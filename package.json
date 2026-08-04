@@ -1,0 +1,15 @@
+{
+	"name": "amalfi",
+	"version": "1.0.0",
+	"description": "Amalfi WordPress Theme",
+	"author": "ThemeZee",
+	"license": "GPL-2.0-or-later",
+	"devDependencies": {
+		"@wordpress/scripts": "wp-7.0"
+	},
+	"scripts": {
+		"build": "wp-scripts build",
+		"format": "wp-scripts format *.{js,json} ./resources/**/*.{ts,tsx,json,scss}",
+		"start": "wp-scripts start"
+	}
+}
