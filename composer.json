@@ -11,8 +11,30 @@
 			"role": "Company"
 		}
 	],
+    "autoload": {
+        "psr-4": {
+            "ThemeZee\\Amalfi\\": "src/"
+        }
+    },
 	"require": {
 		"php": ">=8.1",
 		"themezee/packable": "^1.0"
-	}
+	},
+	"require-dev": {
+		"wp-coding-standards/wpcs": "^3.4"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "phpcs": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
+        "phpcbf": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf",
+        "qa": [
+            "@phpcs"
+        ]
+    }
 }
