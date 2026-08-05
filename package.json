@@ -5,11 +5,18 @@
 	"author": "ThemeZee",
 	"license": "GPL-2.0-or-later",
 	"devDependencies": {
-		"@wordpress/scripts": "wp-7.0"
+		"@apidevtools/json-schema-ref-parser": "^15.5.1",
+		"@wordpress/scripts": "wp-7.0",
+		"ajv": "^8.20.0",
+		"jsonfile": "^6.2.1"
 	},
 	"scripts": {
 		"build": "wp-scripts build",
 		"format": "wp-scripts format *.{js,json} ./resources/**/*.{ts,tsx,json,scss}",
-		"start": "wp-scripts start"
+		"start": "wp-scripts start",
+		"prebuild": "npm run theme-json",
+		"theme-json": "npm run build-theme-json && npm run validate-theme-json",
+		"build-theme-json": "node ./bin/theme-json.js --theme-json-dir ./theme-json && wp-scripts format ./theme.json",
+		"validate-theme-json": "node ./bin/validate-theme-json.js ./theme.json https://schemas.wp.org/trunk/theme.json"
 	}
 }
