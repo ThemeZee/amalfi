@@ -1,0 +1,36 @@
+* {
+	box-sizing: border-box;
+	hyphens: auto;
+	word-break: break-word;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+}
+
+em,
+i {
+	font-style: italic;
+}
+
+strong,
+b {
+	font-weight: 700;
+}
+
+blockquote,
+figure {
+	margin: 0;
+}
+
+picture,
+img {
+	display: block;
+	height: auto;
+	max-width: 100%;
+}
