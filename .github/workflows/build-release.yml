@@ -17,5 +17,16 @@ jobs:
         npm install
         npm run build
 
-    - name: Generate zip
-      uses: 10up/action-wordpress-plugin-build-zip@stable
+    - name: Create ZIP archive
+      run: |
+        THEME_SLUG=amalfi
+        mkdir -p "dist/${THEME_SLUG}"
+        rsync -a --exclude-from=.distignore --exclude="/dist" ./ "dist/${THEME_SLUG}/"
+        cd dist
+        zip -r "../${THEME_SLUG}.zip" "${THEME_SLUG}"
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: amalfi
+        path: amalfi.zip

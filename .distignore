@@ -1,0 +1,16 @@
+/.git
+/.github
+/bin
+/node_modules
+/theme-json
+.distignore
+.gitignore
+AGENTS.md
+composer.json
+composer.lock
+package.json
+package-lock.json
+phpstan.neon.dist
+phpunit.xml.dist
+tsconfig.json
+webpack.config.js
