@@ -75,7 +75,9 @@ function initialize(): void {
 			include_once $autoloader;
 		}
 
-		$modules = array();
+		$modules = array(
+			new Assets\Module(),
+		);
 		array_map( array( package(), 'addModule' ), $modules );
 
 		package()->boot();
