@@ -12,7 +12,7 @@ namespace ThemeZee\Amalfi\Assets;
 /**
  * Registers the block editor stylesheet.
  */
-readonly class Editor {
+class Editor {
 
 	/**
 	 * Constructor.
@@ -20,7 +20,7 @@ readonly class Editor {
 	 * @param string $assetsUrl The base URL to the theme assets directory.
 	 */
 	public function __construct(
-		private string $assetsUrl,
+		private readonly string $assetsUrl,
 	) {
 	}
 

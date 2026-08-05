@@ -12,7 +12,7 @@ namespace ThemeZee\Amalfi\Assets;
 /**
  * Enqueues the frontend stylesheet.
  */
-readonly class Frontend {
+class Frontend {
 
 	private const FRONTEND_HANDLE = 'amalfi-frontend';
 
@@ -23,8 +23,8 @@ readonly class Frontend {
 	 * @param string $assetsUrl  The base URL to the theme assets directory.
 	 */
 	public function __construct(
-		private string $assetsPath,
-		private string $assetsUrl,
+		private readonly string $assetsPath,
+		private readonly string $assetsUrl,
 	) {
 	}
 
@@ -41,7 +41,7 @@ readonly class Frontend {
 		$asset = include $assetFile;
 
 		wp_enqueue_style(
-			self::MODAL_ASSET_HANDLE,
+			self::FRONTEND_HANDLE,
 			"{$this->assetsUrl}/frontend.css",
 			$asset['dependencies'] ?? array(),
 			$asset['version'] ?? false,
