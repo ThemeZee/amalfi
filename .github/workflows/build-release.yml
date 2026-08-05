@@ -11,6 +11,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 24
+
     - name: Build theme
       run: |
         composer install --no-dev
@@ -19,7 +24,7 @@ jobs:
 
     - name: Create ZIP archive
       run: |
-        THEME_SLUG=amalfi
+        THEME_SLUG="${GITHUB_REPOSITORY##*/}"
         mkdir -p "dist/${THEME_SLUG}"
         rsync -a --exclude-from=.distignore --exclude="/dist" ./ "dist/${THEME_SLUG}/"
         cd dist
@@ -28,5 +33,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: amalfi
-        path: amalfi.zip
+        name: ${{ github.event.repository.name }}
+        path: ${{ github.event.repository.name }}.zip
