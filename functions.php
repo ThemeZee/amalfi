@@ -86,4 +86,4 @@ function initialize(): void {
 		handleException( $throwable );
 	}
 }
-add_action( 'after_setup_theme', __NAMESPACE__ . '\\initialize' );
+add_action( 'after_setup_theme', __NAMESPACE__ . '\\initialize', 0 );
