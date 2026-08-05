@@ -30,18 +30,7 @@ class Module implements ServiceModule, ExecutableModule {
 	 */
 	public function services(): array {
 		return array(
-			Editor::class   => static function ( ContainerInterface $container ): Editor {
-				/**
-				 * Theme properties.
-				 *
-				 * @var Properties $properties
-				 */
-				$properties = $container->get( Package::PROPERTIES );
-
-				return new Editor(
-					untrailingslashit( $properties->baseUrl() ?? '' ) . '/assets',
-				);
-			},
+			Editor::class   => static fn () => new Editor(),
 			Frontend::class => static function ( ContainerInterface $container ): Frontend {
 				/**
 				 * Theme properties.
