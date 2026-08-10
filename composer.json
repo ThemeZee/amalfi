@@ -11,11 +11,11 @@
 			"role": "Company"
 		}
 	],
-    "autoload": {
-        "psr-4": {
-            "ThemeZee\\Amalfi\\": "src/"
-        }
-    },
+	"autoload": {
+		"psr-4": {
+			"ThemeZee\\Amalfi\\": "src/"
+		}
+	},
 	"require": {
 		"php": ">=8.1",
 		"themezee/packable": "^1.0"
@@ -28,13 +28,13 @@
 			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
 	},
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "scripts": {
-        "phpcs": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
-        "phpcbf": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf",
-        "qa": [
-            "@phpcs"
-        ]
-    }
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"scripts": {
+		"phpcs": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
+		"phpcbf": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf",
+		"qa": [
+			"@phpcs"
+		]
+	}
 }

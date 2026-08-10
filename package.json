@@ -12,7 +12,7 @@
 	},
 	"scripts": {
 		"build": "wp-scripts build",
-		"format": "wp-scripts format *.{js,json} ./resources/**/*.{ts,tsx,json,scss}",
+		"format": "wp-scripts format *.{js,json} ./resources/**/*.{ts,tsx,json,scss} ./theme-json/**/*.{js,json}",
 		"start": "wp-scripts start",
 		"prebuild": "npm run theme-json",
 		"theme-json": "npm run build-theme-json && npm run validate-theme-json",
