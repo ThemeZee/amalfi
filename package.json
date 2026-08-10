@@ -8,6 +8,7 @@
 		"@apidevtools/json-schema-ref-parser": "^15.5.1",
 		"@wordpress/scripts": "wp-7.0",
 		"ajv": "^8.20.0",
+		"copy-webpack-plugin": "^14.0.0",
 		"jsonfile": "^6.2.1"
 	},
 	"scripts": {

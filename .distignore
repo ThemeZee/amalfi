@@ -2,6 +2,7 @@
 /.github
 /bin
 /node_modules
+/resources/fonts
 /theme-json
 .distignore
 .gitignore
