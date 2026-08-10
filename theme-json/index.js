@@ -3,13 +3,6 @@ module.exports = {
 	version: 3,
 	settings: {
 		appearanceTools: true,
-		background: {
-			backgroundImage: false,
-		},
-		position: {
-			sticky: false,
-		},
-		useRootPaddingAwareAlignments: true,
 	},
 	styles: {},
 };
