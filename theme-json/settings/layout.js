@@ -1,4 +1,4 @@
 module.exports = {
-	contentSize: '800px',
-	wideSize: '1200px',
+	contentSize: '720px',
+	wideSize: '1040px',
 };
