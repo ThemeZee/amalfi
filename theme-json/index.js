@@ -3,6 +3,7 @@ module.exports = {
 	version: 3,
 	settings: {
 		appearanceTools: true,
+		useRootPaddingAwareAlignments: true,
 	},
 	styles: {},
 };
