@@ -84,7 +84,7 @@ const run = async ( argv = [] ) => {
 
 	if ( ! themeArg || ! schemaArg ) {
 		console.error(
-			'Usage: node bin/validate-json.js <path-to-theme.json> <path-to-schema>'
+			'Usage: node bin/validate-theme-json.js <path-to-theme.json> <path-to-schema>'
 		);
 		process.exitCode = 1;
 		return;
