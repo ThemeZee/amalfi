@@ -1,4 +1,4 @@
 module.exports = {
-	body: '1.65',
-	display: '1.15',
+	body: '1.6',
+	display: '1.1',
 };
