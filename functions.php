@@ -87,3 +87,25 @@ function initialize(): void {
 	}
 }
 add_action( 'after_setup_theme', __NAMESPACE__ . '\\initialize', 0 );
+
+/**
+ * Register block pattern categories used by the theme patterns.
+ */
+function registerBlockPatternCategories(): void {
+	$categories = array(
+		'amalfi_hero'         => array( 'label' => __( 'Amalfi: Hero', 'amalfi' ) ),
+		'amalfi_cta'          => array( 'label' => __( 'Amalfi: Call to Action', 'amalfi' ) ),
+		'amalfi_features'     => array( 'label' => __( 'Amalfi: Features', 'amalfi' ) ),
+		'amalfi_services'     => array( 'label' => __( 'Amalfi: Services', 'amalfi' ) ),
+		'amalfi_testimonials' => array( 'label' => __( 'Amalfi: Testimonials', 'amalfi' ) ),
+		'amalfi_team'         => array( 'label' => __( 'Amalfi: Team', 'amalfi' ) ),
+		'amalfi_blog'         => array( 'label' => __( 'Amalfi: Blog Posts', 'amalfi' ) ),
+	);
+
+	foreach ( $categories as $name => $properties ) {
+		if ( ! \WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( $name ) ) {
+			register_block_pattern_category( $name, $properties );
+		}
+	}
+}
+add_action( 'init', __NAMESPACE__ . '\\registerBlockPatternCategories', 9 );
