@@ -6,7 +6,7 @@ module.exports = {
 			},
 			':hover': {
 				color: {
-					text: 'var:preset|color|primary-600',
+					text: 'var:preset|color|primary-700',
 				},
 			},
 		},
