@@ -1,13 +1,13 @@
-<!-- wp:group {"align":"full","layout":{"type":"constrained","contentSize":"1440px"}} -->
-<div class="wp-block-group alignfull">
+<!-- wp:group {"align":"full","style":{"border":{"bottom":{"color":"var:preset|color|primary-200","width":"1px"},"top":{},"right":{},"left":{}}},"layout":{"type":"constrained","contentSize":"1440px"}} -->
+<div class="wp-block-group alignfull" style="border-bottom-color:var(--wp--preset--color--primary-200);border-bottom-width:1px">
 
-	<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|400","bottom":"var:preset|spacing|400"}},"border":{"bottom":{"color":"var:preset|color|primary-200","width":"1px"},"top":{},"right":{},"left":{}}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
-	<div class="wp-block-group" style="border-bottom-color:var(--wp--preset--color--primary-200);border-bottom-width:1px;padding-top:var(--wp--preset--spacing--400);padding-bottom:var(--wp--preset--spacing--400)">
+	<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|400","bottom":"var:preset|spacing|400"}}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
+	<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--400);padding-bottom:var(--wp--preset--spacing--400)">
 
 		<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|200"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
 		<div class="wp-block-group">
 			
-			<!-- wp:site-logo /-->
+			<!-- wp:site-logo {"width":50} /-->
 			 <!-- wp:site-title {"level":0} /-->
 
 		</div>
@@ -18,11 +18,15 @@
 
 			<!-- wp:navigation /-->
 
-			<!-- wp:social-links -->
-			<ul class="wp-block-social-links">
-				<!-- wp:social-link {"service":"instagram"} /-->
-			</ul>
-			<!-- /wp:social-links -->
+			<!-- wp:buttons -->
+			<div class="wp-block-buttons">
+
+				<!-- wp:button -->
+				<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/amalfi/contact/">Contact</a></div>
+				<!-- /wp:button -->
+
+			</div>
+			<!-- /wp:buttons -->
 
 		</div>
 		<!-- /wp:group -->
