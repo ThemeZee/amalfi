@@ -29,7 +29,7 @@
 			<!-- wp:column {"verticalAlignment":"center","width":"60%"} -->
 			<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:60%">
 
-				<!-- wp:post-terms {"term":"category","style":{"typography":{"textTransform":"uppercase","letterSpacing":"0.12rem","fontWeight":"700"},"elements":{"link":{"color":{"text":"var:preset|color|primary-600"}}}},"textColor":"primary-600","fontSize":"body-xs"} /-->
+				<!-- wp:post-terms {"term":"category"} /-->
 
 				<!-- wp:post-title {"isLink":true,"style":{"spacing":{"margin":{"top":"var:preset|spacing|150","bottom":"var:preset|spacing|200"}}},"fontSize":"display-sm"} /-->
 
