@@ -1,0 +1,132 @@
+<?php
+/**
+ * Title: Browse by Category
+ * Slug: amalfi/browse-categories
+ * Categories: amalfi_services
+ *
+ * @package Amalfi
+ */
+
+?>
+
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|1000","right":"var:preset|spacing|400","bottom":"var:preset|spacing|1000","left":"var:preset|spacing|400"},"margin":{"top":"0"},"blockGap":"var:preset|spacing|600"}},"layout":{"type":"constrained","contentSize":"1040px"}} -->
+<div class="wp-block-group alignfull" style="margin-top:0;padding-top:var(--wp--preset--spacing--1000);padding-right:var(--wp--preset--spacing--400);padding-bottom:var(--wp--preset--spacing--1000);padding-left:var(--wp--preset--spacing--400)">
+
+	<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|150"}},"layout":{"type":"constrained","contentSize":"640px"}} -->
+	<div class="wp-block-group">
+
+		<!-- wp:paragraph {"align":"center","style":{"typography":{"textTransform":"uppercase","letterSpacing":"0.12rem","fontWeight":"700"}},"textColor":"primary-600","fontSize":"body-xs"} -->
+		<p class="has-text-align-center has-primary-600-color has-text-color has-body-xs-font-size" style="font-weight:700;letter-spacing:0.12rem;text-transform:uppercase">Find your way around</p>
+		<!-- /wp:paragraph -->
+
+		<!-- wp:heading {"textAlign":"center","fontSize":"display-sm"} -->
+		<h2 class="has-text-align-center has-display-sm-font-size">Browse by category</h2>
+		<!-- /wp:heading -->
+
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|400","left":"var:preset|spacing|400"}}}} -->
+	<div class="wp-block-columns">
+
+		<!-- wp:column -->
+		<div class="wp-block-column">
+			<!-- wp:group {"style":{"border":{"radius":"8px"},"spacing":{"padding":{"top":"var:preset|spacing|500","right":"var:preset|spacing|500","bottom":"var:preset|spacing|500","left":"var:preset|spacing|500"}}},"backgroundColor":"primary-50","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group has-primary-50-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--500);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--500);padding-left:var(--wp--preset--spacing--500)">
+				<!-- wp:heading {"level":3,"fontSize":"body-lg"} -->
+				<h3 class="has-body-lg-font-size"><a href="/amalfi/category/destinations/">Destinations</a></h3>
+				<!-- /wp:heading -->
+				<!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"var:preset|spacing|150"}}},"fontSize":"body-sm"} -->
+				<p class="has-body-sm-font-size" style="margin-top:var(--wp--preset--spacing--150)">Positano, Capri, Ravello, Naples and every village worth the trip.</p>
+				<!-- /wp:paragraph -->
+			</div>
+			<!-- /wp:group -->
+		</div>
+		<!-- /wp:column -->
+
+		<!-- wp:column -->
+		<div class="wp-block-column">
+			<!-- wp:group {"style":{"border":{"radius":"8px"},"spacing":{"padding":{"top":"var:preset|spacing|500","right":"var:preset|spacing|500","bottom":"var:preset|spacing|500","left":"var:preset|spacing|500"}}},"backgroundColor":"primary-50","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group has-primary-50-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--500);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--500);padding-left:var(--wp--preset--spacing--500)">
+				<!-- wp:heading {"level":3,"fontSize":"body-lg"} -->
+				<h3 class="has-body-lg-font-size"><a href="/amalfi/category/things-to-do/">Things to Do</a></h3>
+				<!-- /wp:heading -->
+				<!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"var:preset|spacing|150"}}},"fontSize":"body-sm"} -->
+				<p class="has-body-sm-font-size" style="margin-top:var(--wp--preset--spacing--150)">Hikes, boat trips, beaches and the experiences that make the coast.</p>
+				<!-- /wp:paragraph -->
+			</div>
+			<!-- /wp:group -->
+		</div>
+		<!-- /wp:column -->
+
+		<!-- wp:column -->
+		<div class="wp-block-column">
+			<!-- wp:group {"style":{"border":{"radius":"8px"},"spacing":{"padding":{"top":"var:preset|spacing|500","right":"var:preset|spacing|500","bottom":"var:preset|spacing|500","left":"var:preset|spacing|500"}}},"backgroundColor":"primary-50","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group has-primary-50-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--500);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--500);padding-left:var(--wp--preset--spacing--500)">
+				<!-- wp:heading {"level":3,"fontSize":"body-lg"} -->
+				<h3 class="has-body-lg-font-size"><a href="/amalfi/category/where-to-stay/">Where to Stay</a></h3>
+				<!-- /wp:heading -->
+				<!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"var:preset|spacing|150"}}},"fontSize":"body-sm"} -->
+				<p class="has-body-sm-font-size" style="margin-top:var(--wp--preset--spacing--150)">Grand hotels, boutique boltholes and hidden lemon-grove B&amp;Bs.</p>
+				<!-- /wp:paragraph -->
+			</div>
+			<!-- /wp:group -->
+		</div>
+		<!-- /wp:column -->
+
+	</div>
+	<!-- /wp:columns -->
+
+	<!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|400","left":"var:preset|spacing|400"}}}} -->
+	<div class="wp-block-columns">
+
+		<!-- wp:column -->
+		<div class="wp-block-column">
+			<!-- wp:group {"style":{"border":{"radius":"8px"},"spacing":{"padding":{"top":"var:preset|spacing|500","right":"var:preset|spacing|500","bottom":"var:preset|spacing|500","left":"var:preset|spacing|500"}}},"backgroundColor":"primary-50","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group has-primary-50-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--500);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--500);padding-left:var(--wp--preset--spacing--500)">
+				<!-- wp:heading {"level":3,"fontSize":"body-lg"} -->
+				<h3 class="has-body-lg-font-size"><a href="/amalfi/category/food-drink/">Food &amp; Drink</a></h3>
+				<!-- /wp:heading -->
+				<!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"var:preset|spacing|150"}}},"fontSize":"body-sm"} -->
+				<p class="has-body-sm-font-size" style="margin-top:var(--wp--preset--spacing--150)">Seafood, lemons, limoncello and where the locals really eat.</p>
+				<!-- /wp:paragraph -->
+			</div>
+			<!-- /wp:group -->
+		</div>
+		<!-- /wp:column -->
+
+		<!-- wp:column -->
+		<div class="wp-block-column">
+			<!-- wp:group {"style":{"border":{"radius":"8px"},"spacing":{"padding":{"top":"var:preset|spacing|500","right":"var:preset|spacing|500","bottom":"var:preset|spacing|500","left":"var:preset|spacing|500"}}},"backgroundColor":"primary-50","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group has-primary-50-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--500);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--500);padding-left:var(--wp--preset--spacing--500)">
+				<!-- wp:heading {"level":3,"fontSize":"body-lg"} -->
+				<h3 class="has-body-lg-font-size"><a href="/amalfi/category/travel-tips/">Travel Tips</a></h3>
+				<!-- /wp:heading -->
+				<!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"var:preset|spacing|150"}}},"fontSize":"body-sm"} -->
+				<p class="has-body-sm-font-size" style="margin-top:var(--wp--preset--spacing--150)">Ferries, buses, best seasons and everything to know before you go.</p>
+				<!-- /wp:paragraph -->
+			</div>
+			<!-- /wp:group -->
+		</div>
+		<!-- /wp:column -->
+
+		<!-- wp:column -->
+		<div class="wp-block-column">
+			<!-- wp:group {"style":{"border":{"radius":"8px","color":"var:preset|color|primary-200","width":"1px"},"spacing":{"padding":{"top":"var:preset|spacing|500","right":"var:preset|spacing|500","bottom":"var:preset|spacing|500","left":"var:preset|spacing|500"}}},"layout":{"type":"constrained"}} -->
+			<div class="wp-block-group has-border-color" style="border-color:var(--wp--preset--color--primary-200);border-width:1px;border-radius:8px;padding-top:var(--wp--preset--spacing--500);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--500);padding-left:var(--wp--preset--spacing--500)">
+				<!-- wp:heading {"level":3,"fontSize":"body-lg"} -->
+				<h3 class="has-body-lg-font-size"><a href="/amalfi/blog/">All Stories</a></h3>
+				<!-- /wp:heading -->
+				<!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"var:preset|spacing|150"}}},"fontSize":"body-sm"} -->
+				<p class="has-body-sm-font-size" style="margin-top:var(--wp--preset--spacing--150)">Every guide and dispatch from across the coast, in one place.</p>
+				<!-- /wp:paragraph -->
+			</div>
+			<!-- /wp:group -->
+		</div>
+		<!-- /wp:column -->
+
+	</div>
+	<!-- /wp:columns -->
+
+</div>
+<!-- /wp:group -->

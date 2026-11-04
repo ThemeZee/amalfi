@@ -1,6 +1,6 @@
 <?php
 /**
- * Title: Features (Grid)
+ * Title: Highlights (Grid)
  * Slug: amalfi/features-grid
  * Categories: amalfi_features
  *
@@ -16,11 +16,11 @@
 	<div class="wp-block-group">
 
 		<!-- wp:paragraph {"align":"center","style":{"typography":{"textTransform":"uppercase","letterSpacing":"0.12rem","fontWeight":"700"}},"textColor":"primary-600","fontSize":"body-xs"} -->
-		<p class="has-text-align-center has-primary-600-color has-text-color has-body-xs-font-size" style="font-weight:700;letter-spacing:0.12rem;text-transform:uppercase">What we value</p>
+		<p class="has-text-align-center has-primary-600-color has-text-color has-body-xs-font-size" style="font-weight:700;letter-spacing:0.12rem;text-transform:uppercase">Why the Amalfi Coast</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:heading {"textAlign":"center","fontSize":"display-sm"} -->
-		<h2 class="has-text-align-center has-display-sm-font-size">A handful of principles that guide everything we make.</h2>
+		<h2 class="has-text-align-center has-display-sm-font-size">Three good reasons to lose yourself here for a week.</h2>
 		<!-- /wp:heading -->
 
 	</div>
@@ -37,11 +37,11 @@
 			<!-- /wp:paragraph -->
 
 			<!-- wp:heading {"level":3,"style":{"spacing":{"margin":{"top":"var:preset|spacing|300"}}},"fontSize":"body-xl"} -->
-			<h3 class="has-body-xl-font-size" style="margin-top:var(--wp--preset--spacing--300)">Considered craft</h3>
+			<h3 class="has-body-xl-font-size" style="margin-top:var(--wp--preset--spacing--300)">Villages like no other</h3>
 			<!-- /wp:heading -->
 
 			<!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"var:preset|spacing|150"}}}} -->
-			<p style="margin-top:var(--wp--preset--spacing--150)">Every detail is weighed and reworked until it feels inevitable, never arbitrary.</p>
+			<p style="margin-top:var(--wp--preset--spacing--150)">Pastel towns stacked up the cliffs — Positano, Amalfi, Ravello — each with its own character and its own staircase of a main street.</p>
 			<!-- /wp:paragraph -->
 
 		</div>
@@ -55,11 +55,11 @@
 			<!-- /wp:paragraph -->
 
 			<!-- wp:heading {"level":3,"style":{"spacing":{"margin":{"top":"var:preset|spacing|300"}}},"fontSize":"body-xl"} -->
-			<h3 class="has-body-xl-font-size" style="margin-top:var(--wp--preset--spacing--300)">Room to breathe</h3>
+			<h3 class="has-body-xl-font-size" style="margin-top:var(--wp--preset--spacing--300)">Trails and turquoise sea</h3>
 			<!-- /wp:heading -->
 
 			<!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"var:preset|spacing|150"}}}} -->
-			<p style="margin-top:var(--wp--preset--spacing--150)">Generous space and calm typography let the work, and the reader, settle in.</p>
+			<p style="margin-top:var(--wp--preset--spacing--150)">Walk the Path of the Gods in the morning, swim from a hidden cove by afternoon, and watch the ferries trace the coast at dusk.</p>
 			<!-- /wp:paragraph -->
 
 		</div>
@@ -73,11 +73,11 @@
 			<!-- /wp:paragraph -->
 
 			<!-- wp:heading {"level":3,"style":{"spacing":{"margin":{"top":"var:preset|spacing|300"}}},"fontSize":"body-xl"} -->
-			<h3 class="has-body-xl-font-size" style="margin-top:var(--wp--preset--spacing--300)">Honest materials</h3>
+			<h3 class="has-body-xl-font-size" style="margin-top:var(--wp--preset--spacing--300)">Lemons, pasta, and sea salt</h3>
 			<!-- /wp:heading -->
 
 			<!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"var:preset|spacing|150"}}}} -->
-			<p style="margin-top:var(--wp--preset--spacing--150)">We favour the real and the durable over the loud and the disposable.</p>
+			<p style="margin-top:var(--wp--preset--spacing--150)">Fritto misto by the harbour, giant lemons from the terraces, and a chilled limoncello to end every single meal.</p>
 			<!-- /wp:paragraph -->
 
 		</div>

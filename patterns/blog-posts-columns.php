@@ -23,7 +23,7 @@
 			<!-- /wp:paragraph -->
 
 			<!-- wp:heading {"fontSize":"display-sm"} -->
-			<h2 class="has-display-sm-font-size">Latest writing</h2>
+			<h2 class="has-display-sm-font-size">Latest stories</h2>
 			<!-- /wp:heading -->
 
 		</div>
@@ -33,7 +33,7 @@
 		<div class="wp-block-buttons">
 
 			<!-- wp:button {"className":"is-style-outline"} -->
-			<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#">View all posts</a></div>
+			<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/amalfi/blog/">View all stories</a></div>
 			<!-- /wp:button -->
 
 		</div>
