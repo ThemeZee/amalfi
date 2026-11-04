@@ -28,6 +28,7 @@ class BlockPatternCategory {
 			'amalfi_testimonials' => array( 'label' => __( 'Amalfi: Testimonials', 'amalfi' ) ),
 			'amalfi_team'         => array( 'label' => __( 'Amalfi: Contributors', 'amalfi' ) ),
 			'amalfi_blog'         => array( 'label' => __( 'Amalfi: Posts', 'amalfi' ) ),
+			'amalfi_query'        => array( 'label' => __( 'Amalfi: Query Loops', 'amalfi' ) ),
 			'amalfi_page'         => array( 'label' => __( 'Amalfi: Page Sections', 'amalfi' ) ),
 		);
 
