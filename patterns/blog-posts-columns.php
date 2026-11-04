@@ -18,8 +18,8 @@
 		<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|150"}},"layout":{"type":"constrained"}} -->
 		<div class="wp-block-group">
 
-			<!-- wp:paragraph {"style":{"typography":{"textTransform":"uppercase","letterSpacing":"0.12rem","fontWeight":"700"}},"textColor":"primary-600","fontSize":"body-xs"} -->
-			<p class="has-primary-600-color has-text-color has-body-xs-font-size" style="font-weight:700;letter-spacing:0.12rem;text-transform:uppercase">From the journal</p>
+			<!-- wp:paragraph {"className":"is-style-eyebrow"} -->
+			<p class="is-style-eyebrow">From the journal</p>
 			<!-- /wp:paragraph -->
 
 			<!-- wp:heading {"fontSize":"display-sm"} -->

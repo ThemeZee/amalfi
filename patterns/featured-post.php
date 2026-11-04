@@ -12,8 +12,8 @@
 <!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|1000","right":"var:preset|spacing|400","bottom":"var:preset|spacing|1000","left":"var:preset|spacing|400"},"margin":{"top":"0"},"blockGap":"var:preset|spacing|600"}},"layout":{"type":"constrained","contentSize":"1040px"}} -->
 <div class="wp-block-group alignfull" style="margin-top:0;padding-top:var(--wp--preset--spacing--1000);padding-right:var(--wp--preset--spacing--400);padding-bottom:var(--wp--preset--spacing--1000);padding-left:var(--wp--preset--spacing--400)">
 
-	<!-- wp:paragraph {"style":{"typography":{"textTransform":"uppercase","letterSpacing":"0.12rem","fontWeight":"700"}},"textColor":"primary-600","fontSize":"body-xs"} -->
-	<p class="has-primary-600-color has-text-color has-body-xs-font-size" style="font-weight:700;letter-spacing:0.12rem;text-transform:uppercase">Featured story</p>
+	<!-- wp:paragraph {"className":"is-style-eyebrow"} -->
+	<p class="is-style-eyebrow">Featured story</p>
 	<!-- /wp:paragraph -->
 
 	<!-- wp:query {"queryId":2,"query":{"perPage":1,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"align":"wide"} -->

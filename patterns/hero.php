@@ -12,8 +12,8 @@
 <!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|1000","bottom":"var:preset|spacing|1000"},"margin":{"top":"0"}}},"layout":{"type":"constrained","contentSize":"800px"}} -->
 <div class="wp-block-group alignfull" style="margin-top:0;padding-top:var(--wp--preset--spacing--1000);padding-bottom:var(--wp--preset--spacing--1000)">
 
-	<!-- wp:paragraph {"align":"center","style":{"typography":{"textTransform":"uppercase","letterSpacing":"0.12rem","fontWeight":"700"}},"textColor":"primary-600","fontSize":"body-xs"} -->
-	<p class="has-text-align-center has-primary-600-color has-text-color has-body-xs-font-size" style="font-weight:700;letter-spacing:0.12rem;text-transform:uppercase">The Amalfi Coast, Italy</p>
+	<!-- wp:paragraph {"align":"center","className":"is-style-eyebrow"} -->
+	<p class="has-text-align-center is-style-eyebrow">The Amalfi Coast, Italy</p>
 	<!-- /wp:paragraph -->
 
 	<!-- wp:heading {"textAlign":"center","level":1,"style":{"spacing":{"margin":{"top":"var:preset|spacing|200"}}},"fontSize":"display-xl"} -->

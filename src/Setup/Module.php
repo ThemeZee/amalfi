@@ -29,6 +29,7 @@ class Module implements ServiceModule, ExecutableModule {
 	public function services(): array {
 		return array(
 			BlockPatternCategory::class => static fn () => new BlockPatternCategory(),
+			BlockStyle::class           => static fn () => new BlockStyle(),
 			DefaultBlockPatterns::class => static fn () => new DefaultBlockPatterns(),
 		);
 	}
@@ -44,6 +45,11 @@ class Module implements ServiceModule, ExecutableModule {
 			'init',
 			$container->get( BlockPatternCategory::class ),
 			9,
+		);
+
+		add_action(
+			'init',
+			$container->get( BlockStyle::class ),
 		);
 
 		$defaultBlockPatterns = $container->get( DefaultBlockPatterns::class );

@@ -1,0 +1,17 @@
+// Block styles
+//
+// Default styling for the theme's custom block styles. These rules only set the
+// baseline look of each style. They deliberately avoid `!important` and keep a
+// low specificity so that any block setting a user configures in the editor
+// (color, font size, typography, …) still overrides the block style, whether it
+// is applied through WordPress' preset classes (which use `!important`) or an
+// inline style.
+
+// Eyebrow — small, uppercase, letter-spaced label used above headings.
+.is-style-eyebrow {
+	color: var(--wp--preset--color--primary-600);
+	font-size: var(--wp--preset--font-size--body-xs);
+	font-weight: 700;
+	letter-spacing: 0.12rem;
+	text-transform: uppercase;
+}
