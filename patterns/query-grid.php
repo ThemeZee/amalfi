@@ -3,7 +3,7 @@
  * Title: Query (Grid)
  * Slug: amalfi/query-grid
  * Block Types: core/query
- * Categories: query
+ * Categories: amalfi_blog
  *
  * @package Amalfi
  */

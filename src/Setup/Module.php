@@ -29,6 +29,7 @@ class Module implements ServiceModule, ExecutableModule {
 	public function services(): array {
 		return array(
 			BlockPatternCategory::class => static fn () => new BlockPatternCategory(),
+			DefaultBlockPatterns::class => static fn () => new DefaultBlockPatterns(),
 		);
 	}
 
@@ -43,6 +44,21 @@ class Module implements ServiceModule, ExecutableModule {
 			'init',
 			$container->get( BlockPatternCategory::class ),
 			9,
+		);
+
+		$defaultBlockPatterns = $container->get( DefaultBlockPatterns::class );
+
+		add_action(
+			'after_setup_theme',
+			array( $defaultBlockPatterns, 'removeThemeSupport' ),
+		);
+
+		add_filter( 'should_load_remote_block_patterns', '__return_false' );
+
+		add_action(
+			'init',
+			array( $defaultBlockPatterns, 'unregisterDefaults' ),
+			99,
 		);
 
 		return true;

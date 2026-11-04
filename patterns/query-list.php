@@ -3,7 +3,7 @@
  * Title: Query (List)
  * Slug: amalfi/query-list
  * Block Types: core/query
- * Categories: query
+ * Categories: amalfi_blog
  *
  * @package Amalfi
  */
