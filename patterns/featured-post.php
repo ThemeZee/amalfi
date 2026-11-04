@@ -12,7 +12,7 @@
 <!-- wp:group {"align":"full","style":{"spacing":{"margin":{"top":"0"}}},"layout":{"type":"constrained","contentSize":"1440px","wideSize":"1440px"}} -->
 <div class="wp-block-group alignfull" style="margin-top:0">
 
-	<!-- wp:group {"style":{"border":{"top":{"color":"var:preset|color|primary-200","width":"1px"}},"spacing":{"padding":{"top":"var:preset|spacing|1000","bottom":"var:preset|spacing|1000"},"blockGap":"var:preset|spacing|600"}},"layout":{"type":"constrained","contentSize":"1440px","wideSize":"1440px"}} -->
+	<!-- wp:group {"style":{"border":{"top":{"color":"var:preset|color|primary-200","width":"1px"}},"spacing":{"padding":{"top":"var:preset|spacing|1000","bottom":"var:preset|spacing|1000"},"blockGap":"var:preset|spacing|600"}},"layout":{"type":"constrained","contentSize":"1040px","wideSize":"1040px"}} -->
 	<div class="wp-block-group" style="border-top-color:var(--wp--preset--color--primary-200);border-top-width:1px;padding-top:var(--wp--preset--spacing--1000);padding-bottom:var(--wp--preset--spacing--1000)">
 
 		<!-- wp:paragraph {"className":"is-style-eyebrow"} -->
@@ -27,16 +27,16 @@
 				<!-- wp:columns {"verticalAlignment":"top","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|500","left":"var:preset|spacing|600"},"margin":{"bottom":"0"}}}} -->
 				<div class="wp-block-columns are-vertically-aligned-top" style="margin-bottom:0">
 
-					<!-- wp:column {"verticalAlignment":"top","width":"33%"} -->
-					<div class="wp-block-column is-vertically-aligned-top" style="flex-basis:33%">
+					<!-- wp:column {"verticalAlignment":"top"} -->
+					<div class="wp-block-column is-vertically-aligned-top">
 
 						<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3","style":{"border":{"radius":"8px"}}} /-->
 
 					</div>
 					<!-- /wp:column -->
 
-					<!-- wp:column {"verticalAlignment":"top","width":"47%"} -->
-					<div class="wp-block-column is-vertically-aligned-top" style="flex-basis:47%">
+					<!-- wp:column {"verticalAlignment":"top"} -->
+					<div class="wp-block-column is-vertically-aligned-top">
 
 						<!-- wp:post-terms {"term":"category"} /-->
 
@@ -47,10 +47,6 @@
 						<!-- wp:post-date {"style":{"spacing":{"margin":{"top":"var:preset|spacing|300"}},"elements":{"link":{"color":{"text":"var:preset|color|primary-600"}}}},"fontSize":"body-sm"} /-->
 
 					</div>
-					<!-- /wp:column -->
-
-					<!-- wp:column {"verticalAlignment":"top","width":"20%"} -->
-					<div class="wp-block-column is-vertically-aligned-top" style="flex-basis:20%"></div>
 					<!-- /wp:column -->
 
 				</div>
