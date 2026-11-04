@@ -14,5 +14,6 @@ module.exports = {
 	typography: {
 		fontFamily: 'var:custom|font-family|display',
 		fontSize: 'var:preset|font-size|display-sm',
+		fontStyle: 'italic',
 	},
 };
