@@ -13,7 +13,7 @@ These are hard rules. Do not violate them even when it seems easier.
 1. **Always use WordPress Core blocks for everything.** Build layouts and designs out of core blocks (Group, Columns, Cover, Query Loop, Post Title, Buttons, etc.). Do not reach for third-party blocks or custom blocks unless explicitly asked.
 2. **Never use the Custom HTML block (`core/html`) to build layouts or designs.** If you find yourself writing raw markup inside an HTML block to achieve a layout, stop — compose it from core blocks instead.
 3. **Style with `theme.json` first, custom CSS last.** Before writing any CSS, express the design through `theme.json` (presets, element styles, per-block styles, `settings`/`styles`). Only write custom SCSS when `theme.json` genuinely cannot express it (e.g. a block style variation like `.is-style-eyebrow`, a reset). Prefer presets (`var:preset|color|…`, `var:preset|spacing|…`, `var:preset|font-size|…`) over hardcoded values everywhere — in patterns, templates, and styles.
-4. **Keep the theme distribution-safe.** No hardcoded IDs, no invented domains, nothing tied to a specific site's data (see §6).
+4. **Keep the theme distribution-safe.** No hardcoded IDs, no invented domains, nothing tied to a specific site's data (see §7).
 
 ---
 
@@ -87,7 +87,7 @@ CSS/JS is **compiled, not hand-edited** in `assets/`.
    */
   ?>
   ```
-- **Slug, filename, and title must stay consistent.** When you change a pattern's slug, **rename the file to match** (slug `amalfi/browse-categories` → `browse-categories.php`). Use `mv`, not `git mv` (see §8).
+- **Slug, filename, and title must stay consistent.** When you change a pattern's slug, **rename the file to match** (slug `amalfi/browse-categories` → `browse-categories.php`). Use `mv`, not `git mv` (see §9).
 - **Pattern body is block markup** composed from core blocks, formatted the same way the block editor serializes it (block comments + matching HTML, preset variables in both the attributes and the inline styles). Indentation nesting for readability is fine.
 - **Categories** are registered in `src/Setup/BlockPatternCategory.php`. Reference registered category names in the pattern header.
 - **Naming must be generic/structural**, describing the pattern's role, not any demo topic — e.g. "Testimonials", "Contributors", "Highlights", "Browse by Category", "Call to Action". No domain-specific names in the theme.
@@ -98,7 +98,32 @@ CSS/JS is **compiled, not hand-edited** in `assets/`.
 
 ---
 
-## 6. Templates & template parts (distribution-safe)
+## 6. Images in block patterns (pxhere + readme.txt attribution)
+
+Every image a pattern (or template) uses is a bundled theme asset. Keep the whole pipeline distribution-safe and attributed.
+
+- **Source only from pxhere.com.** All pattern images must come from [pxhere.com](https://pxhere.com/), where every photo is licensed under **CC0 1.0 Universal (public domain)**. Do not use images from any other source (Unsplash, Pexels, other stock sites) unless the user explicitly approves — other licenses differ and would need separate attribution handling.
+- **Store the source in `resources/images/`.** That is the source of truth. `wp-scripts build` copies `resources/images/**` → `assets/images/` (see the `CopyWebpackPlugin` config in `webpack.config.js`), and patterns reference the served copy via `get_theme_file_uri( 'assets/images/<file>.jpg' )`. Never hand-edit or drop files directly into `assets/images/` — add/replace them in `resources/images/` and rebuild.
+- **Reuse before downloading.** Keep the bundled image set small (~10–15 total) and reuse existing images across patterns rather than downloading a new one each time.
+- **Record the exact pxhere source at download time.** Capture the photo page URL (`https://pxhere.com/en/photo/<id>`) when you download — you need it for the readme entry below.
+
+### readme.txt must stay in sync — automatically
+
+Whenever you add, replace, or remove an image in `resources/images/`, update `readme.txt` in the **same change**. Introducing a new image is not finished until its readme entry exists.
+
+- Under `== Resources ==` → `2. Images used in block patterns`, keep one lettered entry per image, in this exact shape:
+  ```
+  x) <Short description> used in the <Pattern name> block pattern (assets/images/<file>.jpg)
+  Source: https://pxhere.com/en/photo/<id>
+  License: Distributed under the terms of the CC0 1.0 Universal Public Domain Dedication (https://creativecommons.org/publicdomain/zero/1.0/)
+  Copyright: Released into the public domain, no attribution required
+  ```
+- Because pxhere is CC0, the `License` and `Copyright` lines are **always** the two fixed lines above — only the description, pattern name, filename, and `Source` URL change per image.
+- Re-letter the list (a, b, c, …) so it stays sequential, and remove an image's entry when you remove the image from the theme.
+
+---
+
+## 7. Templates & template parts (distribution-safe)
 
 - **Templates:** `templates/*.html` (e.g. `index.html`, `home.html`, `single.html`, `archive.html`, `page.html`, `search.html`, `404.html`, plus custom templates like `page-fullwidth.html`). Custom templates are declared in `theme-json/customTemplates.js`.
 - **Template parts:** `parts/*.html` (e.g. `header.html`, `footer.html`, `posts.html`), declared in `theme-json/templateParts.js`.
@@ -109,7 +134,7 @@ CSS/JS is **compiled, not hand-edited** in `assets/`.
 
 ---
 
-## 7. Local WordPress access (dev environment)
+## 8. Local WordPress access (dev environment)
 
 WordPress runs locally via **ddev** (project `themes-website`, type `php`, root `/Users/thomasw/web/themes-website`).
 
@@ -124,7 +149,7 @@ WordPress runs locally via **ddev** (project `themes-website`, type `php`, root 
 
 ---
 
-## 8. Version control
+## 9. Version control
 
 - **Never run git operations** (commit, branch, push, merge, rebase, stage, etc.) and don't offer to. The user handles all version control themselves.
 - Leave changes in the working tree for the user to review and commit. If a workflow seems to need a commit, describe what changed and let the user decide.
@@ -132,7 +157,7 @@ WordPress runs locally via **ddev** (project `themes-website`, type `php`, root 
 
 ---
 
-## 9. Quick checklist before finishing a change
+## 10. Quick checklist before finishing a change
 
 - [ ] Built only from **WordPress Core blocks**; no Custom HTML block used for layout.
 - [ ] Design expressed via **`theme.json`** (presets); custom CSS only where unavoidable.
@@ -141,4 +166,5 @@ WordPress runs locally via **ddev** (project `themes-website`, type `php`, root 
 - [ ] PHP added under **`/src`** as a Packable module/service; nothing added to `functions.php` beyond module registration.
 - [ ] Pattern/template/part names and content are **generic and distribution-safe** (no domain-specific wording, no hardcoded nav `ref`, placeholder emails only).
 - [ ] Pattern **slug = filename = title**; pattern cache flushed if slugs/categories changed.
+- [ ] Any new/changed pattern image is from **pxhere.com (CC0)**, stored in **`resources/images/`**, and **`readme.txt` Resources is updated** with its pxhere source URL.
 - [ ] **No git operations** performed.
