@@ -12,6 +12,11 @@ const config = {
 					to: 'fonts/[name][ext]',
 					force: true,
 				},
+				{
+					from: 'resources/images/**/*.(jpg|jpeg|png|gif|webp|svg)',
+					to: 'images/[name][ext]',
+					force: true,
+				},
 			],
 		} ),
 	],
