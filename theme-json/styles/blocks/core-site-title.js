@@ -15,5 +15,6 @@ module.exports = {
 		fontFamily: 'var:custom|font-family|display',
 		fontSize: 'var:preset|font-size|display-sm',
 		fontStyle: 'italic',
+		fontWeight: '600',
 	},
 };
