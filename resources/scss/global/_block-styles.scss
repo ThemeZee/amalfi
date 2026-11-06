@@ -15,3 +15,38 @@
 	letter-spacing: 0.12rem;
 	text-transform: uppercase;
 }
+
+// Outline (Social Icons) — mirrors the Outline style of the Button block: each
+// icon sits in a transparent, 1px-bordered circle with the dark primary colour
+// at rest and fills with that colour (white icon) on hover/focus. Core applies
+// the per-service brand colours at very low specificity (through `:where()`),
+// so these class selectors win without `!important`; the icon SVG inherits the
+// link's `color` via its `fill: currentColor`, so colouring the link is enough.
+//
+// `:not(.wp-block-social-link-anchor)` targets only the list item: in the block
+// editor the inner anchor button also carries the `wp-block-social-link` class,
+// so without this the border would be drawn twice (list item + anchor).
+.wp-block-social-links.is-style-outline {
+	.wp-block-social-link:not(.wp-block-social-link-anchor) {
+		background-color: transparent;
+		border: 1px solid var(--wp--preset--color--primary-950);
+		color: var(--wp--preset--color--primary-950);
+		transition: all 0.2s ease-in-out;
+	}
+
+	// Roomier buttons than the core default (0.25em), so the icons sit in a
+	// larger circle. Set in `em` to stay proportional to the chosen icon size.
+	.wp-block-social-link-anchor {
+		padding: 0.35em;
+	}
+
+	.wp-block-social-link:not(.wp-block-social-link-anchor):hover,
+	.wp-block-social-link:not(.wp-block-social-link-anchor):focus-within {
+		border-color: var(--wp--preset--color--primary-950);
+		background-color: var(--wp--preset--color--primary-950);
+		color: var(--wp--preset--color--white);
+
+		// Core scales the icon up on hover; keep the outline icons a fixed size.
+		transform: none;
+	}
+}
