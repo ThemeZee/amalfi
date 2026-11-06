@@ -32,6 +32,14 @@ class BlockStyle {
 		);
 
 		register_block_style(
+			'core/heading',
+			array(
+				'name'  => 'overline',
+				'label' => __( 'Overline', 'amalfi' ),
+			)
+		);
+
+		register_block_style(
 			'core/social-links',
 			array(
 				'name'  => 'primary',
