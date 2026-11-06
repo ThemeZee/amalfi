@@ -51,8 +51,20 @@ Current modules: `src/Assets/` (enqueues compiled CSS/JS, editor styles) and `sr
   ```bash
   npm run theme-json
   ```
-  This runs `bin/theme-json.js` (assembles fragments → `theme.json`), formats with Prettier, and validates against the WordPress `theme.json` schema (`bin/validate-theme-json.js`).
+  This runs `bin/theme-json.js` (assembles fragments → `theme.json`), formats with Prettier, and validates against the **trunk** WordPress schema `https://schemas.wp.org/trunk/theme.json` (`bin/validate-theme-json.js`).
+- **Look up valid keys/values in the trunk schema** (`https://schemas.wp.org/trunk/theme.json`) — the latest Core, which this project targets — not from memory or bundled files. The validator above is the gate; a fragment that uses an unknown key will fail it. (The schema defines the key/value surface, but not runtime behaviour — e.g. which blocks accept `:hover`; see block style variations below.)
 - Per-block default styling defined here emits as low-specificity `:root :where(.wp-block-…)` rules **without `!important`**, so a user's per-block editor settings still override the defaults. Keep it that way.
+
+### Block style variations — define in theme.json, not SCSS
+
+A custom block style (e.g. the Social Icons **Outline** style, the Button **Outline** style) is **styled in `theme.json`**, the same as any other design — not in custom SCSS. Register the style's *label* in PHP (`src/Setup/BlockStyle.php` via `register_block_style()`), then express its look under `styles.blocks.<block>.variations.<name>`:
+
+- Style the block itself at the variation root (e.g. `theme-json/styles/blocks/core-button.js` → `variations.outline`).
+- To style **inner blocks** of a container variation (the class lands on the container, but each child needs styling — e.g. Social Icons, where `is-style-outline` sits on the `<ul>` but the border belongs on each `core/social-link`), nest them: `variations.<name>.blocks.core/<inner>` (and `…elements.<name>` for element styling). WordPress compiles this ("section styles") into a scoped `.is-style-<name>--N` rule at render time. See `theme-json/styles/blocks/core-social-links.js`.
+- Prefer real design keys (`border`, `color`, `spacing`, `typography`, with `var:preset|…` values).
+- For anything a design key can't express, use the variation's **`css` property** rather than SCSS, so the whole style stays in one `theme.json` fragment. `&` is the node's selector; nest with `& :pseudo` / `& .descendant`, and use real CSS (`var(--wp--preset--color--…)`, not `var:preset|…`). Cases that need it: **pseudo-states** (`:hover`/`:focus`/`:active`/`:focus-within` are valid as design keys only for the `link`/`button` elements and the `core/button` / `core/navigation-link` blocks — `VALID_BLOCK_PSEUDO_SELECTORS`); **`transition` / `transform`**; **sub-elements that are neither a block nor a theme.json element** (e.g. the social-link anchor `.wp-block-social-link-anchor` — design keys only reach the `core/social-link` block, i.e. the `<li>`); and **editor-only selector fixes** (the editor duplicates `wp-block-social-link` onto the inner anchor button, so a `.wp-block-social-link` border is drawn twice — reset the inner one). See `theme-json/styles/blocks/core-social-links.js` for all of these.
+- Specificity to know: everything here emits at `:root :where(…)` = `0-1-0` (design keys and `css` alike), and the block-style-variation stylesheet loads after `wp-block-library`, so it beats core block CSS **of equal `0-1-0` specificity** by load order (e.g. core's brand colours, the default anchor padding). Within a node the `css` rules are emitted **after** its design-key rules, so a `css` override (hover fill, border reset) wins the `0-1-0` tie by source order.
+- To beat a core rule of **higher** specificity, a `css` declaration needs `!important` (there is no way to raise specificity past `:root :where(…)`). Example: core scales social icons on hover via `.wp-block-social-link:hover` (`0-2-0`), so the variation's `css` suppresses it with `transform: none !important`. Reserve `!important` for exactly this — a single declaration overriding a core default for which **no editor control exists** (so it can't clobber a user setting); never use it where a user block setting should win. This keeps the whole variation in `theme.json`; fall to SCSS only if even `!important` can't do it.
 
 ---
 
@@ -69,7 +81,7 @@ CSS/JS is **compiled, not hand-edited** in `assets/`.
   node_modules/.bin/wp-scripts build
   ```
 - **Do NOT use `npm run build` for CSS/JS-only changes.** Its `prebuild` hook runs `npm run theme-json`, which regenerates `theme.json` and can reformat/alter it unexpectedly. Use `wp-scripts build` directly to compile only the webpack entries and leave `theme.json` untouched.
-- **Block-style CSS** (e.g. `.is-style-eyebrow`): keep it free of `!important` and low-specificity so user block settings and WP preset classes (which use `!important`) still win.
+- **Block-style CSS** (the SCSS that remains after §3 — the parts of a block style variation `theme.json` can't express): keep it free of `!important` and low-specificity so user block settings and WP preset classes (which use `!important`) still win.
 
 `node_modules` and `vendor` are already installed.
 
