@@ -21,8 +21,8 @@
 			<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|150"}},"layout":{"type":"constrained"}} -->
 			<div class="wp-block-group">
 
-				<!-- wp:paragraph {"className":"is-style-eyebrow"} -->
-				<p class="is-style-eyebrow">From the journal</p>
+				<!-- wp:paragraph {"className":"is-style-overline"} -->
+				<p class="is-style-overline">From the journal</p>
 				<!-- /wp:paragraph -->
 
 				<!-- wp:heading {"fontSize":"display-sm"} -->

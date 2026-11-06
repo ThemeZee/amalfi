@@ -7,8 +7,8 @@
 // is applied through WordPress' preset classes (which use `!important`) or an
 // inline style.
 
-// Eyebrow — small, uppercase, letter-spaced label used above headings.
-.is-style-eyebrow {
+// Overline — small, uppercase, letter-spaced label used above headings.
+.is-style-overline {
 	color: var(--wp--preset--color--primary-600);
 	font-size: var(--wp--preset--font-size--body-xs);
 	font-weight: 700;

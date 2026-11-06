@@ -12,8 +12,8 @@
 <!-- wp:group {"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|800"}}},"layout":{"type":"constrained"}} -->
 <div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--800)">
 
-	<!-- wp:paragraph {"className":"is-style-eyebrow"} -->
-	<p class="is-style-eyebrow">About the journal</p>
+	<!-- wp:paragraph {"className":"is-style-overline"} -->
+	<p class="is-style-overline">About the journal</p>
 	<!-- /wp:paragraph -->
 
 	<!-- wp:heading {"level":1,"style":{"spacing":{"margin":{"top":"var:preset|spacing|150"}}}} -->

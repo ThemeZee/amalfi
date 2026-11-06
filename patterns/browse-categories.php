@@ -18,8 +18,8 @@
 		<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|150"}},"layout":{"type":"constrained","contentSize":"640px"}} -->
 		<div class="wp-block-group">
 
-			<!-- wp:paragraph {"align":"center","className":"is-style-eyebrow"} -->
-			<p class="has-text-align-center is-style-eyebrow">Find your way around</p>
+			<!-- wp:paragraph {"align":"center","className":"is-style-overline"} -->
+			<p class="has-text-align-center is-style-overline">Find your way around</p>
 			<!-- /wp:paragraph -->
 
 			<!-- wp:heading {"textAlign":"center","fontSize":"display-sm"} -->

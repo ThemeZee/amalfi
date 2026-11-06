@@ -15,8 +15,8 @@
 	<!-- wp:group {"style":{"border":{"top":{"color":"var:preset|color|primary-200","width":"1px"}},"spacing":{"padding":{"top":"var:preset|spacing|1000","bottom":"var:preset|spacing|1000"}}},"layout":{"type":"constrained","contentSize":"800px","wideSize":"800px"}} -->
 	<div class="wp-block-group" style="border-top-color:var(--wp--preset--color--primary-200);border-top-width:1px;padding-top:var(--wp--preset--spacing--1000);padding-bottom:var(--wp--preset--spacing--1000)">
 
-		<!-- wp:paragraph {"align":"center","className":"is-style-eyebrow"} -->
-		<p class="has-text-align-center is-style-eyebrow">The Coastal Dispatch</p>
+		<!-- wp:paragraph {"align":"center","className":"is-style-overline"} -->
+		<p class="has-text-align-center is-style-overline">The Coastal Dispatch</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:heading {"textAlign":"center","style":{"spacing":{"margin":{"top":"var:preset|spacing|200"}}},"fontSize":"display-md"} -->

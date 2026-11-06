@@ -26,8 +26,8 @@ class BlockStyle {
 		register_block_style(
 			'core/paragraph',
 			array(
-				'name'  => 'eyebrow',
-				'label' => __( 'Eyebrow', 'amalfi' ),
+				'name'  => 'overline',
+				'label' => __( 'Overline', 'amalfi' ),
 			)
 		);
 	}
