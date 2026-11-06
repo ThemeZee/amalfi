@@ -34,6 +34,14 @@ class BlockStyle {
 		register_block_style(
 			'core/social-links',
 			array(
+				'name'  => 'primary',
+				'label' => __( 'Primary', 'amalfi' ),
+			)
+		);
+
+		register_block_style(
+			'core/social-links',
+			array(
 				'name'  => 'outline',
 				'label' => __( 'Outline', 'amalfi' ),
 			)
