@@ -1,0 +1,21 @@
+// Block-style CSS — the parts of a block style variation that theme.json's
+// per-block `css` hatch cannot express. Kept free of `!important` and at the
+// lowest specificity that does the job, so user block settings and WP preset
+// classes still win.
+
+// Table · Stripes — default stripe fill.
+//
+// Core sets a grey default on alternating rows
+// (`.wp-block-table.is-style-stripes tbody tr:nth-child(2n+1)`, specificity
+// 0-3-2). The theme.json `css` hatch can only emit a `:root :where(…)` rule
+// (0-1-0), which loses to that, so the stripe colour belongs here instead.
+//
+// This rule matches core's specificity (0-3-2) and, because the theme
+// stylesheet loads after `wp-block-library`, wins the default by source order.
+// It deliberately stays below the 0-4-2 of core's
+// `.has-…-background-color tbody tr:nth-child(2n+1)` rules, so a stripe
+// background a user picks in the editor still overrides this default — no
+// `!important` required.
+.wp-block-table.is-style-stripes tbody tr:nth-child(odd) {
+	background-color: var(--wp--preset--color--primary-200);
+}
