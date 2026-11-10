@@ -1,7 +1,9 @@
 // Table — themed with the primary palette: a primary-200 header fill, thin
 // primary-200 cell rules and the body font at body-sm for a denser, legible
-// grid. Cells, header and caption are sub-nodes with no theme.json keys of
-// their own, so they go through `css`.
+// grid. Cells and header are sub-nodes with no theme.json keys of their own, so
+// they go through `css`. The caption is styled globally via the shared
+// `styles.elements.caption` entry (see theme-json/styles/elements/caption.js),
+// not here.
 //
 // The base styles every table (`.wp-block-table`); the `stripes` variation
 // drops the cell rules and header fill in favour of alternating primary-200 rows
@@ -32,10 +34,7 @@ module.exports = {
 		'text-align:left}' +
 		'& thead th{background-color:var(--wp--preset--color--primary-200);' +
 		'font-weight:700;letter-spacing:0.02rem;text-align:left}' +
-		'& tfoot td{font-weight:700}' +
-		'& figcaption{margin-top:var(--wp--preset--spacing--200);' +
-		'font-size:var(--wp--preset--font-size--body-xs);' +
-		'color:var(--wp--preset--color--primary-600)}',
+		'& tfoot td{font-weight:700}',
 	variations: {
 		stripes: {
 			css:
