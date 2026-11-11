@@ -50,7 +50,7 @@
 			<!-- wp:group {"layout":{"type":"constrained"}} -->
 			<div class="wp-block-group">
 
-				<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"3/2","style":{"border":{"radius":"6px"},"spacing":{"margin":{"bottom":"var:preset|spacing|300"}}}} /-->
+				<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"3/2","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|300"}}}} /-->
 
 				<!-- wp:post-terms {"term":"category"} /-->
 

@@ -21,7 +21,7 @@
 			<!-- wp:column {"verticalAlignment":"center","width":"50%"} -->
 			<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:50%">
 
-				<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3","style":{"border":{"radius":"6px"}}} /-->
+				<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3"} /-->
 
 			</div>
 			<!-- /wp:column -->
