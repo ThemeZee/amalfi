@@ -62,5 +62,13 @@ class BlockStyle {
 				'label' => __( 'Outline', 'amalfi' ),
 			)
 		);
+
+		register_block_style(
+			'core/post-terms',
+			array(
+				'name'  => 'outline',
+				'label' => __( 'Outline', 'amalfi' ),
+			)
+		);
 	}
 }
