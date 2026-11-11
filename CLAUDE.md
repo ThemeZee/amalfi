@@ -102,12 +102,13 @@ CSS/JS is **compiled, not hand-edited** in `assets/`.
    */
   ?>
   ```
-- **Slug, filename, and title must stay consistent.** When you change a pattern's slug, **rename the file to match** (slug `amalfi/browse-categories` → `browse-categories.php`). Use `mv`, not `git mv` (see §9).
+- **Slug, filename, and title must stay consistent — the slug *is* the sanitized title, and the filename matches the slug.** A pattern titled `Highlights (Grid)` has slug `amalfi/highlights-grid` and lives in `highlights-grid.php`; `Newsletter (Card)` → `amalfi/newsletter-card` → `newsletter-card.php`. Sanitizing lowercases, drops parentheses/`&`, and turns runs of non-alphanumerics into single hyphens. When you change any one of title/slug/filename, update the other two in the same change (and any `wp:pattern`/`patternName` references in site content). Use `mv`, not `git mv` (see §9).
 - **Pattern body is block markup** composed from core blocks, formatted the same way the block editor serializes it (block comments + matching HTML, preset variables in both the attributes and the inline styles). Indentation nesting for readability is fine.
-- **Categories** are registered in `src/Setup/BlockPatternCategory.php`. Reference registered category names in the pattern header.
+- **Categories** are registered in `src/Setup/BlockPatternCategory.php`. **A category's slug must match its label** — the slug is `amalfi_` + the lowercased label after `Amalfi:` with spaces as underscores (label `Amalfi: Page Sections` → slug `amalfi_page_sections`, `Amalfi: Query Loops` → `amalfi_query_loops`). Reference the registered slug in each pattern's `Categories:` header, and when you rename a category, update every pattern header that uses it.
 - **Naming must be generic/structural**, describing the pattern's role, not any demo topic — e.g. "Testimonials", "Contributors", "Highlights", "Browse by Category", "Call to Action". No domain-specific names in the theme.
-- After renaming/re-slugging a pattern or editing categories, **flush the pattern cache** so changes show up:
+- After renaming/re-slugging a pattern or editing categories, **flush the pattern cache** so changes show up. On this **multisite** install the theme's pattern file list is a *network* (site) transient, so the `--network` flush is the one that matters; run both to be safe:
   ```bash
+  ddev exec wp transient delete --all --network --url=https://themes-website.localhost/amalfi/
   ddev exec wp transient delete --all --url=https://themes-website.localhost/amalfi/
   ```
 

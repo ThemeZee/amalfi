@@ -1,8 +1,8 @@
 <?php
 /**
  * Title: Highlights (Grid)
- * Slug: amalfi/features-grid
- * Categories: amalfi_features
+ * Slug: amalfi/highlights-grid
+ * Categories: amalfi_highlights
  *
  * @package Amalfi
  */
