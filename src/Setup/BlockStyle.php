@@ -24,6 +24,14 @@ class BlockStyle {
 	 */
 	public function __invoke(): void {
 		register_block_style(
+			'core/navigation',
+			array(
+				'name'  => 'main-navigation',
+				'label' => __( 'Main Navigation', 'amalfi' ),
+			)
+		);
+
+		register_block_style(
 			'core/paragraph',
 			array(
 				'name'  => 'overline',
