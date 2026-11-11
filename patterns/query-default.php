@@ -3,15 +3,15 @@
  * Title: Query (Default)
  * Slug: amalfi/query-default
  * Block Types: core/query
- * Categories: amalfi_query
+ * Categories: amalfi_query_loops
  *
  * @package Amalfi
  */
 
 ?>
 
-<!-- wp:query {"queryId":1,"query":{"perPage":6,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true}} -->
-<div class="wp-block-query">
+<!-- wp:query {"queryId":1,"query":{"perPage":6,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true},"align":"wide"} -->
+<div class="wp-block-query alignwide">
 
 	<!-- wp:post-template -->
 
