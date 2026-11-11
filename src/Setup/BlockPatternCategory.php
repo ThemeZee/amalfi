@@ -23,13 +23,12 @@ class BlockPatternCategory {
 		$categories = array(
 			'amalfi_hero'         => array( 'label' => __( 'Amalfi: Hero', 'amalfi' ) ),
 			'amalfi_categories'   => array( 'label' => __( 'Amalfi: Categories', 'amalfi' ) ),
-			'amalfi_cta'          => array( 'label' => __( 'Amalfi: Newsletter', 'amalfi' ) ),
-			'amalfi_features'     => array( 'label' => __( 'Amalfi: Highlights', 'amalfi' ) ),
+			'amalfi_newsletter'   => array( 'label' => __( 'Amalfi: Newsletter', 'amalfi' ) ),
+			'amalfi_highlights'   => array( 'label' => __( 'Amalfi: Highlights', 'amalfi' ) ),
 			'amalfi_testimonials' => array( 'label' => __( 'Amalfi: Testimonials', 'amalfi' ) ),
-			'amalfi_team'         => array( 'label' => __( 'Amalfi: Contributors', 'amalfi' ) ),
-			'amalfi_blog'         => array( 'label' => __( 'Amalfi: Posts', 'amalfi' ) ),
-			'amalfi_query'        => array( 'label' => __( 'Amalfi: Query Loops', 'amalfi' ) ),
-			'amalfi_page'         => array( 'label' => __( 'Amalfi: Page Sections', 'amalfi' ) ),
+			'amalfi_contributors' => array( 'label' => __( 'Amalfi: Contributors', 'amalfi' ) ),
+			'amalfi_posts'        => array( 'label' => __( 'Amalfi: Posts', 'amalfi' ) ),
+			'amalfi_query_loops'  => array( 'label' => __( 'Amalfi: Query Loops', 'amalfi' ) ),
 		);
 
 		foreach ( $categories as $name => $properties ) {
