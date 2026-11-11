@@ -22,18 +22,22 @@ const MAIN_NAVIGATION_CSS =
 	'text-transform:uppercase;font-weight:600;letter-spacing:0.12rem;' +
 	'font-size:var(--wp--preset--font-size--body-xs)' +
 	'}' +
-	// Hover / keyboard-focus colour for top-level items. Core pins the link
-	// itself to `color:inherit` at 0-3-0 (`.…-item__content.…-item__content`),
-	// which the variation's `:root :where(…)` link rules (0-1-0) can't beat — so
-	// set the colour on the `<li>` and let the link inherit it. No `!important`
-	// needed: the `<li>` carries no competing colour rule. Each state is its own
-	// rule block: WordPress's `&`-scoping drops all but the last of a single
-	// comma-separated selector, so the two states must not share one.
-	'& .wp-block-navigation__container > li:hover{' +
-	'color:var(--wp--preset--color--primary-700)' +
+	// Hover / keyboard-focus colour for every nav link — top-level and dropdown,
+	// desktop and the mobile overlay. The colour is set on the link itself (not
+	// the `<li>`), which needs `!important`: core pins links to `color:inherit` —
+	// `.…-item__content.…-item__content` (0-3-0) on desktop, and in the overlay it
+	// also pins the `<li>` with `.is-menu-open … .wp-block-navigation-item`
+	// `color:inherit !important` (0-3-0). The variation `css` can't out-specify a
+	// 0-3-0 `!important` (WordPress caps it at `:root :where(…)` = 0-1-0), so the
+	// `<li>` can't be coloured in the overlay — but the links' own inherit rules
+	// are not `!important`, so an `!important` on the link beats them everywhere.
+	// No editor control for nav-link colour. Each state is its own rule block:
+	// WordPress's `&`-scoping drops all but the last of a comma-separated selector.
+	'& .wp-block-navigation-item__content:hover{' +
+	'color:var(--wp--preset--color--primary-700) !important' +
 	'}' +
-	'& .wp-block-navigation__container > li:focus-within{' +
-	'color:var(--wp--preset--color--primary-700)' +
+	'& .wp-block-navigation-item__content:focus{' +
+	'color:var(--wp--preset--color--primary-700) !important' +
 	'}' +
 	// Slightly larger dropdown chevron on top-level toggles (the `<button>` is a
 	// direct child of the top-level `<li>`, so this leaves any nested icon alone),
@@ -87,14 +91,15 @@ const MAIN_NAVIGATION_CSS =
 	'padding-left:var(--wp--preset--spacing--300) !important;' +
 	'padding-right:var(--wp--preset--spacing--300) !important' +
 	'}' +
-	// Hover / keyboard-focus colour for dropdown items — set on the `<li>` (the
-	// link stays core's `color:inherit`), one rule block per state. No competing
-	// colour rule on these items, so no !important.
-	'& .wp-block-navigation__submenu-container > li:hover{' +
-	'color:var(--wp--preset--color--primary-700)' +
-	'}' +
-	'& .wp-block-navigation__submenu-container > li:focus-within{' +
-	'color:var(--wp--preset--color--primary-700)' +
+	// Mobile overlay: green fill instead of core's white. The block's own overlay
+	// colour control (`overlayBackgroundColor`) can't do it — it tints the desktop
+	// dropdowns and the mobile overlay as one, and those differ here (primary-200
+	// vs primary-100) — so it's set here. Core pins the white at
+	// `.wp-block-navigation:not(.has-background) .…responsive-container.is-menu-open
+	// :not(.disable-default-overlay)` (0-5-0), past this `:root :where(…)` rule, so
+	// it needs `!important`.
+	'& .wp-block-navigation__responsive-container.is-menu-open{' +
+	'background-color:var(--wp--preset--color--primary-100) !important' +
 	'}';
 
 module.exports = {
