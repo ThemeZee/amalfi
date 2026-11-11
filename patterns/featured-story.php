@@ -1,8 +1,8 @@
 <?php
 /**
  * Title: Featured Story
- * Slug: amalfi/featured-post
- * Categories: amalfi_blog
+ * Slug: amalfi/featured-story
+ * Categories: amalfi_posts
  *
  * @package Amalfi
  */

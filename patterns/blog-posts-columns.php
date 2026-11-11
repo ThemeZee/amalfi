@@ -2,7 +2,7 @@
 /**
  * Title: Blog Posts (Columns)
  * Slug: amalfi/blog-posts-columns
- * Categories: amalfi_blog
+ * Categories: amalfi_posts
  *
  * @package Amalfi
  */
