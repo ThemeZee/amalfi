@@ -26,7 +26,7 @@ module.exports = {
 	variations: {
 		// Outline — gives each term link the look of the Button block's Outline
 		// style: a transparent, 1px-bordered box in the dark primary colour that
-		// fills on hover, using the same box (border + padding) as the button.
+		// fills on hover, with a slightly more compact box than a button.
 		// Styling only `elements.link` leaves the prefix and suffix with the
 		// block's default styling; the comma separator is hidden instead (a plain
 		// gap between the bordered boxes reads better than a comma), so the pills
@@ -53,10 +53,10 @@ module.exports = {
 							bottom: 'var:preset|spacing|100',
 						},
 						padding: {
-							top: 'calc(var(--wp--preset--spacing--200) - 1px)',
-							bottom: 'calc(var(--wp--preset--spacing--200) - 1px)',
-							left: 'calc(var(--wp--preset--spacing--300) - 1px)',
-							right: 'calc(var(--wp--preset--spacing--300) - 1px)',
+							top: 'calc(var(--wp--preset--spacing--150) - 1px)',
+							bottom: 'calc(var(--wp--preset--spacing--150) - 1px)',
+							left: 'calc(var(--wp--preset--spacing--200) - 1px)',
+							right: 'calc(var(--wp--preset--spacing--200) - 1px)',
 						},
 					},
 					typography: {

@@ -82,10 +82,10 @@ module.exports = {
 					},
 					spacing: {
 						padding: {
-							top: 'calc(var(--wp--preset--spacing--200) - 1px)',
-							bottom: 'calc(var(--wp--preset--spacing--200) - 1px)',
-							left: 'calc(var(--wp--preset--spacing--300) - 1px)',
-							right: 'calc(var(--wp--preset--spacing--300) - 1px)',
+							top: 'calc(var(--wp--preset--spacing--150) - 1px)',
+							bottom: 'calc(var(--wp--preset--spacing--150) - 1px)',
+							left: 'calc(var(--wp--preset--spacing--200) - 1px)',
+							right: 'calc(var(--wp--preset--spacing--200) - 1px)',
 						},
 					},
 					':hover': {
