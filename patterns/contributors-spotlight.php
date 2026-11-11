@@ -2,7 +2,7 @@
 /**
  * Title: Contributors (Spotlight)
  * Slug: amalfi/contributors-spotlight
- * Categories: amalfi_team
+ * Categories: amalfi_contributors
  *
  * @package Amalfi
  */

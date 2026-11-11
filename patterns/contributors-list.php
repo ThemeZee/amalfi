@@ -2,7 +2,7 @@
 /**
  * Title: Contributors (List)
  * Slug: amalfi/contributors-list
- * Categories: amalfi_team
+ * Categories: amalfi_contributors
  *
  * @package Amalfi
  */

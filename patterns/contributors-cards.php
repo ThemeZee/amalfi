@@ -2,7 +2,7 @@
 /**
  * Title: Contributors (Cards)
  * Slug: amalfi/contributors-cards
- * Categories: amalfi_team
+ * Categories: amalfi_contributors
  *
  * @package Amalfi
  */
