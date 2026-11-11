@@ -1,6 +1,6 @@
 // Default styling for the Post Navigation Link block (Previous / Next links on
 // single posts). Styled to read the same as the Tags links in the post footer
-// (core/post-terms, rendered at body-sm there) — plain uppercase links, not a
+// (core/post-terms, body-xs / 12px) — plain uppercase links, not a
 // button. Kept in lock-step with core-post-terms.js: primary-700 links that go
 // primary-950 on hover, no underline, 700 weight, 0.12rem letter-spacing,
 // uppercase. Pure structured keys — no border/background/box, so no css escape
@@ -28,7 +28,7 @@ module.exports = {
 		},
 	},
 	typography: {
-		fontSize: 'var:preset|font-size|body-sm',
+		fontSize: 'var:preset|font-size|body-xs',
 		fontWeight: '700',
 		letterSpacing: '0.12rem',
 		textTransform: 'uppercase',
