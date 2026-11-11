@@ -25,23 +25,11 @@
 			<!-- wp:column -->
 			<div class="wp-block-column">
 
-				<!-- wp:group {"style":{"border":{"radius":"8px","color":"var:preset|color|primary-200","width":"1px"},"spacing":{"padding":{"top":"var:preset|spacing|500","right":"var:preset|spacing|500","bottom":"var:preset|spacing|500","left":"var:preset|spacing|500"}}},"layout":{"type":"constrained"}} -->
-				<div class="wp-block-group has-border-color" style="border-color:var(--wp--preset--color--primary-200);border-width:1px;border-radius:8px;padding-top:var(--wp--preset--spacing--500);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--500);padding-left:var(--wp--preset--spacing--500)">
-
-					<!-- wp:paragraph {"style":{"typography":{"fontStyle":"italic","fontWeight":"400"}},"fontSize":"body-lg"} -->
-					<p class="has-body-lg-font-size" style="font-style:italic;font-weight:400">&ldquo;We planned our whole week around these guides. The Path of the Gods at sunrise was the highlight of our year.&rdquo;</p>
-					<!-- /wp:paragraph -->
-
-					<!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"var:preset|spacing|300"}},"typography":{"fontWeight":"700"}},"fontSize":"body-sm"} -->
-					<p class="has-body-sm-font-size" style="margin-top:var(--wp--preset--spacing--300);font-weight:700">Hannah &amp; Tom</p>
-					<!-- /wp:paragraph -->
-
-					<!-- wp:paragraph {"textColor":"primary-600","fontSize":"body-xs"} -->
-					<p class="has-primary-600-color has-text-color has-body-xs-font-size">First trip to Positano</p>
-					<!-- /wp:paragraph -->
-
-				</div>
-				<!-- /wp:group -->
+				<!-- wp:quote -->
+				<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+				<p>&ldquo;We planned our whole week around these guides. The Path of the Gods at sunrise was the highlight of our year.&rdquo;</p>
+				<!-- /wp:paragraph --><cite>Hannah &amp; Tom</cite></blockquote>
+				<!-- /wp:quote -->
 
 			</div>
 			<!-- /wp:column -->
@@ -49,23 +37,11 @@
 			<!-- wp:column -->
 			<div class="wp-block-column">
 
-				<!-- wp:group {"style":{"border":{"radius":"8px","color":"var:preset|color|primary-200","width":"1px"},"spacing":{"padding":{"top":"var:preset|spacing|500","right":"var:preset|spacing|500","bottom":"var:preset|spacing|500","left":"var:preset|spacing|500"}}},"layout":{"type":"constrained"}} -->
-				<div class="wp-block-group has-border-color" style="border-color:var(--wp--preset--color--primary-200);border-width:1px;border-radius:8px;padding-top:var(--wp--preset--spacing--500);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--500);padding-left:var(--wp--preset--spacing--500)">
-
-					<!-- wp:paragraph {"style":{"typography":{"fontStyle":"italic","fontWeight":"400"}},"fontSize":"body-lg"} -->
-					<p class="has-body-lg-font-size" style="font-style:italic;font-weight:400">&ldquo;Honest, beautifully written, and genuinely useful. The seafood recommendations alone were worth the trip.&rdquo;</p>
-					<!-- /wp:paragraph -->
-
-					<!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"var:preset|spacing|300"}},"typography":{"fontWeight":"700"}},"fontSize":"body-sm"} -->
-					<p class="has-body-sm-font-size" style="margin-top:var(--wp--preset--spacing--300);font-weight:700">Marco Ferretti</p>
-					<!-- /wp:paragraph -->
-
-					<!-- wp:paragraph {"textColor":"primary-600","fontSize":"body-xs"} -->
-					<p class="has-primary-600-color has-text-color has-body-xs-font-size">Returning every summer</p>
-					<!-- /wp:paragraph -->
-
-				</div>
-				<!-- /wp:group -->
+				<!-- wp:quote -->
+				<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+				<p>&ldquo;Honest, beautifully written, and genuinely useful. The seafood recommendations alone were worth the trip.&rdquo;</p>
+				<!-- /wp:paragraph --><cite>Marco Ferretti</cite></blockquote>
+				<!-- /wp:quote -->
 
 			</div>
 			<!-- /wp:column -->
@@ -73,23 +49,11 @@
 			<!-- wp:column -->
 			<div class="wp-block-column">
 
-				<!-- wp:group {"style":{"border":{"radius":"8px","color":"var:preset|color|primary-200","width":"1px"},"spacing":{"padding":{"top":"var:preset|spacing|500","right":"var:preset|spacing|500","bottom":"var:preset|spacing|500","left":"var:preset|spacing|500"}}},"layout":{"type":"constrained"}} -->
-				<div class="wp-block-group has-border-color" style="border-color:var(--wp--preset--color--primary-200);border-width:1px;border-radius:8px;padding-top:var(--wp--preset--spacing--500);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--500);padding-left:var(--wp--preset--spacing--500)">
-
-					<!-- wp:paragraph {"style":{"typography":{"fontStyle":"italic","fontWeight":"400"}},"fontSize":"body-lg"} -->
-					<p class="has-body-lg-font-size" style="font-style:italic;font-weight:400">&ldquo;I came for the photos and stayed for the stories. We booked a tiny B&amp;B in Atrani and never looked back.&rdquo;</p>
-					<!-- /wp:paragraph -->
-
-					<!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"var:preset|spacing|300"}},"typography":{"fontWeight":"700"}},"fontSize":"body-sm"} -->
-					<p class="has-body-sm-font-size" style="margin-top:var(--wp--preset--spacing--300);font-weight:700">Sophie Laurent</p>
-					<!-- /wp:paragraph -->
-
-					<!-- wp:paragraph {"textColor":"primary-600","fontSize":"body-xs"} -->
-					<p class="has-primary-600-color has-text-color has-body-xs-font-size">Slow traveller</p>
-					<!-- /wp:paragraph -->
-
-				</div>
-				<!-- /wp:group -->
+				<!-- wp:quote -->
+				<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+				<p>&ldquo;I came for the photos and stayed for the stories. We booked a tiny B&amp;B in Atrani and never looked back.&rdquo;</p>
+				<!-- /wp:paragraph --><cite>Sophie Laurent</cite></blockquote>
+				<!-- /wp:quote -->
 
 			</div>
 			<!-- /wp:column -->
