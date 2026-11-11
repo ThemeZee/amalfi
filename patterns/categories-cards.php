@@ -1,8 +1,8 @@
 <?php
 /**
- * Title: Browse by Category
- * Slug: amalfi/browse-categories
- * Categories: amalfi_services
+ * Title: Categories (Cards)
+ * Slug: amalfi/categories-cards
+ * Categories: amalfi_categories
  *
  * @package Amalfi
  */

@@ -1,8 +1,8 @@
 <?php
 /**
- * Title: Categories (Inline)
- * Slug: amalfi/categories-inline
- * Categories: amalfi_services
+ * Title: Categories (Buttons)
+ * Slug: amalfi/categories-buttons
+ * Categories: amalfi_categories
  *
  * @package Amalfi
  */

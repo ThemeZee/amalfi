@@ -2,7 +2,7 @@
 /**
  * Title: Categories (List)
  * Slug: amalfi/categories-list
- * Categories: amalfi_services
+ * Categories: amalfi_categories
  *
  * @package Amalfi
  */

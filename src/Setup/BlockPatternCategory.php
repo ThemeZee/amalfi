@@ -22,9 +22,9 @@ class BlockPatternCategory {
 	public function __invoke(): void {
 		$categories = array(
 			'amalfi_hero'         => array( 'label' => __( 'Amalfi: Hero', 'amalfi' ) ),
+			'amalfi_categories'   => array( 'label' => __( 'Amalfi: Categories', 'amalfi' ) ),
 			'amalfi_cta'          => array( 'label' => __( 'Amalfi: Newsletter', 'amalfi' ) ),
 			'amalfi_features'     => array( 'label' => __( 'Amalfi: Highlights', 'amalfi' ) ),
-			'amalfi_services'     => array( 'label' => __( 'Amalfi: Categories', 'amalfi' ) ),
 			'amalfi_testimonials' => array( 'label' => __( 'Amalfi: Testimonials', 'amalfi' ) ),
 			'amalfi_team'         => array( 'label' => __( 'Amalfi: Contributors', 'amalfi' ) ),
 			'amalfi_blog'         => array( 'label' => __( 'Amalfi: Posts', 'amalfi' ) ),
