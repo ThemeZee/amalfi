@@ -1,7 +1,7 @@
 <?php
 /**
- * Title: Hero
- * Slug: amalfi/hero
+ * Title: Hero (Image)
+ * Slug: amalfi/hero-image
  * Categories: amalfi_hero
  *
  * @package Amalfi
