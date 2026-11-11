@@ -50,8 +50,8 @@
 		<!-- wp:column {"verticalAlignment":"center","width":"50%"} -->
 		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:50%">
 
-			<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"8px"}}} -->
-			<figure class="wp-block-image size-full has-custom-border"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/positano-coast.jpg' ) ); ?>" alt="<?php esc_attr_e( 'Positano on the Amalfi Coast', 'amalfi' ); ?>" style="border-radius:8px"/></figure>
+			<!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
+			<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/positano-coast.jpg' ) ); ?>" alt="<?php esc_attr_e( 'Positano on the Amalfi Coast', 'amalfi' ); ?>"/></figure>
 			<!-- /wp:image -->
 
 		</div>
