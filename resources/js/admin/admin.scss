@@ -1,0 +1,58 @@
+/**
+ * Theme Setup admin page styling.
+ *
+ * Minimal layout tweaks only; the controls use the @wordpress/components
+ * (wp-components) stylesheet, enqueued as a dependency.
+ */
+#amalfi-theme-setup {
+	max-width: 880px;
+
+	.amalfi-theme-setup__title {
+		margin-bottom: 4px;
+	}
+
+	.amalfi-theme-setup__intro {
+		margin-top: 0;
+		color: #50575e;
+		font-size: 14px;
+	}
+
+	.amalfi-theme-setup__panel {
+		margin-top: 16px;
+	}
+
+	.amalfi-theme-setup__section > p:first-child {
+		margin-top: 0;
+	}
+
+	.amalfi-theme-setup__hint {
+		margin-top: 0;
+		color: #50575e;
+	}
+
+	.amalfi-theme-setup__actions {
+		margin-top: 16px;
+	}
+
+	.amalfi-theme-setup__notice {
+		margin: 12px 0 0;
+	}
+
+	.amalfi-license-badge {
+		display: inline-block;
+		padding: 2px 10px;
+		border-radius: 2px;
+		font-size: 12px;
+		font-weight: 600;
+		line-height: 1.8;
+		color: #fff;
+
+		&--active {
+			background: #008a20;
+		}
+
+		&--inactive {
+			background: #757575;
+		}
+	}
+}

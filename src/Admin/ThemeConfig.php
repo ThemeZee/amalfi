@@ -122,13 +122,6 @@ final class ThemeConfig {
 	}
 
 	/**
-	 * The settings group / settings page identifier.
-	 */
-	public function settingsGroup(): string {
-		return 'amalfi_theme_settings';
-	}
-
-	/**
 	 * The slug of the admin page under Appearance.
 	 */
 	public function pageSlug(): string {
@@ -140,13 +133,6 @@ final class ThemeConfig {
 	 */
 	public function capability(): string {
 		return 'manage_options';
-	}
-
-	/**
-	 * The identifier used for grouping settings notices.
-	 */
-	public function noticeSlug(): string {
-		return 'amalfi_theme_settings_notices';
 	}
 
 	/**

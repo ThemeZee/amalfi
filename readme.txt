@@ -3,8 +3,8 @@ Author URI: https://themezee.com/
 Theme URI: https://themezee.com/themes/amalfi/
 Contributors: themezee
 Tags: full-site-editing, template-editing, one-column, blog, portfolio, custom-background, custom-logo, custom-header, custom-menu, grid-layout, education, editor-style, wide-blocks, block-styles, block-patterns, rtl-language-support, right-sidebar, news, featured-images, flexible-header, custom-colors, full-width-template, sticky-post, threaded-comments, footer-widgets, translation-ready, theme-options, two-columns, three-columns
-Requires at least: 6.8
-Tested up to: 7.0
+Requires at least: 7.1
+Tested up to: 7.1
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

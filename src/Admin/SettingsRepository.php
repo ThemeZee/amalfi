@@ -69,15 +69,6 @@ class SettingsRepository {
 	}
 
 	/**
-	 * Ensure the option row exists so the Settings API can save to it.
-	 */
-	public function ensureExists(): void {
-		if ( false === get_option( $this->config->optionName() ) ) {
-			add_option( $this->config->optionName() );
-		}
-	}
-
-	/**
 	 * Return the stored license key, or an empty string.
 	 */
 	public function licenseKey(): string {

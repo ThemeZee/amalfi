@@ -10,25 +10,14 @@ declare(strict_types=1);
 namespace ThemeZee\Amalfi\Admin;
 
 /**
- * Renders the license fields and handles activation / deactivation against the
- * ThemeZee store (Easy Digital Downloads Software Licensing).
+ * Activates and deactivates the theme license against the ThemeZee store
+ * (Easy Digital Downloads Software Licensing).
+ *
+ * The activate/deactivate operations return a structured result so they can be
+ * driven from a REST endpoint; {@see self::state()} provides the current
+ * license state for bootstrapping the admin UI.
  */
 class LicenseManager {
-
-	/**
-	 * Nonce action / field name for the license form.
-	 */
-	private const NONCE = 'amalfi_license_nonce';
-
-	/**
-	 * Submit button name that activates the license.
-	 */
-	private const ACTIVATE = 'amalfi_activate_license';
-
-	/**
-	 * Submit button name that deactivates the license.
-	 */
-	private const DEACTIVATE = 'amalfi_deactivate_license';
 
 	/**
 	 * Constructor.
@@ -43,124 +32,54 @@ class LicenseManager {
 	}
 
 	/**
-	 * Register the license settings fields.
+	 * The current license state.
+	 *
+	 * @return array{active: bool, status: string, keyMasked: string}
 	 */
-	public function registerFields(): void {
-		add_settings_field(
-			$this->config->optionName() . '[amalfi_license_status]',
-			esc_html__( 'License Status', 'amalfi' ),
-			array( $this, 'renderStatusField' ),
-			$this->config->settingsGroup(),
-			AdminPage::SECTION_LICENSE
-		);
-
-		add_settings_field(
-			$this->config->optionName() . '[amalfi_license_key]',
-			esc_html__( 'License Key', 'amalfi' ),
-			array( $this, 'renderKeyField' ),
-			$this->config->settingsGroup(),
-			AdminPage::SECTION_LICENSE
-		);
-	}
-
-	/**
-	 * Render the license status indicator.
-	 */
-	public function renderStatusField(): void {
-		if ( $this->settings->hasValidLicense() ) {
-			printf(
-				'<span style="display:inline-block;margin-bottom:12px;padding:4px 8px;background:#008a20;color:#fff;">%s</span><br/>' .
-				'<span class="description">%s</span>',
-				esc_html__( 'Active', 'amalfi' ),
-				esc_html__( 'You are receiving updates.', 'amalfi' )
-			);
-
-			return;
-		}
-
-		printf(
-			'<span style="display:inline-block;margin-bottom:12px;padding:4px 8px;background:#444;color:#fff;">%s</span><br/>' .
-			'<span class="description">%s</span>',
-			esc_html__( 'Inactive', 'amalfi' ),
-			esc_html__( 'Please activate your license.', 'amalfi' )
-		);
-	}
-
-	/**
-	 * Render the license key field and its activate / deactivate button.
-	 */
-	public function renderKeyField(): void {
+	public function state(): array {
 		$key = $this->settings->licenseKey();
 
-		if ( $this->settings->hasValidLicense() ) {
-			printf(
-				'<input type="text" class="regular-text" value="%1$s" readonly="readonly" /> ' .
-				'<input type="submit" class="button" name="%2$s" value="%3$s" />',
-				esc_attr( $this->maskKey( $key ) ),
-				esc_attr( self::DEACTIVATE ),
-				esc_attr__( 'Deactivate License', 'amalfi' )
-			);
-		} else {
-			printf(
-				'<input type="text" class="regular-text" id="%1$s" name="%1$s" value="%2$s" /> ' .
-				'<input type="submit" class="button" name="%3$s" value="%4$s" />',
-				esc_attr( $this->config->optionName() . '[amalfi_license_key]' ),
-				esc_attr( $key ),
-				esc_attr( self::ACTIVATE ),
-				esc_attr__( 'Activate License', 'amalfi' )
-			);
-		}
-
-		wp_nonce_field( self::NONCE, self::NONCE );
+		return array(
+			'active'    => $this->settings->hasValidLicense(),
+			'status'    => $this->settings->licenseStatus(),
+			'keyMasked' => '' !== $key ? $this->maskKey( $key ) : '',
+		);
 	}
 
 	/**
-	 * Handle a license activation request.
+	 * Activate a license key against the store.
+	 *
+	 * @param string $key The license key.
+	 * @return array{active: bool, status: string, keyMasked: string, message: string, type: string}
 	 */
-	public function maybeActivate(): void {
-		if ( ! $this->isRequest( self::ACTIVATE ) ) {
-			return;
-		}
-
-		// Nonce verified in isRequest() above via check_admin_referer().
-		$key = isset( $_POST[ $this->config->optionName() ]['amalfi_license_key'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			? sanitize_text_field( wp_unslash( $_POST[ $this->config->optionName() ]['amalfi_license_key'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			: '';
+	public function activate( string $key ): array {
+		$key = trim( $key );
 
 		if ( '' === $key ) {
-			$this->addError( 'license_empty', esc_html__( 'Please enter a license key.', 'amalfi' ) );
-			$this->redirectBack();
+			return $this->result( __( 'Please enter a license key.', 'amalfi' ), 'error' );
 		}
 
 		$data = $this->request( 'activate_license', $key );
 
 		if ( null === $data ) {
-			$this->redirectBack();
+			return $this->result( __( 'An error occurred, please try again.', 'amalfi' ), 'error' );
 		}
 
 		if ( empty( $data->success ) ) {
-			$this->addError( 'license_error', $this->errorMessage( $data ) );
-			$this->redirectBack();
+			return $this->result( $this->errorMessage( $data ), 'error' );
 		}
 
-		if ( SettingsRepository::STATUS_VALID === ( $data->license ?? '' ) ) {
-			$this->settings->storeLicense( $key, SettingsRepository::STATUS_VALID );
-			$this->addError( 'license_activated', esc_html__( 'License was successfully activated.', 'amalfi' ), 'success' );
-		} else {
-			$this->settings->storeLicense( $key, (string) ( $data->license ?? SettingsRepository::STATUS_INACTIVE ) );
-		}
+		$this->settings->storeLicense( $key, SettingsRepository::STATUS_VALID );
 
-		$this->redirectBack();
+		return $this->result( __( 'License was successfully activated.', 'amalfi' ), 'success' );
 	}
 
 	/**
-	 * Handle a license deactivation request.
+	 * Deactivate the stored license.
+	 *
+	 * @return array{active: bool, status: string, keyMasked: string, message: string, type: string}
 	 */
-	public function maybeDeactivate(): void {
-		if ( ! $this->isRequest( self::DEACTIVATE ) ) {
-			return;
-		}
-
+	public function deactivate(): array {
 		$key = $this->settings->licenseKey();
 
 		if ( '' !== $key ) {
@@ -168,9 +87,8 @@ class LicenseManager {
 		}
 
 		$this->settings->clearLicense();
-		$this->addError( 'license_deactivated', esc_html__( 'License was deactivated.', 'amalfi' ), 'success' );
 
-		$this->redirectBack();
+		return $this->result( __( 'License was deactivated.', 'amalfi' ), 'success' );
 	}
 
 	/**
@@ -237,20 +155,20 @@ class LicenseManager {
 	}
 
 	/**
-	 * Whether the current request is the given license submit, with a valid nonce.
+	 * Build a result array from the current state plus a message.
 	 *
-	 * @param string $submit The submit button name to check.
+	 * @param string $message The result message.
+	 * @param string $type    The result type (success / error).
+	 * @return array{active: bool, status: string, keyMasked: string, message: string, type: string}
 	 */
-	private function isRequest( string $submit ): bool {
-		if ( ! isset( $_POST[ $submit ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			return false;
-		}
-
-		if ( ! current_user_can( $this->config->capability() ) ) {
-			return false;
-		}
-
-		return (bool) check_admin_referer( self::NONCE, self::NONCE );
+	private function result( string $message, string $type ): array {
+		return array_merge(
+			$this->state(),
+			array(
+				'message' => $message,
+				'type'    => $type,
+			)
+		);
 	}
 
 	/**
@@ -277,15 +195,7 @@ class LicenseManager {
 			)
 		);
 
-		if ( is_wp_error( $response ) ) {
-			$this->addError( 'license_api_error', $response->get_error_message() );
-
-			return null;
-		}
-
-		if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
-			$this->addError( 'license_api_error', esc_html__( 'An error occurred, please try again.', 'amalfi' ) );
-
+		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
 			return null;
 		}
 
@@ -347,25 +257,5 @@ class LicenseManager {
 		$visible = substr( $key, -5 );
 
 		return str_repeat( '*', max( 0, strlen( $key ) - 5 ) ) . $visible;
-	}
-
-	/**
-	 * Record a settings notice.
-	 *
-	 * @param string $code    The notice code.
-	 * @param string $message The notice message.
-	 * @param string $type    The notice type (error / success).
-	 */
-	private function addError( string $code, string $message, string $type = 'error' ): void {
-		add_settings_error( $this->config->noticeSlug(), $code, $message, $type );
-	}
-
-	/**
-	 * Redirect back to the settings page, preserving notices.
-	 */
-	private function redirectBack(): void {
-		set_transient( 'settings_errors', get_settings_errors(), 30 );
-		wp_safe_redirect( $this->config->pageUrl() );
-		exit;
 	}
 }

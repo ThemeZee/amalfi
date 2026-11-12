@@ -25,6 +25,7 @@ const config = {
 module.exports = {
 	...config,
 	entry: {
+		admin: './resources/js/admin/index.js',
 		editor: './resources/scss/editor/index.scss',
 		frontend: './resources/scss/frontend/index.scss',
 	},

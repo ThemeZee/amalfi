@@ -12,19 +12,13 @@ namespace ThemeZee\Amalfi\Admin;
 use Throwable;
 
 /**
- * Renders the demo content setting and imports the selected content.
+ * Imports the demo content (categories, tags, featured images, posts and pages).
+ *
+ * The importer exposes a single {@see self::run()} operation that performs the
+ * selected parts and returns a structured result, so it can be driven from a
+ * REST endpoint (or anywhere else) rather than a form submission.
  */
 class DemoImporter {
-
-	/**
-	 * Nonce action / field name for the import form.
-	 */
-	private const NONCE = 'amalfi_demo_content_nonce';
-
-	/**
-	 * Submit button name that triggers the import.
-	 */
-	private const SUBMIT = 'amalfi_import_demo_content';
 
 	/**
 	 * Constructor.
@@ -41,190 +35,128 @@ class DemoImporter {
 	}
 
 	/**
-	 * Register the demo content settings field.
+	 * The content parts that can be imported, with a label and item count.
+	 *
+	 * @return array<int, array{key: string, label: string, count: int}>
 	 */
-	public function registerFields(): void {
-		add_settings_field(
-			$this->config->optionName() . '[amalfi_demo_content]',
-			esc_html__( 'Import Content', 'amalfi' ),
-			array( $this, 'renderField' ),
-			$this->config->settingsGroup(),
-			AdminPage::SECTION_DEMO
+	public function parts(): array {
+		return array(
+			array(
+				'key'   => 'categories',
+				'label' => __( 'Categories', 'amalfi' ),
+				'count' => count( $this->content->categoryNames() ),
+			),
+			array(
+				'key'   => 'tags',
+				'label' => __( 'Tags', 'amalfi' ),
+				'count' => count( $this->content->tagNames() ),
+			),
+			array(
+				'key'   => 'image',
+				'label' => __( 'Featured Images', 'amalfi' ),
+				'count' => count( $this->content->imageFiles() ),
+			),
+			array(
+				'key'   => 'posts',
+				'label' => __( 'Blog Posts', 'amalfi' ),
+				'count' => count( $this->content->postDefinitions() ),
+			),
+			array(
+				'key'   => 'pages',
+				'label' => __( 'Static Pages', 'amalfi' ),
+				'count' => 3,
+			),
 		);
 	}
 
 	/**
-	 * Render the demo content checkboxes and import button.
+	 * Import the selected demo content parts.
+	 *
+	 * Categories, tags and images are imported first so posts can be linked to
+	 * them. Each part is independent: a failure in one is recorded and the rest
+	 * still run. Posts are always created with their title, content and excerpt;
+	 * categories, tags and featured images are only attached when available.
+	 *
+	 * @param array<string, bool> $parts Which parts to import, keyed as in {@see self::parts()}.
+	 * @return array<int, array{task: string, label: string, status: string, message: string}> The per-part results.
 	 */
-	public function renderField(): void {
-		$settings = $this->settings->all();
-		$selected = isset( $settings['amalfi_demo_content'] ) && is_array( $settings['amalfi_demo_content'] )
-			? $settings['amalfi_demo_content']
-			: array();
-
-		foreach ( $this->options() as $key => $label ) {
-			$name    = $this->config->optionName() . '[amalfi_demo_content][' . $key . ']';
-			$checked = ! empty( $selected[ $key ] );
-
-			printf(
-				'<input type="hidden" name="%1$s" value="0" />' .
-				'<input type="checkbox" id="%1$s" name="%1$s" value="1" %2$s /> ' .
-				'<label for="%1$s">%3$s</label><br/>',
-				esc_attr( $name ),
-				checked( true, $checked, false ),
-				esc_html( $label )
-			);
-		}
-
-		printf(
-			'<br/><input type="submit" class="button" name="%1$s" value="%2$s" />',
-			esc_attr( self::SUBMIT ),
-			esc_attr__( 'Import Content', 'amalfi' )
-		);
-
-		wp_nonce_field( self::NONCE, self::NONCE );
-	}
-
-	/**
-	 * Handle the import request.
-	 */
-	public function maybeImport(): void {
-		if ( ! isset( $_POST[ self::SUBMIT ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			return;
-		}
-
-		if ( ! current_user_can( $this->config->capability() ) ) {
-			return;
-		}
-
-		if ( ! check_admin_referer( self::NONCE, self::NONCE ) ) {
-			return;
-		}
-
-		$selected = $this->selectedParts();
-
+	public function run( array $parts ): array {
 		$this->ensureMediaFunctions();
 
-		$categoryMap = array();
-		if ( ! empty( $selected['categories'] ) ) {
-			$categoryMap = $this->runStep(
-				fn () => $this->importCategories(),
-				'demo_import_categories',
-				esc_html__( 'Categories were successfully imported.', 'amalfi' ),
-				esc_html__( 'Categories could not be imported.', 'amalfi' ),
-				array()
-			);
-		}
+		$labels  = wp_list_pluck( $this->parts(), 'label', 'key' );
+		$results = array();
 
-		$tagMap = array();
-		if ( ! empty( $selected['tags'] ) ) {
-			$tagMap = $this->runStep(
-				fn () => $this->importTags(),
-				'demo_import_tags',
-				esc_html__( 'Tags were successfully imported.', 'amalfi' ),
-				esc_html__( 'Tags could not be imported.', 'amalfi' ),
-				array()
-			);
-		}
+		$categoryMap = ! empty( $parts['categories'] )
+			? $this->runTask( $results, 'categories', $labels['categories'], fn () => $this->importCategories(), array() )
+			: array();
 
-		$imageMap = array();
-		if ( ! empty( $selected['image'] ) ) {
-			$imageMap = $this->runStep(
-				fn () => $this->importFeaturedImages(),
-				'demo_import_image',
-				esc_html__( 'Featured images were successfully imported.', 'amalfi' ),
-				esc_html__( 'Featured images could not be imported.', 'amalfi' ),
-				array()
-			);
-		}
+		$tagMap = ! empty( $parts['tags'] )
+			? $this->runTask( $results, 'tags', $labels['tags'], fn () => $this->importTags(), array() )
+			: array();
 
-		if ( ! empty( $selected['posts'] ) ) {
-			$this->runStep(
+		$imageMap = ! empty( $parts['image'] )
+			? $this->runTask( $results, 'image', $labels['image'], fn () => $this->importFeaturedImages(), array() )
+			: array();
+
+		if ( ! empty( $parts['posts'] ) ) {
+			$this->runTask(
+				$results,
+				'posts',
+				$labels['posts'],
 				function () use ( $categoryMap, $tagMap, $imageMap ): bool {
 					$this->importPosts( $categoryMap, $tagMap, $imageMap );
 					return true;
 				},
-				'demo_import_posts',
-				esc_html__( 'Blog posts were successfully imported.', 'amalfi' ),
-				esc_html__( 'Blog posts could not be imported.', 'amalfi' ),
 				false
 			);
 		}
 
-		if ( ! empty( $selected['pages'] ) ) {
-			$this->runStep(
+		if ( ! empty( $parts['pages'] ) ) {
+			$this->runTask(
+				$results,
+				'pages',
+				$labels['pages'],
 				function (): bool {
 					$this->importPages();
 					return true;
 				},
-				'demo_import_pages',
-				esc_html__( 'Static pages were successfully imported.', 'amalfi' ),
-				esc_html__( 'Static pages could not be imported.', 'amalfi' ),
 				false
 			);
 		}
 
-		$this->redirectBack();
+		return $results;
 	}
 
 	/**
-	 * The content parts that can be imported, labelled with their amount.
+	 * Run a single import task, appending a success or error result.
 	 *
-	 * @return array<string, string>
+	 * @param array<int, array{task: string, label: string, status: string, message: string}> $results  Results, appended to by reference.
+	 * @param string                                                                          $task     The task key.
+	 * @param string                                                                          $label    The task label.
+	 * @param callable                                                                        $op       The operation to run; returns its value.
+	 * @param mixed                                                                           $fallback Value returned when the task fails.
+	 * @return mixed The operation's value, or the fallback on failure.
 	 */
-	private function options(): array {
-		return array(
-			/* translators: %d: number of categories to import. */
-			'categories' => sprintf( esc_html__( 'Categories (%d)', 'amalfi' ), count( $this->content->categoryNames() ) ),
-			/* translators: %d: number of tags to import. */
-			'tags'       => sprintf( esc_html__( 'Tags (%d)', 'amalfi' ), count( $this->content->tagNames() ) ),
-			/* translators: %d: number of featured images to import. */
-			'image'      => sprintf( esc_html__( 'Featured Images (%d)', 'amalfi' ), count( $this->content->imageFiles() ) ),
-			/* translators: %d: number of blog posts to import. */
-			'posts'      => sprintf( esc_html__( 'Blog Posts (%d)', 'amalfi' ), count( $this->content->postDefinitions() ) ),
-			/* translators: %d: number of static pages to import. */
-			'pages'      => sprintf( esc_html__( 'Static Pages (%d)', 'amalfi' ), 3 ),
-		);
-	}
-
-	/**
-	 * Return the parts the user selected for import.
-	 *
-	 * @return array<string, bool>
-	 */
-	private function selectedParts(): array {
-		// Nonce verified in maybeImport() before this runs.
-		$raw = isset( $_POST[ $this->config->optionName() ]['amalfi_demo_content'] ) && is_array( $_POST[ $this->config->optionName() ]['amalfi_demo_content'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			? wp_unslash( $_POST[ $this->config->optionName() ]['amalfi_demo_content'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			: array();
-
-		$selected = array();
-		foreach ( array( 'categories', 'tags', 'image', 'posts', 'pages' ) as $key ) {
-			$selected[ $key ] = ! empty( $raw[ $key ] );
-		}
-
-		return $selected;
-	}
-
-	/**
-	 * Run a single import step, recording a success or error notice.
-	 *
-	 * @template T
-	 * @param callable $step     The step to run; returns its result.
-	 * @param string   $code     Notice code.
-	 * @param string   $success  Success message.
-	 * @param string   $failure  Failure message.
-	 * @param mixed    $fallback Value returned when the step fails.
-	 * @return mixed The step result, or the fallback on failure.
-	 */
-	private function runStep( callable $step, string $code, string $success, string $failure, mixed $fallback ): mixed {
+	private function runTask( array &$results, string $task, string $label, callable $op, mixed $fallback ): mixed {
 		try {
-			$result = $step();
-			add_settings_error( $this->config->noticeSlug(), $code, $success, 'success' );
+			$value     = $op();
+			$results[] = array(
+				'task'    => $task,
+				'label'   => $label,
+				'status'  => 'success',
+				/* translators: %s: the imported content type, e.g. Categories. */
+				'message' => sprintf( __( '%s imported successfully.', 'amalfi' ), $label ),
+			);
 
-			return $result;
+			return $value;
 		} catch ( Throwable ) {
-			add_settings_error( $this->config->noticeSlug(), $code, $failure, 'error' );
+			$results[] = array(
+				'task'    => $task,
+				'label'   => $label,
+				'status'  => 'error',
+				/* translators: %s: the content type that failed to import, e.g. Categories. */
+				'message' => sprintf( __( '%s could not be imported.', 'amalfi' ), $label ),
+			);
 
 			return $fallback;
 		}
@@ -478,14 +410,5 @@ class DemoImporter {
 			require_once ABSPATH . 'wp-admin/includes/file.php';
 			require_once ABSPATH . 'wp-admin/includes/media.php';
 		}
-	}
-
-	/**
-	 * Redirect back to the settings page after an import.
-	 */
-	private function redirectBack(): void {
-		set_transient( 'settings_errors', get_settings_errors(), 30 );
-		wp_safe_redirect( $this->config->pageUrl() );
-		exit;
 	}
 }

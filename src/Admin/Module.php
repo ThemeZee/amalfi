@@ -54,10 +54,6 @@ class Module implements ServiceModule, ExecutableModule {
 			DemoContent::class        => static fn ( ContainerInterface $c ): DemoContent => new DemoContent(
 				$c->get( ThemeConfig::class )
 			),
-			AdminPage::class          => static fn ( ContainerInterface $c ): AdminPage => new AdminPage(
-				$c->get( ThemeConfig::class ),
-				$c->get( SettingsRepository::class )
-			),
 			DemoImporter::class       => static fn ( ContainerInterface $c ): DemoImporter => new DemoImporter(
 				$c->get( ThemeConfig::class ),
 				$c->get( SettingsRepository::class ),
@@ -66,6 +62,17 @@ class Module implements ServiceModule, ExecutableModule {
 			LicenseManager::class     => static fn ( ContainerInterface $c ): LicenseManager => new LicenseManager(
 				$c->get( ThemeConfig::class ),
 				$c->get( SettingsRepository::class )
+			),
+			RestController::class     => static fn ( ContainerInterface $c ): RestController => new RestController(
+				$c->get( ThemeConfig::class ),
+				$c->get( DemoImporter::class ),
+				$c->get( LicenseManager::class )
+			),
+			AdminPage::class          => static fn ( ContainerInterface $c ): AdminPage => new AdminPage(
+				$c->get( ThemeConfig::class ),
+				$c->get( DemoImporter::class ),
+				$c->get( LicenseManager::class ),
+				$c->get( RestController::class )
 			),
 			ThemeUpdater::class       => static fn ( ContainerInterface $c ): ThemeUpdater => new ThemeUpdater(
 				$c->get( ThemeConfig::class ),
@@ -82,41 +89,44 @@ class Module implements ServiceModule, ExecutableModule {
 	 */
 	public function run( ContainerInterface $container ): bool {
 		$this->runAdminPage( $container );
+		$this->runRest( $container );
+		$this->runLicenseHooks( $container );
 		$this->runUpdater( $container );
 
 		return true;
 	}
 
 	/**
-	 * Wire the admin page, demo importer and license manager.
+	 * Wire the admin page: register the menu entry and enqueue the React app.
 	 *
 	 * @param ContainerInterface $container The service container.
 	 */
 	private function runAdminPage( ContainerInterface $container ): void {
-		if ( ! is_admin() ) {
-			return;
-		}
-
-		$page    = $container->get( AdminPage::class );
-		$demo    = $container->get( DemoImporter::class );
-		$license = $container->get( LicenseManager::class );
+		$page = $container->get( AdminPage::class );
 
 		add_action( 'admin_menu', array( $page, 'registerPage' ), 9 );
-		add_action( 'admin_notices', array( $page, 'renderNotices' ) );
+		add_action( 'admin_enqueue_scripts', array( $page, 'enqueue' ) );
+	}
 
+	/**
+	 * Register the REST routes that power the admin page.
+	 *
+	 * @param ContainerInterface $container The service container.
+	 */
+	private function runRest( ContainerInterface $container ): void {
 		add_action(
-			'admin_init',
-			static function () use ( $page, $demo, $license ): void {
-				$page->registerSettings();
-				$demo->registerFields();
-				$license->registerFields();
-
-				$demo->maybeImport();
-				$license->maybeActivate();
-				$license->maybeDeactivate();
-			},
-			9
+			'rest_api_init',
+			array( $container->get( RestController::class ), 'registerRoutes' )
 		);
+	}
+
+	/**
+	 * Wire the license reminder notice and the wp.org update filter.
+	 *
+	 * @param ContainerInterface $container The service container.
+	 */
+	private function runLicenseHooks( ContainerInterface $container ): void {
+		$license = $container->get( LicenseManager::class );
 
 		add_action( 'admin_notices', array( $license, 'renderReminder' ) );
 		add_filter( 'http_request_args', array( $license, 'disableWporgRequest' ), 5, 2 );

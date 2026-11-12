@@ -10,33 +10,38 @@ declare(strict_types=1);
 namespace ThemeZee\Amalfi\Admin;
 
 /**
- * Registers the "Theme Setup" page under the Appearance menu.
+ * Registers the "Theme Setup" page under the Appearance menu and mounts the
+ * React application that renders the demo-content and license sections.
  *
- * This service owns the page itself and its settings sections. The individual
- * settings fields are registered by the feature services ({@see DemoImporter}
- * and {@see LicenseManager}) into the sections declared here.
+ * The page itself is just a root element plus the enqueued script/styles and a
+ * bootstrap data blob; all UI lives in the compiled `assets/admin.js` app, and
+ * its actions go through {@see RestController}.
  */
 class AdminPage {
 
 	/**
-	 * Identifier of the demo content section.
+	 * The DOM id the React app mounts on.
 	 */
-	public const SECTION_DEMO = 'amalfi_demo_section';
+	private const ROOT_ID = 'amalfi-theme-setup';
 
 	/**
-	 * Identifier of the license section.
+	 * The script/style handle.
 	 */
-	public const SECTION_LICENSE = 'amalfi_license_section';
+	private const HANDLE = 'amalfi-admin';
 
 	/**
 	 * Constructor.
 	 *
-	 * @param ThemeConfig        $config   The theme configuration.
-	 * @param SettingsRepository $settings The settings repository.
+	 * @param ThemeConfig    $config  The theme configuration.
+	 * @param DemoImporter   $demo    The demo importer (for the importable parts).
+	 * @param LicenseManager $license The license manager (for the current state).
+	 * @param RestController $rest    The REST controller (for the namespace).
 	 */
 	public function __construct(
 		private readonly ThemeConfig $config,
-		private readonly SettingsRepository $settings,
+		private readonly DemoImporter $demo,
+		private readonly LicenseManager $license,
+		private readonly RestController $rest,
 	) {
 	}
 
@@ -54,111 +59,75 @@ class AdminPage {
 	}
 
 	/**
-	 * Register the settings container and its sections.
-	 */
-	public function registerSettings(): void {
-		$this->settings->ensureExists();
-
-		add_settings_section(
-			self::SECTION_DEMO,
-			esc_html__( 'Demo Content', 'amalfi' ),
-			array( $this, 'renderDemoIntro' ),
-			$this->config->settingsGroup()
-		);
-
-		add_settings_section(
-			self::SECTION_LICENSE,
-			esc_html__( 'License Settings', 'amalfi' ),
-			array( $this, 'renderLicenseIntro' ),
-			$this->config->settingsGroup()
-		);
-
-		register_setting(
-			$this->config->settingsGroup(),
-			$this->config->optionName(),
-			array( $this, 'sanitize' )
-		);
-	}
-
-	/**
-	 * Render the settings page.
+	 * Render the page root. The React app replaces its contents.
 	 */
 	public function render(): void {
-		?>
-		<div class="wrap">
-			<h1>
-				<?php
-				printf(
-					/* translators: %1$s: Theme name. %2$s: Theme version. */
-					esc_html__( '%1$s %2$s', 'amalfi' ),
-					esc_html( $this->config->name() ),
-					esc_html( $this->config->version() )
-				);
-				?>
-			</h1>
-
-			<form method="post" action="options.php">
-				<?php
-				do_settings_sections( $this->config->settingsGroup() );
-				settings_fields( $this->config->settingsGroup() );
-				submit_button();
-				?>
-			</form>
-		</div>
-		<?php
+		printf(
+			'<div class="wrap"><div id="%1$s">%2$s</div></div>',
+			esc_attr( self::ROOT_ID ),
+			esc_html__( 'Loading…', 'amalfi' )
+		);
 	}
 
 	/**
-	 * Render the admin notices for this page.
-	 */
-	public function renderNotices(): void {
-		settings_errors( $this->config->noticeSlug() );
-	}
-
-	/**
-	 * Render the demo section introduction.
-	 */
-	public function renderDemoIntro(): void {
-		esc_html_e( 'Import the demo content into your website to get started quickly.', 'amalfi' );
-	}
-
-	/**
-	 * Render the license section introduction.
-	 */
-	public function renderLicenseIntro(): void {
-		esc_html_e( 'An active license key is needed to install updates and receive support.', 'amalfi' );
-	}
-
-	/**
-	 * Sanitize the submitted settings.
+	 * Enqueue the admin app and inject its bootstrap data.
 	 *
-	 * @param mixed $input The submitted settings.
+	 * @param string $hookSuffix The current admin page hook suffix.
+	 */
+	public function enqueue( string $hookSuffix ): void {
+		if ( 'appearance_page_' . $this->config->pageSlug() !== $hookSuffix ) {
+			return;
+		}
+
+		$assetsPath = untrailingslashit( $this->config->basePath() ) . '/assets';
+		$assetFile  = $assetsPath . '/admin.asset.php';
+
+		if ( ! file_exists( $assetFile ) ) {
+			return;
+		}
+
+		$asset = include $assetFile;
+
+		wp_enqueue_script(
+			self::HANDLE,
+			get_theme_file_uri( 'assets/admin.js' ),
+			$asset['dependencies'] ?? array(),
+			$asset['version'] ?? false,
+			true
+		);
+
+		wp_set_script_translations( self::HANDLE, 'amalfi' );
+
+		wp_add_inline_script(
+			self::HANDLE,
+			'window.amalfiThemeSetup = ' . wp_json_encode( $this->bootstrap() ) . ';',
+			'before'
+		);
+
+		if ( file_exists( $assetsPath . '/admin.css' ) ) {
+			wp_enqueue_style(
+				self::HANDLE,
+				get_theme_file_uri( 'assets/admin.css' ),
+				array( 'wp-components' ),
+				$asset['version'] ?? false
+			);
+		} else {
+			wp_enqueue_style( 'wp-components' );
+		}
+	}
+
+	/**
+	 * The bootstrap data passed to the React app.
+	 *
 	 * @return array<string, mixed>
 	 */
-	public function sanitize( $input = array() ): array {
-		$input = is_array( $input ) ? $input : array();
-
-		// Only the Settings API "Save Changes" submit carries a referer; the
-		// custom import/license buttons handle their own persistence, so leave
-		// the stored values untouched for those requests.
-		if ( empty( $_POST['_wp_http_referer'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			return $input;
-		}
-
-		$stored = get_option( $this->config->optionName(), array() );
-		$stored = is_array( $stored ) ? $stored : array();
-
-		foreach ( $input as $key => $value ) {
-			if ( is_array( $value ) ) {
-				foreach ( $value as $checkbox => $enabled ) {
-					$input[ $key ][ $checkbox ] = ! empty( $enabled ) ? 1 : 0;
-				}
-				continue;
-			}
-
-			$input[ $key ] = sanitize_text_field( (string) $value );
-		}
-
-		return array_merge( $stored, $input );
+	private function bootstrap(): array {
+		return array(
+			'themeName'     => $this->config->name(),
+			'version'       => $this->config->version(),
+			'restNamespace' => $this->rest->namespaceRoot(),
+			'demoParts'     => $this->demo->parts(),
+			'license'       => $this->license->state(),
+		);
 	}
 }
