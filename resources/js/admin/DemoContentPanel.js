@@ -5,7 +5,7 @@ import { useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import {
-	CheckboxControl,
+	ToggleControl,
 	Button,
 	Notice,
 	Spinner,
@@ -59,20 +59,22 @@ export default function DemoContentPanel( { parts, restNamespace } ) {
 				) }
 			</p>
 
-			{ parts.map( ( part ) => (
-				<CheckboxControl
-					key={ part.key }
-					__nextHasNoMarginBottom
-					label={ sprintf(
-						/* translators: %1$s: content type label. %2$d: number of items. */
-						__( '%1$s (%2$d)', 'amalfi' ),
-						part.label,
-						part.count
-					) }
-					checked={ !! selected[ part.key ] }
-					onChange={ toggle( part.key ) }
-				/>
-			) ) }
+			<div className="amalfi-theme-setup__toggles">
+				{ parts.map( ( part ) => (
+					<ToggleControl
+						key={ part.key }
+						__nextHasNoMarginBottom
+						label={ sprintf(
+							/* translators: %1$s: content type label. %2$d: number of items. */
+							__( '%1$s (%2$d)', 'amalfi' ),
+							part.label,
+							part.count
+						) }
+						checked={ !! selected[ part.key ] }
+						onChange={ toggle( part.key ) }
+					/>
+				) ) }
+			</div>
 
 			<Flex justify="flex-start" className="amalfi-theme-setup__actions">
 				<Button
