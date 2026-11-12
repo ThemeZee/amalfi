@@ -116,6 +116,17 @@ class DemoImporter {
 			);
 		}
 
+		$tagMap = array();
+		if ( ! empty( $selected['tags'] ) ) {
+			$tagMap = $this->runStep(
+				fn () => $this->importTags(),
+				'demo_import_tags',
+				esc_html__( 'Tags were successfully imported.', 'amalfi' ),
+				esc_html__( 'Tags could not be imported.', 'amalfi' ),
+				array()
+			);
+		}
+
 		$imageMap = array();
 		if ( ! empty( $selected['image'] ) ) {
 			$imageMap = $this->runStep(
@@ -129,8 +140,8 @@ class DemoImporter {
 
 		if ( ! empty( $selected['posts'] ) ) {
 			$this->runStep(
-				function () use ( $categoryMap, $imageMap ): bool {
-					$this->importPosts( $categoryMap, $imageMap );
+				function () use ( $categoryMap, $tagMap, $imageMap ): bool {
+					$this->importPosts( $categoryMap, $tagMap, $imageMap );
 					return true;
 				},
 				'demo_import_posts',
@@ -165,6 +176,8 @@ class DemoImporter {
 		return array(
 			/* translators: %d: number of categories to import. */
 			'categories' => sprintf( esc_html__( 'Categories (%d)', 'amalfi' ), count( $this->content->categoryNames() ) ),
+			/* translators: %d: number of tags to import. */
+			'tags'       => sprintf( esc_html__( 'Tags (%d)', 'amalfi' ), count( $this->content->tagNames() ) ),
 			/* translators: %d: number of featured images to import. */
 			'image'      => sprintf( esc_html__( 'Featured Images (%d)', 'amalfi' ), count( $this->content->imageFiles() ) ),
 			/* translators: %d: number of blog posts to import. */
@@ -186,7 +199,7 @@ class DemoImporter {
 			: array();
 
 		$selected = array();
-		foreach ( array( 'categories', 'image', 'posts', 'pages' ) as $key ) {
+		foreach ( array( 'categories', 'tags', 'image', 'posts', 'pages' ) as $key ) {
 			$selected[ $key ] = ! empty( $raw[ $key ] );
 		}
 
@@ -220,24 +233,46 @@ class DemoImporter {
 	/**
 	 * Create the demo categories.
 	 *
-	 * Existing categories of the same name are reused rather than duplicated,
-	 * so the import can be run more than once safely.
-	 *
 	 * @return array<string, int> A map of category name to term ID.
 	 * @throws \RuntimeException When a category cannot be created.
 	 */
 	private function importCategories(): array {
+		return $this->importTerms( $this->content->categoryNames(), 'category' );
+	}
+
+	/**
+	 * Create the demo tags.
+	 *
+	 * @return array<string, int> A map of tag name to term ID.
+	 * @throws \RuntimeException When a tag cannot be created.
+	 */
+	private function importTags(): array {
+		return $this->importTerms( $this->content->tagNames(), 'post_tag' );
+	}
+
+	/**
+	 * Create terms in a taxonomy, reusing existing terms of the same name.
+	 *
+	 * Reusing existing terms rather than duplicating them keeps the import safe
+	 * to run more than once.
+	 *
+	 * @param string[] $names    The term names to create.
+	 * @param string   $taxonomy The taxonomy the terms belong to.
+	 * @return array<string, int> A map of term name to term ID.
+	 * @throws \RuntimeException When a term cannot be created.
+	 */
+	private function importTerms( array $names, string $taxonomy ): array {
 		$map = array();
 
-		foreach ( $this->content->categoryNames() as $name ) {
-			$existing = term_exists( $name, 'category' );
+		foreach ( $names as $name ) {
+			$existing = term_exists( $name, $taxonomy );
 
 			if ( is_array( $existing ) ) {
 				$map[ $name ] = (int) $existing['term_id'];
 				continue;
 			}
 
-			$term = wp_insert_term( $name, 'category' );
+			$term = wp_insert_term( $name, $taxonomy );
 
 			if ( is_wp_error( $term ) ) {
 				throw new \RuntimeException( esc_html( $term->get_error_message() ) );
@@ -302,16 +337,17 @@ class DemoImporter {
 	/**
 	 * Create the demo posts.
 	 *
-	 * Each post is assigned the category it belongs to. When categories were
-	 * not imported, the category is still used if it already exists, otherwise
-	 * the post is created without one. Its featured image is set when the
-	 * matching image was imported.
+	 * Each post is assigned the category and tags it belongs to. When those
+	 * terms were not imported, they are still used if they already exist,
+	 * otherwise the post is created without them. Its featured image is set
+	 * when the matching image was imported.
 	 *
 	 * @param array<string, int> $categoryMap A map of category name to term ID.
+	 * @param array<string, int> $tagMap      A map of tag name to term ID.
 	 * @param array<string, int> $imageMap    A map of image file name to attachment ID.
 	 * @throws \RuntimeException When a post cannot be created.
 	 */
-	private function importPosts( array $categoryMap, array $imageMap ): void {
+	private function importPosts( array $categoryMap, array $tagMap, array $imageMap ): void {
 		foreach ( $this->content->posts() as $post ) {
 			$postarr = array(
 				'post_title'   => $post['title'],
@@ -322,7 +358,7 @@ class DemoImporter {
 				'post_author'  => get_current_user_id(),
 			);
 
-			$categoryId = $this->resolveCategoryId( $post['category'], $categoryMap );
+			$categoryId = $this->resolveTermId( $post['category'], $categoryMap, 'category' );
 			if ( $categoryId > 0 ) {
 				$postarr['post_category'] = array( $categoryId );
 			}
@@ -333,6 +369,11 @@ class DemoImporter {
 				throw new \RuntimeException( esc_html( $postId->get_error_message() ) );
 			}
 
+			$tagIds = $this->resolveTermIds( $post['tags'], $tagMap, 'post_tag' );
+			if ( array() !== $tagIds ) {
+				wp_set_post_terms( $postId, $tagIds, 'post_tag' );
+			}
+
 			if ( ! empty( $imageMap[ $post['image'] ] ) ) {
 				set_post_thumbnail( $postId, $imageMap[ $post['image'] ] );
 			}
@@ -340,18 +381,44 @@ class DemoImporter {
 	}
 
 	/**
-	 * Resolve a category name to a term ID.
+	 * Resolve several term names to term IDs, dropping any that do not resolve.
 	 *
-	 * @param string             $name        The category name.
-	 * @param array<string, int> $categoryMap A map of category name to term ID.
-	 * @return int The term ID, or 0 when the category does not exist.
+	 * @param string[]           $names    The term names.
+	 * @param array<string, int> $map      A map of term name to term ID.
+	 * @param string             $taxonomy The taxonomy the terms belong to.
+	 * @return int[] The resolved term IDs.
 	 */
-	private function resolveCategoryId( string $name, array $categoryMap ): int {
-		if ( isset( $categoryMap[ $name ] ) ) {
-			return $categoryMap[ $name ];
+	private function resolveTermIds( array $names, array $map, string $taxonomy ): array {
+		$ids = array();
+
+		foreach ( $names as $name ) {
+			$id = $this->resolveTermId( $name, $map, $taxonomy );
+			if ( $id > 0 ) {
+				$ids[] = $id;
+			}
 		}
 
-		$existing = term_exists( $name, 'category' );
+		return $ids;
+	}
+
+	/**
+	 * Resolve a term name to a term ID.
+	 *
+	 * Prefers the imported term map and falls back to an existing term of the
+	 * same name, so posts are still linked to terms that already exist even
+	 * when that term type was not imported in this run.
+	 *
+	 * @param string             $name     The term name.
+	 * @param array<string, int> $map      A map of term name to term ID.
+	 * @param string             $taxonomy The taxonomy the term belongs to.
+	 * @return int The term ID, or 0 when the term does not exist.
+	 */
+	private function resolveTermId( string $name, array $map, string $taxonomy ): int {
+		if ( isset( $map[ $name ] ) ) {
+			return $map[ $name ];
+		}
+
+		$existing = term_exists( $name, $taxonomy );
 
 		return is_array( $existing ) ? (int) $existing['term_id'] : 0;
 	}

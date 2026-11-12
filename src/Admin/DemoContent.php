@@ -44,15 +44,44 @@ class DemoContent {
 	}
 
 	/**
+	 * The demo post tags to create.
+	 *
+	 * These are the distinct tag names referenced by the demo posts (see the
+	 * `tags` key of each entry in {@see self::postDefinitions()}).
+	 *
+	 * @return string[]
+	 */
+	public function tagNames(): array {
+		return array(
+			'amalfi-town',
+			'beaches',
+			'boat-trips',
+			'budget',
+			'capri',
+			'ferry',
+			'hiking',
+			'limoncello',
+			'luxury',
+			'naples',
+			'pompeii',
+			'positano',
+			'ravello',
+			'romantic',
+			'seafood',
+			'sorrento',
+		);
+	}
+
+	/**
 	 * The demo blog posts to create.
 	 *
 	 * Each entry describes a post: its title, the category it belongs to, a
 	 * short excerpt, the base name of the block markup file under
-	 * `demo-content/posts/`, and the bundled featured image file name. The
-	 * content itself is loaded on demand by {@see self::posts()} so the large
-	 * markup stays out of this class.
+	 * `demo-content/posts/`, the bundled featured image file name, and the tag
+	 * names it is assigned. The content itself is loaded on demand by
+	 * {@see self::posts()} so the large markup stays out of this class.
 	 *
-	 * @return array<int, array{title: string, category: string, excerpt: string, file: string, image: string}>
+	 * @return array<int, array{title: string, category: string, excerpt: string, file: string, image: string, tags: string[]}>
 	 */
 	public function postDefinitions(): array {
 		return array(
@@ -62,6 +91,7 @@ class DemoContent {
 				'excerpt'  => __( "Everything we wish we'd known before our first trip — when to go, where to base yourself, and how to arrive.", 'amalfi' ),
 				'file'     => 'amalfi-coast-first-timers-guide',
 				'image'    => 'amalfi-coast-panorama.jpg',
+				'tags'     => array( 'amalfi-town', 'budget', 'ferry' ),
 			),
 			array(
 				'title'    => __( 'Positano: The Vertical Village That Steals Every Heart', 'amalfi' ),
@@ -69,6 +99,7 @@ class DemoContent {
 				'excerpt'  => __( "Approach by sea and Positano rises like an amphitheatre of colour. A love letter to the coast's most famous village.", 'amalfi' ),
 				'file'     => 'positano-vertical-village',
 				'image'    => 'positano-coast.jpg',
+				'tags'     => array( 'beaches', 'positano', 'romantic' ),
 			),
 			array(
 				'title'    => __( 'Walking the Path of the Gods', 'amalfi' ),
@@ -76,6 +107,7 @@ class DemoContent {
 				'excerpt'  => __( 'The Sentiero degli Dei is the coast\'s greatest walk — three hours of ridgeline views from Bomerano to Nocelle.', 'amalfi' ),
 				'file'     => 'walking-path-of-the-gods',
 				'image'    => 'amalfi-cliff-view.jpg',
+				'tags'     => array( 'hiking', 'positano' ),
 			),
 			array(
 				'title'    => __( 'A Day Trip to Capri from the Amalfi Coast', 'amalfi' ),
@@ -83,6 +115,7 @@ class DemoContent {
 				'excerpt'  => __( 'Faraglioni rocks, a chic piazzetta, and a glowing blue grotto. How to make the most of a day on Capri.', 'amalfi' ),
 				'file'     => 'day-trip-to-capri',
 				'image'    => 'capri-faraglioni.jpg',
+				'tags'     => array( 'boat-trips', 'capri', 'ferry' ),
 			),
 			array(
 				'title'    => __( 'Where to Stay: Cute Hotels & Hidden B&Bs', 'amalfi' ),
@@ -90,6 +123,7 @@ class DemoContent {
 				'excerpt'  => __( 'From cliff-edge grand hotels to lemon-grove B&Bs — how to choose where to sleep on the Amalfi Coast.', 'amalfi' ),
 				'file'     => 'where-to-stay-amalfi-coast',
 				'image'    => 'amalfi-ravello-port.jpg',
+				'tags'     => array( 'budget', 'luxury', 'romantic' ),
 			),
 			array(
 				'title'    => __( 'Pompeii & Vesuvius: A Journey into Ancient History', 'amalfi' ),
@@ -97,6 +131,7 @@ class DemoContent {
 				'excerpt'  => __( 'An easy train ride from Naples, the city frozen by Vesuvius in AD 79 makes the ancient world startlingly real.', 'amalfi' ),
 				'file'     => 'pompeii-vesuvius-day-trip',
 				'image'    => 'pompeii-vesuvius.jpg',
+				'tags'     => array( 'naples', 'pompeii' ),
 			),
 			array(
 				'title'    => __( 'The Best Seafood Spots Along the Coast', 'amalfi' ),
@@ -104,6 +139,7 @@ class DemoContent {
 				'excerpt'  => __( "From harbour fritto misto to Cetara's anchovies — where and what to eat along the coast.", 'amalfi' ),
 				'file'     => 'best-seafood-amalfi-coast',
 				'image'    => 'coastal-seafood.jpg',
+				'tags'     => array( 'amalfi-town', 'seafood' ),
 			),
 			array(
 				'title'    => __( 'Limoncello: The Taste of the Amalfi Lemons', 'amalfi' ),
@@ -111,6 +147,7 @@ class DemoContent {
 				'excerpt'  => __( "Bright, cold and shockingly lemony: the story of the Amalfi's giant lemons and the drink that ends every meal.", 'amalfi' ),
 				'file'     => 'limoncello-amalfi-lemons',
 				'image'    => 'amalfi-lemons.jpg',
+				'tags'     => array( 'limoncello', 'sorrento' ),
 			),
 			array(
 				'title'    => __( 'Ravello: Gardens, Music & Mountaintop Views', 'amalfi' ),
@@ -118,6 +155,7 @@ class DemoContent {
 				'excerpt'  => __( 'High above the coast, Ravello is a town of gardens, music, and views that stop conversation.', 'amalfi' ),
 				'file'     => 'ravello-gardens-and-views',
 				'image'    => 'ravello-garden.jpg',
+				'tags'     => array( 'ravello', 'romantic' ),
 			),
 			array(
 				'title'    => __( 'Getting Around: Ferries, Buses & the Coastal Road', 'amalfi' ),
@@ -125,6 +163,7 @@ class DemoContent {
 				'excerpt'  => __( 'Ferries, blue SITA buses, or a private driver? How to move between the villages without the stress.', 'amalfi' ),
 				'file'     => 'getting-around-amalfi-coast',
 				'image'    => 'amalfi-boat.jpg',
+				'tags'     => array( 'boat-trips', 'budget', 'ferry' ),
 			),
 			array(
 				'title'    => __( 'Beach-Hopping on the Amalfi Coast', 'amalfi' ),
@@ -132,6 +171,7 @@ class DemoContent {
 				'excerpt'  => __( 'Small, pebbly coves between the cliffs — the best beaches to find, and the secret ones you reach by boat.', 'amalfi' ),
 				'file'     => 'beach-hopping-amalfi-coast',
 				'image'    => 'mediterranean-beach.jpg',
+				'tags'     => array( 'beaches', 'boat-trips', 'sorrento' ),
 			),
 			array(
 				'title'    => __( '48 Hours in Naples: Pizza, Culture & Chaos', 'amalfi' ),
@@ -139,6 +179,7 @@ class DemoContent {
 				'excerpt'  => __( "Don't rush through Italy's most exuberant city. Two days of history, views, and the world's best pizza.", 'amalfi' ),
 				'file'     => '48-hours-in-naples',
 				'image'    => 'naples-waterfront-sunset.jpg',
+				'tags'     => array( 'naples', 'pompeii' ),
 			),
 		);
 	}
@@ -146,7 +187,7 @@ class DemoContent {
 	/**
 	 * The demo blog posts, each with its content markup loaded.
 	 *
-	 * @return array<int, array{title: string, category: string, excerpt: string, content: string, image: string}>
+	 * @return array<int, array{title: string, category: string, excerpt: string, content: string, image: string, tags: string[]}>
 	 */
 	public function posts(): array {
 		$posts = array();
@@ -158,6 +199,7 @@ class DemoContent {
 				'excerpt'  => $post['excerpt'],
 				'content'  => $this->postContent( $post['file'] ),
 				'image'    => $post['image'],
+				'tags'     => $post['tags'],
 			);
 		}
 

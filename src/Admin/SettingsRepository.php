@@ -140,6 +140,7 @@ class SettingsRepository {
 			'amalfi_license_status' => self::STATUS_INACTIVE,
 			'amalfi_demo_content'   => array(
 				'categories' => 1,
+				'tags'       => 1,
 				'image'      => 1,
 				'posts'      => 1,
 				'pages'      => 1,
