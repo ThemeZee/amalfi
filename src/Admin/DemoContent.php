@@ -47,11 +47,12 @@ class DemoContent {
 	 * The demo blog posts to create.
 	 *
 	 * Each entry describes a post: its title, the category it belongs to, a
-	 * short excerpt and the base name of the block markup file under
-	 * `demo-content/posts/`. The content itself is loaded on demand by
-	 * {@see self::posts()} so the large markup stays out of this class.
+	 * short excerpt, the base name of the block markup file under
+	 * `demo-content/posts/`, and the bundled featured image file name. The
+	 * content itself is loaded on demand by {@see self::posts()} so the large
+	 * markup stays out of this class.
 	 *
-	 * @return array<int, array{title: string, category: string, excerpt: string, file: string}>
+	 * @return array<int, array{title: string, category: string, excerpt: string, file: string, image: string}>
 	 */
 	public function postDefinitions(): array {
 		return array(
@@ -60,72 +61,84 @@ class DemoContent {
 				'category' => __( 'Travel Tips', 'amalfi' ),
 				'excerpt'  => __( "Everything we wish we'd known before our first trip — when to go, where to base yourself, and how to arrive.", 'amalfi' ),
 				'file'     => 'amalfi-coast-first-timers-guide',
+				'image'    => 'amalfi-coast-panorama.jpg',
 			),
 			array(
 				'title'    => __( 'Positano: The Vertical Village That Steals Every Heart', 'amalfi' ),
 				'category' => __( 'Destinations', 'amalfi' ),
 				'excerpt'  => __( "Approach by sea and Positano rises like an amphitheatre of colour. A love letter to the coast's most famous village.", 'amalfi' ),
 				'file'     => 'positano-vertical-village',
+				'image'    => 'positano-coast.jpg',
 			),
 			array(
 				'title'    => __( 'Walking the Path of the Gods', 'amalfi' ),
 				'category' => __( 'Things to Do', 'amalfi' ),
 				'excerpt'  => __( 'The Sentiero degli Dei is the coast\'s greatest walk — three hours of ridgeline views from Bomerano to Nocelle.', 'amalfi' ),
 				'file'     => 'walking-path-of-the-gods',
+				'image'    => 'amalfi-cliff-view.jpg',
 			),
 			array(
 				'title'    => __( 'A Day Trip to Capri from the Amalfi Coast', 'amalfi' ),
 				'category' => __( 'Destinations', 'amalfi' ),
 				'excerpt'  => __( 'Faraglioni rocks, a chic piazzetta, and a glowing blue grotto. How to make the most of a day on Capri.', 'amalfi' ),
 				'file'     => 'day-trip-to-capri',
+				'image'    => 'capri-faraglioni.jpg',
 			),
 			array(
 				'title'    => __( 'Where to Stay: Cute Hotels & Hidden B&Bs', 'amalfi' ),
 				'category' => __( 'Where to Stay', 'amalfi' ),
 				'excerpt'  => __( 'From cliff-edge grand hotels to lemon-grove B&Bs — how to choose where to sleep on the Amalfi Coast.', 'amalfi' ),
 				'file'     => 'where-to-stay-amalfi-coast',
+				'image'    => 'amalfi-ravello-port.jpg',
 			),
 			array(
 				'title'    => __( 'Pompeii & Vesuvius: A Journey into Ancient History', 'amalfi' ),
 				'category' => __( 'Destinations', 'amalfi' ),
 				'excerpt'  => __( 'An easy train ride from Naples, the city frozen by Vesuvius in AD 79 makes the ancient world startlingly real.', 'amalfi' ),
 				'file'     => 'pompeii-vesuvius-day-trip',
+				'image'    => 'pompeii-vesuvius.jpg',
 			),
 			array(
 				'title'    => __( 'The Best Seafood Spots Along the Coast', 'amalfi' ),
 				'category' => __( 'Food & Drink', 'amalfi' ),
 				'excerpt'  => __( "From harbour fritto misto to Cetara's anchovies — where and what to eat along the coast.", 'amalfi' ),
 				'file'     => 'best-seafood-amalfi-coast',
+				'image'    => 'coastal-seafood.jpg',
 			),
 			array(
 				'title'    => __( 'Limoncello: The Taste of the Amalfi Lemons', 'amalfi' ),
 				'category' => __( 'Food & Drink', 'amalfi' ),
 				'excerpt'  => __( "Bright, cold and shockingly lemony: the story of the Amalfi's giant lemons and the drink that ends every meal.", 'amalfi' ),
 				'file'     => 'limoncello-amalfi-lemons',
+				'image'    => 'amalfi-lemons.jpg',
 			),
 			array(
 				'title'    => __( 'Ravello: Gardens, Music & Mountaintop Views', 'amalfi' ),
 				'category' => __( 'Destinations', 'amalfi' ),
 				'excerpt'  => __( 'High above the coast, Ravello is a town of gardens, music, and views that stop conversation.', 'amalfi' ),
 				'file'     => 'ravello-gardens-and-views',
+				'image'    => 'ravello-garden.jpg',
 			),
 			array(
 				'title'    => __( 'Getting Around: Ferries, Buses & the Coastal Road', 'amalfi' ),
 				'category' => __( 'Travel Tips', 'amalfi' ),
 				'excerpt'  => __( 'Ferries, blue SITA buses, or a private driver? How to move between the villages without the stress.', 'amalfi' ),
 				'file'     => 'getting-around-amalfi-coast',
+				'image'    => 'amalfi-boat.jpg',
 			),
 			array(
 				'title'    => __( 'Beach-Hopping on the Amalfi Coast', 'amalfi' ),
 				'category' => __( 'Things to Do', 'amalfi' ),
 				'excerpt'  => __( 'Small, pebbly coves between the cliffs — the best beaches to find, and the secret ones you reach by boat.', 'amalfi' ),
 				'file'     => 'beach-hopping-amalfi-coast',
+				'image'    => 'mediterranean-beach.jpg',
 			),
 			array(
 				'title'    => __( '48 Hours in Naples: Pizza, Culture & Chaos', 'amalfi' ),
 				'category' => __( 'Destinations', 'amalfi' ),
 				'excerpt'  => __( "Don't rush through Italy's most exuberant city. Two days of history, views, and the world's best pizza.", 'amalfi' ),
 				'file'     => '48-hours-in-naples',
+				'image'    => 'naples-waterfront-sunset.jpg',
 			),
 		);
 	}
@@ -133,7 +146,7 @@ class DemoContent {
 	/**
 	 * The demo blog posts, each with its content markup loaded.
 	 *
-	 * @return array<int, array{title: string, category: string, excerpt: string, content: string}>
+	 * @return array<int, array{title: string, category: string, excerpt: string, content: string, image: string}>
 	 */
 	public function posts(): array {
 		$posts = array();
@@ -144,6 +157,7 @@ class DemoContent {
 				'category' => $post['category'],
 				'excerpt'  => $post['excerpt'],
 				'content'  => $this->postContent( $post['file'] ),
+				'image'    => $post['image'],
 			);
 		}
 
@@ -151,10 +165,21 @@ class DemoContent {
 	}
 
 	/**
-	 * Absolute path to the bundled featured image.
+	 * The unique featured image file names used by the demo posts.
+	 *
+	 * @return string[]
 	 */
-	public function featuredImagePath(): string {
-		return $this->config->basePath() . '/assets/images/positano-coast.jpg';
+	public function imageFiles(): array {
+		return array_values( array_unique( array_column( $this->postDefinitions(), 'image' ) ) );
+	}
+
+	/**
+	 * Absolute path to a bundled demo image.
+	 *
+	 * @param string $file The image file name.
+	 */
+	public function imagePath( string $file ): string {
+		return $this->config->basePath() . '/assets/images/' . $file;
 	}
 
 	/**

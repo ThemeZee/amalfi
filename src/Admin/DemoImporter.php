@@ -116,21 +116,21 @@ class DemoImporter {
 			);
 		}
 
-		$imageId = 0;
+		$imageMap = array();
 		if ( ! empty( $selected['image'] ) ) {
-			$imageId = $this->runStep(
-				fn () => $this->importFeaturedImage(),
+			$imageMap = $this->runStep(
+				fn () => $this->importFeaturedImages(),
 				'demo_import_image',
-				esc_html__( 'The featured image was successfully imported.', 'amalfi' ),
-				esc_html__( 'The featured image could not be imported.', 'amalfi' ),
-				0
+				esc_html__( 'Featured images were successfully imported.', 'amalfi' ),
+				esc_html__( 'Featured images could not be imported.', 'amalfi' ),
+				array()
 			);
 		}
 
 		if ( ! empty( $selected['posts'] ) ) {
 			$this->runStep(
-				function () use ( $categoryMap, $imageId ): bool {
-					$this->importPosts( $categoryMap, $imageId );
+				function () use ( $categoryMap, $imageMap ): bool {
+					$this->importPosts( $categoryMap, $imageMap );
 					return true;
 				},
 				'demo_import_posts',
@@ -165,7 +165,8 @@ class DemoImporter {
 		return array(
 			/* translators: %d: number of categories to import. */
 			'categories' => sprintf( esc_html__( 'Categories (%d)', 'amalfi' ), count( $this->content->categoryNames() ) ),
-			'image'      => esc_html__( 'Featured Image (1)', 'amalfi' ),
+			/* translators: %d: number of featured images to import. */
+			'image'      => sprintf( esc_html__( 'Featured Images (%d)', 'amalfi' ), count( $this->content->imageFiles() ) ),
 			/* translators: %d: number of blog posts to import. */
 			'posts'      => sprintf( esc_html__( 'Blog Posts (%d)', 'amalfi' ), count( $this->content->postDefinitions() ) ),
 			/* translators: %d: number of static pages to import. */
@@ -249,29 +250,46 @@ class DemoImporter {
 	}
 
 	/**
-	 * Sideload the bundled featured image into the media library.
+	 * Sideload the bundled featured images into the media library.
 	 *
+	 * @return array<string, int> A map of image file name to attachment ID.
+	 * @throws \RuntimeException When an image cannot be imported.
+	 */
+	private function importFeaturedImages(): array {
+		$map = array();
+
+		foreach ( $this->content->imageFiles() as $file ) {
+			$map[ $file ] = $this->sideloadImage( $file );
+		}
+
+		return $map;
+	}
+
+	/**
+	 * Sideload a single bundled image into the media library.
+	 *
+	 * @param string $file The image file name.
 	 * @return int The attachment ID.
 	 * @throws \RuntimeException When the image cannot be imported.
 	 */
-	private function importFeaturedImage(): int {
-		$source = $this->content->featuredImagePath();
+	private function sideloadImage( string $file ): int {
+		$source = $this->content->imagePath( $file );
 
 		if ( ! is_readable( $source ) ) {
-			throw new \RuntimeException( 'Demo image not found.' );
+			throw new \RuntimeException( 'Demo image not found: ' . esc_html( $file ) );
 		}
 
 		$temp = wp_tempnam( basename( $source ) );
 		if ( ! $temp || ! copy( $source, $temp ) ) {
-			throw new \RuntimeException( 'Could not copy demo image.' );
+			throw new \RuntimeException( 'Could not copy demo image: ' . esc_html( $file ) );
 		}
 
-		$file = array(
-			'name'     => 'amalfi-' . basename( $source ),
+		$sideload = array(
+			'name'     => basename( $source ),
 			'tmp_name' => $temp,
 		);
 
-		$id = media_handle_sideload( $file, 0 );
+		$id = media_handle_sideload( $sideload, 0 );
 
 		if ( is_wp_error( $id ) ) {
 			wp_delete_file( $temp );
@@ -286,13 +304,14 @@ class DemoImporter {
 	 *
 	 * Each post is assigned the category it belongs to. When categories were
 	 * not imported, the category is still used if it already exists, otherwise
-	 * the post is created without one.
+	 * the post is created without one. Its featured image is set when the
+	 * matching image was imported.
 	 *
 	 * @param array<string, int> $categoryMap A map of category name to term ID.
-	 * @param int                $imageId     The featured image ID, or 0 for none.
+	 * @param array<string, int> $imageMap    A map of image file name to attachment ID.
 	 * @throws \RuntimeException When a post cannot be created.
 	 */
-	private function importPosts( array $categoryMap, int $imageId ): void {
+	private function importPosts( array $categoryMap, array $imageMap ): void {
 		foreach ( $this->content->posts() as $post ) {
 			$postarr = array(
 				'post_title'   => $post['title'],
@@ -314,8 +333,8 @@ class DemoImporter {
 				throw new \RuntimeException( esc_html( $postId->get_error_message() ) );
 			}
 
-			if ( $imageId > 0 ) {
-				set_post_thumbnail( $postId, $imageId );
+			if ( ! empty( $imageMap[ $post['image'] ] ) ) {
+				set_post_thumbnail( $postId, $imageMap[ $post['image'] ] );
 			}
 		}
 	}
