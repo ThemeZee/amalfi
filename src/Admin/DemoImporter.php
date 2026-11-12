@@ -105,9 +105,9 @@ class DemoImporter {
 
 		$this->ensureMediaFunctions();
 
-		$categoryIds = array();
+		$categoryMap = array();
 		if ( ! empty( $selected['categories'] ) ) {
-			$categoryIds = $this->runStep(
+			$categoryMap = $this->runStep(
 				fn () => $this->importCategories(),
 				'demo_import_categories',
 				esc_html__( 'Categories were successfully imported.', 'amalfi' ),
@@ -129,8 +129,8 @@ class DemoImporter {
 
 		if ( ! empty( $selected['posts'] ) ) {
 			$this->runStep(
-				function () use ( $categoryIds, $imageId ): bool {
-					$this->importPosts( $categoryIds, $imageId );
+				function () use ( $categoryMap, $imageId ): bool {
+					$this->importPosts( $categoryMap, $imageId );
 					return true;
 				},
 				'demo_import_posts',
@@ -167,7 +167,7 @@ class DemoImporter {
 			'categories' => sprintf( esc_html__( 'Categories (%d)', 'amalfi' ), count( $this->content->categoryNames() ) ),
 			'image'      => esc_html__( 'Featured Image (1)', 'amalfi' ),
 			/* translators: %d: number of blog posts to import. */
-			'posts'      => sprintf( esc_html__( 'Blog Posts (%d)', 'amalfi' ), count( $this->content->postTitles() ) ),
+			'posts'      => sprintf( esc_html__( 'Blog Posts (%d)', 'amalfi' ), count( $this->content->postDefinitions() ) ),
 			/* translators: %d: number of static pages to import. */
 			'pages'      => sprintf( esc_html__( 'Static Pages (%d)', 'amalfi' ), 3 ),
 		);
@@ -219,23 +219,33 @@ class DemoImporter {
 	/**
 	 * Create the demo categories.
 	 *
-	 * @return int[] The created term IDs.
+	 * Existing categories of the same name are reused rather than duplicated,
+	 * so the import can be run more than once safely.
+	 *
+	 * @return array<string, int> A map of category name to term ID.
 	 * @throws \RuntimeException When a category cannot be created.
 	 */
 	private function importCategories(): array {
-		$ids = array();
+		$map = array();
 
 		foreach ( $this->content->categoryNames() as $name ) {
-			$term = wp_create_term( $name, 'category' );
+			$existing = term_exists( $name, 'category' );
+
+			if ( is_array( $existing ) ) {
+				$map[ $name ] = (int) $existing['term_id'];
+				continue;
+			}
+
+			$term = wp_insert_term( $name, 'category' );
 
 			if ( is_wp_error( $term ) ) {
 				throw new \RuntimeException( esc_html( $term->get_error_message() ) );
 			}
 
-			$ids[] = (int) $term['term_id'];
+			$map[ $name ] = (int) $term['term_id'];
 		}
 
-		return $ids;
+		return $map;
 	}
 
 	/**
@@ -274,22 +284,28 @@ class DemoImporter {
 	/**
 	 * Create the demo posts.
 	 *
-	 * @param int[] $categoryIds The category IDs to assign at random.
-	 * @param int   $imageId     The featured image ID, or 0 for none.
+	 * Each post is assigned the category it belongs to. When categories were
+	 * not imported, the category is still used if it already exists, otherwise
+	 * the post is created without one.
+	 *
+	 * @param array<string, int> $categoryMap A map of category name to term ID.
+	 * @param int                $imageId     The featured image ID, or 0 for none.
 	 * @throws \RuntimeException When a post cannot be created.
 	 */
-	private function importPosts( array $categoryIds, int $imageId ): void {
-		foreach ( $this->content->postTitles() as $title ) {
+	private function importPosts( array $categoryMap, int $imageId ): void {
+		foreach ( $this->content->posts() as $post ) {
 			$postarr = array(
-				'post_title'   => $title,
-				'post_content' => $this->content->post(),
+				'post_title'   => $post['title'],
+				'post_content' => $post['content'],
+				'post_excerpt' => $post['excerpt'],
 				'post_type'    => 'post',
 				'post_status'  => 'publish',
 				'post_author'  => get_current_user_id(),
 			);
 
-			if ( array() !== $categoryIds ) {
-				$postarr['post_category'] = array( $categoryIds[ array_rand( $categoryIds ) ] );
+			$categoryId = $this->resolveCategoryId( $post['category'], $categoryMap );
+			if ( $categoryId > 0 ) {
+				$postarr['post_category'] = array( $categoryId );
 			}
 
 			$postId = wp_insert_post( $postarr, true );
@@ -302,6 +318,23 @@ class DemoImporter {
 				set_post_thumbnail( $postId, $imageId );
 			}
 		}
+	}
+
+	/**
+	 * Resolve a category name to a term ID.
+	 *
+	 * @param string             $name        The category name.
+	 * @param array<string, int> $categoryMap A map of category name to term ID.
+	 * @return int The term ID, or 0 when the category does not exist.
+	 */
+	private function resolveCategoryId( string $name, array $categoryMap ): int {
+		if ( isset( $categoryMap[ $name ] ) ) {
+			return $categoryMap[ $name ];
+		}
+
+		$existing = term_exists( $name, 'category' );
+
+		return is_array( $existing ) ? (int) $existing['term_id'] : 0;
 	}
 
 	/**
