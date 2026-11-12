@@ -76,6 +76,7 @@ function initialize(): void {
 		}
 
 		$modules = array(
+			new Admin\Module(),
 			new Assets\Module(),
 			new Setup\Module(),
 		);
