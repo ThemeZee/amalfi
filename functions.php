@@ -76,13 +76,13 @@ function initialize(): void {
 		}
 
 		$modules = array(
-			new Core\Module(),
 			new Admin\Module(),
+			new Assets\Module(),
+			new Core\Module(),
 			new DemoContent\Module(),
 			new Licensing\Module(),
-			new Updates\Module(),
-			new Assets\Module(),
 			new Setup\Module(),
+			new Updates\Module(),
 		);
 		array_map( array( package(), 'addModule' ), $modules );
 
