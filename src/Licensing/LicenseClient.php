@@ -1,13 +1,16 @@
 <?php
 /**
- * Theme license management.
+ * Theme license client.
  *
  * @package ThemeZee\Amalfi
  */
 
 declare(strict_types=1);
 
-namespace ThemeZee\Amalfi\Admin;
+namespace ThemeZee\Amalfi\Licensing;
+
+use ThemeZee\Amalfi\Core\SettingsRepository;
+use ThemeZee\Amalfi\Core\ThemeConfig;
 
 /**
  * Activates and deactivates the theme license against the ThemeZee store
@@ -17,7 +20,7 @@ namespace ThemeZee\Amalfi\Admin;
  * driven from a REST endpoint; {@see self::state()} provides the current
  * license state for bootstrapping the admin UI.
  */
-class LicenseManager {
+class LicenseClient {
 
 	/**
 	 * Constructor.
@@ -89,69 +92,6 @@ class LicenseManager {
 		$this->settings->clearLicense();
 
 		return $this->result( __( 'License was deactivated.', 'amalfi' ), 'success' );
-	}
-
-	/**
-	 * Show a reminder notice when the license is not active.
-	 */
-	public function renderReminder(): void {
-		global $pagenow;
-
-		if ( $this->settings->hasValidLicense() ) {
-			return;
-		}
-
-		if ( ! current_user_can( $this->config->capability() ) ) {
-			return;
-		}
-
-		$screens = array( 'index.php', 'update-core.php', 'themes.php' );
-		if ( ! in_array( $pagenow, $screens, true ) || isset( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			return;
-		}
-
-		printf(
-			'<div class="notice notice-info"><p>%s</p></div>',
-			wp_kses_post(
-				sprintf(
-					/* translators: %1$s: Theme name. %2$s: URL of the theme settings page. */
-					__( 'Please enter your license key for the %1$s theme in order to receive updates and support. <a href="%2$s">Enter License Key</a>', 'amalfi' ),
-					esc_html( $this->config->name() ),
-					esc_url( $this->config->pageUrl() )
-				)
-			)
-		);
-	}
-
-	/**
-	 * Remove this theme from wp.org update checks so updates come from the store.
-	 *
-	 * @param array<string, mixed> $args The HTTP request arguments.
-	 * @param string               $url  The request URL.
-	 * @return array<string, mixed>
-	 */
-	public function disableWporgRequest( array $args, string $url ): array {
-		if ( ! str_starts_with( $url, 'https://api.wordpress.org/themes/update-check/1.1/' ) ) {
-			return $args;
-		}
-
-		if ( empty( $args['body']['themes'] ) ) {
-			return $args;
-		}
-
-		$themes = json_decode( $args['body']['themes'] );
-
-		if ( ! isset( $themes->themes ) ) {
-			return $args;
-		}
-
-		$parent = get_option( 'template' );
-		$child  = get_option( 'stylesheet' );
-		unset( $themes->themes->$parent, $themes->themes->$child );
-
-		$args['body']['themes'] = wp_json_encode( $themes );
-
-		return $args;
 	}
 
 	/**

@@ -7,7 +7,9 @@
 
 declare(strict_types=1);
 
-namespace ThemeZee\Amalfi\Admin;
+namespace ThemeZee\Amalfi\DemoContent;
+
+use ThemeZee\Amalfi\Core\ThemeConfig;
 
 /**
  * Builds the block markup for the demo pages and posts.
@@ -16,7 +18,7 @@ namespace ThemeZee\Amalfi\Admin;
  * always reflects the current patterns and stays distribution-safe. Posts use
  * generic placeholder copy.
  */
-class DemoContent {
+class Content {
 
 	/**
 	 * Constructor.

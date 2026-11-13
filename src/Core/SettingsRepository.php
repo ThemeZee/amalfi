@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace ThemeZee\Amalfi\Admin;
+namespace ThemeZee\Amalfi\Core;
 
 /**
  * Reads and writes the theme settings option.
  *
- * All Admin services go through this repository instead of calling
- * `get_option()` / `update_option()` directly, so the option name and its
- * default shape live in exactly one place.
+ * Services go through this repository instead of calling `get_option()` /
+ * `update_option()` directly, so the option name and its default shape live in
+ * exactly one place.
  */
 class SettingsRepository {
 
@@ -129,13 +129,6 @@ class SettingsRepository {
 		return array(
 			'amalfi_license_key'    => '',
 			'amalfi_license_status' => self::STATUS_INACTIVE,
-			'amalfi_demo_content'   => array(
-				'categories' => 1,
-				'tags'       => 1,
-				'image'      => 1,
-				'posts'      => 1,
-				'pages'      => 1,
-			),
 		);
 	}
 }

@@ -76,7 +76,11 @@ function initialize(): void {
 		}
 
 		$modules = array(
+			new Core\Module(),
 			new Admin\Module(),
+			new DemoContent\Module(),
+			new Licensing\Module(),
+			new Updates\Module(),
 			new Assets\Module(),
 			new Setup\Module(),
 		);

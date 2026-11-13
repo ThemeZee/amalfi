@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace ThemeZee\Amalfi\Admin;
+namespace ThemeZee\Amalfi\DemoContent;
 
 use Throwable;
 
@@ -18,19 +18,15 @@ use Throwable;
  * selected parts and returns a structured result, so it can be driven from a
  * REST endpoint (or anywhere else) rather than a form submission.
  */
-class DemoImporter {
+class Importer {
 
 	/**
 	 * Constructor.
 	 *
-	 * @param ThemeConfig        $config   The theme configuration.
-	 * @param SettingsRepository $settings The settings repository.
-	 * @param DemoContent        $content  The demo content provider.
+	 * @param Content $content The demo content provider.
 	 */
 	public function __construct(
-		private readonly ThemeConfig $config,
-		private readonly SettingsRepository $settings,
-		private readonly DemoContent $content,
+		private readonly Content $content,
 	) {
 	}
 

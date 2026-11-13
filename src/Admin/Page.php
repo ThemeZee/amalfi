@@ -1,6 +1,6 @@
 <?php
 /**
- * Theme setup admin page.
+ * Theme Setup page.
  *
  * @package ThemeZee\Amalfi
  */
@@ -9,16 +9,18 @@ declare(strict_types=1);
 
 namespace ThemeZee\Amalfi\Admin;
 
+use ThemeZee\Amalfi\Core\ThemeConfig;
+
 /**
- * Registers the "Theme Setup" page under the Appearance menu.
+ * Registers the "Theme Setup" page under the Appearance menu and renders its
+ * server-side chrome.
  *
- * The page chrome (header, theme links, screenshot and documentation) is
- * rendered server-side with PHP so it paints instantly. Only the interactive
- * Demo Content and License Settings controls are hydrated client-side: the
- * React app mounts into a single container and its actions go through
- * {@see RestController}.
+ * The header, theme links, "Getting started" heading and documentation section
+ * are rendered with PHP so they paint instantly. Only the Demo Content and
+ * License Settings controls are hydrated client-side, into the mount element
+ * this page outputs (see {@see Assets} for the enqueue and bootstrap data).
  */
-class AdminPage {
+class Page {
 
 	/**
 	 * The DOM id the React app mounts on (the demo/license controls only).
@@ -26,23 +28,12 @@ class AdminPage {
 	private const MOUNT_ID = 'amalfi-demo-license';
 
 	/**
-	 * The script/style handle.
-	 */
-	private const HANDLE = 'amalfi-admin';
-
-	/**
 	 * Constructor.
 	 *
-	 * @param ThemeConfig    $config  The theme configuration.
-	 * @param DemoImporter   $demo    The demo importer (for the importable parts).
-	 * @param LicenseManager $license The license manager (for the current state).
-	 * @param RestController $rest    The REST controller (for the namespace).
+	 * @param ThemeConfig $config The theme configuration.
 	 */
 	public function __construct(
 		private readonly ThemeConfig $config,
-		private readonly DemoImporter $demo,
-		private readonly LicenseManager $license,
-		private readonly RestController $rest,
 	) {
 	}
 
@@ -127,66 +118,6 @@ class AdminPage {
 			</div>
 		</div>
 		<?php
-	}
-
-	/**
-	 * Enqueue the admin app and inject its bootstrap data.
-	 *
-	 * @param string $hookSuffix The current admin page hook suffix.
-	 */
-	public function enqueue( string $hookSuffix ): void {
-		if ( 'appearance_page_' . $this->config->pageSlug() !== $hookSuffix ) {
-			return;
-		}
-
-		$assetsPath = untrailingslashit( $this->config->basePath() ) . '/assets';
-		$assetFile  = $assetsPath . '/admin.asset.php';
-
-		if ( ! file_exists( $assetFile ) ) {
-			return;
-		}
-
-		$asset = include $assetFile;
-
-		wp_enqueue_script(
-			self::HANDLE,
-			get_theme_file_uri( 'assets/admin.js' ),
-			$asset['dependencies'] ?? array(),
-			$asset['version'] ?? false,
-			true
-		);
-
-		wp_set_script_translations( self::HANDLE, 'amalfi' );
-
-		wp_add_inline_script(
-			self::HANDLE,
-			'window.amalfiThemeSetup = ' . wp_json_encode( $this->bootstrap() ) . ';',
-			'before'
-		);
-
-		if ( file_exists( $assetsPath . '/admin.css' ) ) {
-			wp_enqueue_style(
-				self::HANDLE,
-				get_theme_file_uri( 'assets/admin.css' ),
-				array( 'wp-components' ),
-				$asset['version'] ?? false
-			);
-		} else {
-			wp_enqueue_style( 'wp-components' );
-		}
-	}
-
-	/**
-	 * The bootstrap data passed to the React app (the demo/license controls only).
-	 *
-	 * @return array<string, mixed>
-	 */
-	private function bootstrap(): array {
-		return array(
-			'restNamespace' => $this->rest->namespaceRoot(),
-			'demoParts'     => $this->demo->parts(),
-			'license'       => $this->license->state(),
-		);
 	}
 
 	/**

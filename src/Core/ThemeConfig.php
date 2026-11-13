@@ -1,16 +1,16 @@
 <?php
 /**
- * Central theme configuration for the Admin module.
+ * Central theme configuration.
  *
  * @package ThemeZee\Amalfi
  */
 
 declare(strict_types=1);
 
-namespace ThemeZee\Amalfi\Admin;
+namespace ThemeZee\Amalfi\Core;
 
 /**
- * Immutable value object holding the constants the Admin services share.
+ * Immutable value object holding the constants the theme services share.
  *
  * This replaces the loose `define()` constants used in the procedural themes
  * (e.g. AMALFI_THEME_NAME / _ID / _VERSION / _STORE_URL) with a single,
@@ -137,6 +137,13 @@ final class ThemeConfig {
 	 */
 	public function optionName(): string {
 		return 'amalfi_theme_settings';
+	}
+
+	/**
+	 * The REST namespace for the theme's own routes.
+	 */
+	public function restNamespace(): string {
+		return 'amalfi/v1';
 	}
 
 	/**

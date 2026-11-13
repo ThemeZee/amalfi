@@ -7,8 +7,10 @@
 
 declare(strict_types=1);
 
-namespace ThemeZee\Amalfi\Admin;
+namespace ThemeZee\Amalfi\Updates;
 
+use ThemeZee\Amalfi\Core\SettingsRepository;
+use ThemeZee\Amalfi\Core\ThemeConfig;
 use stdClass;
 
 /**
