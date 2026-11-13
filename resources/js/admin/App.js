@@ -1,11 +1,12 @@
 /**
- * Demo Content / License Settings panels.
+ * Demo Content / License Settings sections.
  *
  * Only this interactive part is hydrated client-side; the rest of the Theme
  * Setup page (header, links, screenshot, documentation) is server-rendered.
+ * Each section is a plain heading plus its fields on the default admin
+ * background — no card or collapsible wrapper.
  */
 import { __ } from '@wordpress/i18n';
-import { Panel, PanelBody } from '@wordpress/components';
 
 import DemoContentPanel from './DemoContentPanel';
 import LicensePanel from './LicensePanel';
@@ -16,19 +17,22 @@ export default function App() {
 	const restNamespace = bootstrap.restNamespace || 'amalfi/v1';
 
 	return (
-		<Panel>
-			<PanelBody title={ __( 'Demo Content', 'amalfi' ) } initialOpen={ true }>
+		<div className="amalfi-theme-setup__columns">
+			<section className="amalfi-theme-setup__group">
+				<h3>{ __( 'Demo Content', 'amalfi' ) }</h3>
 				<DemoContentPanel
 					parts={ bootstrap.demoParts || [] }
 					restNamespace={ restNamespace }
 				/>
-			</PanelBody>
-			<PanelBody title={ __( 'License Settings', 'amalfi' ) } initialOpen={ false }>
+			</section>
+
+			<section className="amalfi-theme-setup__group">
+				<h3>{ __( 'License Settings', 'amalfi' ) }</h3>
 				<LicensePanel
 					initialState={ bootstrap.license || {} }
 					restNamespace={ restNamespace }
 				/>
-			</PanelBody>
-		</Panel>
+			</section>
+		</div>
 	);
 }

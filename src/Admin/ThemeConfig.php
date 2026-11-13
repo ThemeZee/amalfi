@@ -32,7 +32,7 @@ final class ThemeConfig {
 	 * Set this to the Easy Digital Downloads download ID for the Amalfi theme
 	 * so license activation and update checks resolve to the right product.
 	 */
-	public const ITEM_ID = 0;
+	public const ITEM_ID = 267408;
 
 	/**
 	 * Constructor.

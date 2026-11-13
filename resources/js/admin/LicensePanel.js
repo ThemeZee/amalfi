@@ -4,7 +4,14 @@
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import { TextControl, Button, Notice, Spinner, Flex } from '@wordpress/components';
+import {
+	BaseControl,
+	TextControl,
+	Button,
+	Notice,
+	Spinner,
+	Flex,
+} from '@wordpress/components';
 
 export default function LicensePanel( { initialState, restNamespace } ) {
 	const [ state, setState ] = useState( {
@@ -52,8 +59,20 @@ export default function LicensePanel( { initialState, restNamespace } ) {
 
 	return (
 		<div className="amalfi-theme-setup__section">
-			<p>
-				<strong>{ __( 'Status:', 'amalfi' ) }</strong>{ ' ' }
+			<p className="amalfi-theme-setup__hint">
+				{ state.active
+					? __( 'You are receiving updates.', 'amalfi' )
+					: __(
+							'An active license key is needed to install updates and receive support.',
+							'amalfi'
+					  ) }
+			</p>
+			<BaseControl
+				__nextHasNoMarginBottom
+				id="amalfi-license-status"
+				className="amalfi-license-status"
+				label={ __( 'License Status', 'amalfi' ) }
+			>
 				<span
 					className={ `amalfi-license-badge amalfi-license-badge--${
 						state.active ? 'active' : 'inactive'
@@ -63,15 +82,7 @@ export default function LicensePanel( { initialState, restNamespace } ) {
 						? __( 'Active', 'amalfi' )
 						: __( 'Inactive', 'amalfi' ) }
 				</span>
-			</p>
-			<p className="amalfi-theme-setup__hint">
-				{ state.active
-					? __( 'You are receiving updates.', 'amalfi' )
-					: __(
-							'An active license key is needed to install updates and receive support.',
-							'amalfi'
-					  ) }
-			</p>
+			</BaseControl>
 
 			{ state.active ? (
 				<>

@@ -54,7 +54,7 @@ export default function DemoContentPanel( { parts, restNamespace } ) {
 		<div className="amalfi-theme-setup__section">
 			<p>
 				{ __(
-					'Select the content to import, then run the importer. Existing items of the same name are reused rather than duplicated.',
+					'Select the content to import, then run the importer.',
 					'amalfi'
 				) }
 			</p>

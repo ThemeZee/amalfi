@@ -64,11 +64,8 @@ class AdminPage {
 	 * hydrates only the Demo Content / License Settings container.
 	 */
 	public function render(): void {
-		$name       = $this->config->name();
-		$version    = $this->config->version();
-		$screenshot = $this->screenshotUrl();
-		/* translators: %s: theme name. */
-		$screenshotAlt = sprintf( __( '%s theme screenshot', 'amalfi' ), $name );
+		$name    = $this->config->name();
+		$version = $this->config->version();
 		?>
 		<div class="wrap">
 			<div class="amalfi-theme-info">
@@ -107,26 +104,8 @@ class AdminPage {
 						?>
 					</h2>
 
-					<div class="amalfi-theme-info__columns">
-						<div class="amalfi-theme-info__main">
-							<div id="<?php echo esc_attr( self::MOUNT_ID ); ?>" class="amalfi-theme-setup__app">
-								<?php esc_html_e( 'Loading…', 'amalfi' ); ?>
-							</div>
-						</div>
-
-						<div class="amalfi-theme-info__side">
-							<?php if ( null !== $screenshot ) : ?>
-								<img
-									class="amalfi-theme-info__screenshot"
-									src="<?php echo esc_url( $screenshot ); ?>"
-									alt="<?php echo esc_attr( $screenshotAlt ); ?>"
-								/>
-							<?php else : ?>
-								<div class="amalfi-theme-info__screenshot amalfi-theme-info__screenshot--placeholder" aria-hidden="true">
-									<span><?php echo esc_html( $name ); ?></span>
-								</div>
-							<?php endif; ?>
-						</div>
+					<div id="<?php echo esc_attr( self::MOUNT_ID ); ?>" class="amalfi-theme-setup__app">
+						<?php esc_html_e( 'Loading…', 'amalfi' ); ?>
 					</div>
 				</section>
 
@@ -245,20 +224,5 @@ class AdminPage {
 	 */
 	private function docsUrl(): string {
 		return $this->config->storeUrl() . '/docs/' . $this->config->slug() . '-documentation/';
-	}
-
-	/**
-	 * The theme screenshot URL, or null when the theme has no screenshot.
-	 */
-	private function screenshotUrl(): ?string {
-		$base = untrailingslashit( $this->config->basePath() );
-
-		foreach ( array( 'screenshot.png', 'screenshot.jpg' ) as $file ) {
-			if ( file_exists( $base . '/' . $file ) ) {
-				return get_theme_file_uri( $file );
-			}
-		}
-
-		return null;
 	}
 }

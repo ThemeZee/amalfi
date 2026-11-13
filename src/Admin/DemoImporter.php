@@ -42,6 +42,11 @@ class DemoImporter {
 	public function parts(): array {
 		return array(
 			array(
+				'key'   => 'posts',
+				'label' => __( 'Blog Posts', 'amalfi' ),
+				'count' => count( $this->content->postDefinitions() ),
+			),
+			array(
 				'key'   => 'categories',
 				'label' => __( 'Categories', 'amalfi' ),
 				'count' => count( $this->content->categoryNames() ),
@@ -55,11 +60,6 @@ class DemoImporter {
 				'key'   => 'image',
 				'label' => __( 'Featured Images', 'amalfi' ),
 				'count' => count( $this->content->imageFiles() ),
-			),
-			array(
-				'key'   => 'posts',
-				'label' => __( 'Blog Posts', 'amalfi' ),
-				'count' => count( $this->content->postDefinitions() ),
 			),
 			array(
 				'key'   => 'pages',
