@@ -1,16 +1,14 @@
 /**
  * Theme Setup admin page styling.
  *
- * A theme-info style layout (header, links, two-column "Getting started",
- * documentation footer) wrapping the @wordpress/components (wp-components)
- * controls, which supply their own styling.
+ * The page chrome is server-rendered; only the Demo Content / License Settings
+ * container (#amalfi-demo-license) is hydrated by React. Styles are scoped to
+ * the server-rendered wrapper so they apply to both.
  */
-#amalfi-theme-setup {
-	.amalfi-theme-info {
-		position: relative;
-		max-width: 1050px;
-		margin: 25px 40px 0 20px;
-	}
+.amalfi-theme-info {
+	position: relative;
+	max-width: 1050px;
+	margin: 25px 40px 0 20px;
 
 	/* Header */
 	.amalfi-theme-info__title {
@@ -80,6 +78,11 @@
 		.amalfi-theme-info__side {
 			max-width: 560px;
 		}
+	}
+
+	/* Demo/license container (React mount) */
+	.amalfi-theme-setup__app {
+		color: #646970;
 	}
 
 	/* Screenshot */

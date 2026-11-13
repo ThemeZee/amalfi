@@ -10,7 +10,7 @@ import App from './App';
 import './admin.scss';
 
 domReady( () => {
-	const root = document.getElementById( 'amalfi-theme-setup' );
+	const root = document.getElementById( 'amalfi-demo-license' );
 
 	if ( root ) {
 		createRoot( root ).render( <App /> );

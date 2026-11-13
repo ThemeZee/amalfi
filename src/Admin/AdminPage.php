@@ -10,19 +10,20 @@ declare(strict_types=1);
 namespace ThemeZee\Amalfi\Admin;
 
 /**
- * Registers the "Theme Setup" page under the Appearance menu and mounts the
- * React application that renders the demo-content and license sections.
+ * Registers the "Theme Setup" page under the Appearance menu.
  *
- * The page itself is just a root element plus the enqueued script/styles and a
- * bootstrap data blob; all UI lives in the compiled `assets/admin.js` app, and
- * its actions go through {@see RestController}.
+ * The page chrome (header, theme links, screenshot and documentation) is
+ * rendered server-side with PHP so it paints instantly. Only the interactive
+ * Demo Content and License Settings controls are hydrated client-side: the
+ * React app mounts into a single container and its actions go through
+ * {@see RestController}.
  */
 class AdminPage {
 
 	/**
-	 * The DOM id the React app mounts on.
+	 * The DOM id the React app mounts on (the demo/license controls only).
 	 */
-	private const ROOT_ID = 'amalfi-theme-setup';
+	private const MOUNT_ID = 'amalfi-demo-license';
 
 	/**
 	 * The script/style handle.
@@ -59,14 +60,94 @@ class AdminPage {
 	}
 
 	/**
-	 * Render the page root. The React app replaces its contents.
+	 * Render the page. The static chrome is server-rendered; the React app
+	 * hydrates only the Demo Content / License Settings container.
 	 */
 	public function render(): void {
-		printf(
-			'<div class="wrap"><div id="%1$s">%2$s</div></div>',
-			esc_attr( self::ROOT_ID ),
-			esc_html__( 'Loading…', 'amalfi' )
-		);
+		$name       = $this->config->name();
+		$version    = $this->config->version();
+		$screenshot = $this->screenshotUrl();
+		/* translators: %s: theme name. */
+		$screenshotAlt = sprintf( __( '%s theme screenshot', 'amalfi' ), $name );
+		?>
+		<div class="wrap">
+			<div class="amalfi-theme-info">
+
+				<h1 class="amalfi-theme-info__title">
+					<?php
+					/* translators: %1$s: theme name. %2$s: version. */
+					printf( esc_html__( 'Welcome to %1$s %2$s', 'amalfi' ), esc_html( $name ), esc_html( $version ) );
+					?>
+				</h1>
+
+				<?php if ( '' !== $this->config->description() ) : ?>
+					<p class="amalfi-theme-info__description">
+						<?php echo esc_html( $this->config->description() ); ?>
+					</p>
+				<?php endif; ?>
+
+				<hr />
+
+				<p class="amalfi-theme-info__links">
+					<strong><?php esc_html_e( 'Theme Links:', 'amalfi' ); ?></strong>
+					<?php foreach ( $this->links() as $link ) : ?>
+						<a href="<?php echo esc_url( $link['url'] ); ?>" target="_blank" rel="noreferrer noopener">
+							<?php echo esc_html( $link['label'] ); ?>
+						</a>
+					<?php endforeach; ?>
+				</p>
+
+				<hr />
+
+				<section class="amalfi-theme-info__getting-started">
+					<h2>
+						<?php
+						/* translators: %s: theme name. */
+						printf( esc_html__( 'Getting started with %s', 'amalfi' ), esc_html( $name ) );
+						?>
+					</h2>
+
+					<div class="amalfi-theme-info__columns">
+						<div class="amalfi-theme-info__main">
+							<div id="<?php echo esc_attr( self::MOUNT_ID ); ?>" class="amalfi-theme-setup__app">
+								<?php esc_html_e( 'Loading…', 'amalfi' ); ?>
+							</div>
+						</div>
+
+						<div class="amalfi-theme-info__side">
+							<?php if ( null !== $screenshot ) : ?>
+								<img
+									class="amalfi-theme-info__screenshot"
+									src="<?php echo esc_url( $screenshot ); ?>"
+									alt="<?php echo esc_attr( $screenshotAlt ); ?>"
+								/>
+							<?php else : ?>
+								<div class="amalfi-theme-info__screenshot amalfi-theme-info__screenshot--placeholder" aria-hidden="true">
+									<span><?php echo esc_html( $name ); ?></span>
+								</div>
+							<?php endif; ?>
+						</div>
+					</div>
+				</section>
+
+				<hr />
+
+				<section class="amalfi-theme-info__documentation">
+					<h2><?php esc_html_e( 'Theme Documentation', 'amalfi' ); ?></h2>
+					<p class="amalfi-theme-info__about">
+						<?php esc_html_e( 'Need help to set up and configure this theme? We have you covered. Check out the extensive theme documentation on our website.', 'amalfi' ); ?>
+					</p>
+					<a class="button button-secondary" href="<?php echo esc_url( $this->docsUrl() ); ?>" target="_blank" rel="noreferrer noopener">
+						<?php
+						/* translators: %s: theme name. */
+						printf( esc_html__( "View %s's documentation", 'amalfi' ), esc_html( $name ) );
+						?>
+					</a>
+				</section>
+
+			</div>
+		</div>
+		<?php
 	}
 
 	/**
@@ -117,21 +198,15 @@ class AdminPage {
 	}
 
 	/**
-	 * The bootstrap data passed to the React app.
+	 * The bootstrap data passed to the React app (the demo/license controls only).
 	 *
 	 * @return array<string, mixed>
 	 */
 	private function bootstrap(): array {
 		return array(
-			'themeName'     => $this->config->name(),
-			'version'       => $this->config->version(),
-			'description'   => $this->config->description(),
 			'restNamespace' => $this->rest->namespaceRoot(),
 			'demoParts'     => $this->demo->parts(),
 			'license'       => $this->license->state(),
-			'links'         => $this->links(),
-			'docsUrl'       => $this->docsUrl(),
-			'screenshot'    => $this->screenshotUrl(),
 		);
 	}
 
@@ -143,7 +218,7 @@ class AdminPage {
 	private function links(): array {
 		$slug  = $this->config->slug();
 		$store = $this->config->storeUrl();
-		$home  = $this->config->uri() ?: $store . '/themes/' . $slug . '/';
+		$home  = '' !== $this->config->uri() ? $this->config->uri() : $store . '/themes/' . $slug . '/';
 
 		return array(
 			array(
