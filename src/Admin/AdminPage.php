@@ -125,9 +125,69 @@ class AdminPage {
 		return array(
 			'themeName'     => $this->config->name(),
 			'version'       => $this->config->version(),
+			'description'   => $this->config->description(),
 			'restNamespace' => $this->rest->namespaceRoot(),
 			'demoParts'     => $this->demo->parts(),
 			'license'       => $this->license->state(),
+			'links'         => $this->links(),
+			'docsUrl'       => $this->docsUrl(),
+			'screenshot'    => $this->screenshotUrl(),
 		);
+	}
+
+	/**
+	 * The theme links shown in the header.
+	 *
+	 * @return array<int, array{label: string, url: string}>
+	 */
+	private function links(): array {
+		$slug  = $this->config->slug();
+		$store = $this->config->storeUrl();
+		$home  = $this->config->uri() ?: $store . '/themes/' . $slug . '/';
+
+		return array(
+			array(
+				'label' => __( 'Theme Page', 'amalfi' ),
+				'url'   => $home,
+			),
+			array(
+				'label' => __( 'Theme Demo', 'amalfi' ),
+				'url'   => 'https://preview.themezee.com/?demo=' . $slug,
+			),
+			array(
+				'label' => __( 'Theme Documentation', 'amalfi' ),
+				'url'   => $this->docsUrl(),
+			),
+			array(
+				'label' => __( 'Theme Changelog', 'amalfi' ),
+				'url'   => $store . '/changelogs/?action=themezee-changelog&type=theme&slug=' . $slug,
+			),
+			array(
+				'label' => __( 'Rate this theme', 'amalfi' ),
+				'url'   => 'https://wordpress.org/support/theme/' . $slug . '/reviews/',
+			),
+		);
+	}
+
+	/**
+	 * The theme documentation URL.
+	 */
+	private function docsUrl(): string {
+		return $this->config->storeUrl() . '/docs/' . $this->config->slug() . '-documentation/';
+	}
+
+	/**
+	 * The theme screenshot URL, or null when the theme has no screenshot.
+	 */
+	private function screenshotUrl(): ?string {
+		$base = untrailingslashit( $this->config->basePath() );
+
+		foreach ( array( 'screenshot.png', 'screenshot.jpg' ) as $file ) {
+			if ( file_exists( $base . '/' . $file ) ) {
+				return get_theme_file_uri( $file );
+			}
+		}
+
+		return null;
 	}
 }

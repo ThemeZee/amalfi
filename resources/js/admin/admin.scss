@@ -1,26 +1,127 @@
 /**
  * Theme Setup admin page styling.
  *
- * Minimal layout tweaks only; the controls use the @wordpress/components
- * (wp-components) stylesheet, enqueued as a dependency.
+ * A theme-info style layout (header, links, two-column "Getting started",
+ * documentation footer) wrapping the @wordpress/components (wp-components)
+ * controls, which supply their own styling.
  */
 #amalfi-theme-setup {
-	max-width: 880px;
-
-	.amalfi-theme-setup__title {
-		margin-bottom: 4px;
+	.amalfi-theme-info {
+		position: relative;
+		max-width: 1050px;
+		margin: 25px 40px 0 20px;
 	}
 
-	.amalfi-theme-setup__intro {
-		margin-top: 0;
-		color: #50575e;
+	/* Header */
+	.amalfi-theme-info__title {
+		margin: 0.2em 0 0;
+		padding: 0;
+		color: #333;
+		font-weight: 400;
+		font-size: 3em;
+		line-height: 1.2;
+	}
+
+	.amalfi-theme-info__description {
+		min-height: 60px;
+		margin: 1em 0;
+		color: #777;
+		font-size: 1.4em;
+		font-weight: 400;
+		line-height: 1.6;
+	}
+
+	hr {
+		margin: 1.5em 0;
+		border: 0;
+		border-top: 1px solid #dcdcde;
+	}
+
+	/* Theme links */
+	.amalfi-theme-info__links {
 		font-size: 14px;
+
+		strong {
+			margin-right: 1em;
+		}
+
+		a {
+			padding: 0 1em;
+			text-decoration: none;
+		}
 	}
 
-	.amalfi-theme-setup__panel {
-		margin-top: 16px;
+	/* Getting started */
+	.amalfi-theme-info__getting-started {
+		margin: 2em 0;
 	}
 
+	.amalfi-theme-info__getting-started h2,
+	.amalfi-theme-info__documentation h2 {
+		margin: 1em 0 0.6em;
+		font-size: 1.8em;
+		font-weight: 600;
+		line-height: 1.5;
+	}
+
+	.amalfi-theme-info__columns {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+		gap: 48px;
+		align-items: start;
+		margin-top: 1.5em;
+	}
+
+	@media screen and (max-width: 1100px) {
+		.amalfi-theme-info__columns {
+			grid-template-columns: 1fr;
+		}
+
+		.amalfi-theme-info__side {
+			max-width: 560px;
+		}
+	}
+
+	/* Screenshot */
+	.amalfi-theme-info__screenshot {
+		display: block;
+		width: 100%;
+		border: 1px solid #dcdcde;
+		border-radius: 4px;
+		box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.08 );
+	}
+
+	.amalfi-theme-info__screenshot--placeholder {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		aspect-ratio: 4 / 3;
+		border: 1px dashed #c3c4c7;
+		background: #f6f7f7;
+		box-shadow: none;
+
+		span {
+			color: #a7aaad;
+			font-size: 1.4em;
+			font-weight: 600;
+			letter-spacing: 0.02em;
+		}
+	}
+
+	/* Documentation */
+	.amalfi-theme-info__documentation {
+		margin: 2em 0 3em;
+	}
+
+	.amalfi-theme-info__about {
+		max-width: 820px;
+		margin: 0 0 1.2em;
+		color: #777;
+		font-size: 1.2em;
+		line-height: 1.6;
+	}
+
+	/* Panels / controls */
 	.amalfi-theme-setup__section > p:first-child {
 		margin-top: 0;
 	}
@@ -34,7 +135,7 @@
 
 	.amalfi-theme-setup__hint {
 		margin-top: 0;
-		color: #50575e;
+		color: #646970;
 	}
 
 	.amalfi-theme-setup__actions {

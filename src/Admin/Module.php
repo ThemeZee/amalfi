@@ -46,6 +46,8 @@ class Module implements ServiceModule, ExecutableModule {
 					$properties->author(),
 					$properties->textDomain(),
 					untrailingslashit( $properties->basePath() ),
+					$properties->description(),
+					$properties->uri(),
 				);
 			},
 			SettingsRepository::class => static fn ( ContainerInterface $c ): SettingsRepository => new SettingsRepository(

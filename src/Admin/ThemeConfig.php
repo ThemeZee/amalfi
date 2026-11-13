@@ -37,14 +37,16 @@ final class ThemeConfig {
 	/**
 	 * Constructor.
 	 *
-	 * @param string $name       Human readable theme name (e.g. "Amalfi").
+	 * @param string $name        Human readable theme name (e.g. "Amalfi").
 	 * @param string $slug        Theme slug / stylesheet directory name.
-	 * @param string $version    Current theme version.
-	 * @param string $author     Theme author.
-	 * @param string $textDomain Theme text domain.
-	 * @param string $basePath   Absolute path to the theme root (no trailing slash).
-	 * @param int    $itemId     Store download ID.
-	 * @param string $storeUrl   Licensing / update API endpoint.
+	 * @param string $version     Current theme version.
+	 * @param string $author      Theme author.
+	 * @param string $textDomain  Theme text domain.
+	 * @param string $basePath    Absolute path to the theme root (no trailing slash).
+	 * @param string $description Theme description.
+	 * @param string $uri         Theme home page URL.
+	 * @param int    $itemId      Store download ID.
+	 * @param string $storeUrl    Licensing / update API endpoint.
 	 */
 	public function __construct(
 		private readonly string $name,
@@ -53,9 +55,25 @@ final class ThemeConfig {
 		private readonly string $author,
 		private readonly string $textDomain,
 		private readonly string $basePath,
+		private readonly string $description = '',
+		private readonly string $uri = '',
 		private readonly int $itemId = self::ITEM_ID,
 		private readonly string $storeUrl = self::STORE_URL,
 	) {
+	}
+
+	/**
+	 * The theme description.
+	 */
+	public function description(): string {
+		return $this->description;
+	}
+
+	/**
+	 * The theme home page URL.
+	 */
+	public function uri(): string {
+		return $this->uri;
 	}
 
 	/**
