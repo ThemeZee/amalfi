@@ -10,8 +10,9 @@ import { __ } from '@wordpress/i18n';
 
 import DemoContentPanel from './DemoContentPanel';
 import LicensePanel from './LicensePanel';
+import type { ThemeSetupBootstrap } from './types';
 
-const bootstrap = window.amalfiThemeSetup || {};
+const bootstrap: ThemeSetupBootstrap = window.amalfiThemeSetup || {};
 
 export default function App() {
 	const restNamespace = bootstrap.restNamespace || 'amalfi/v1';

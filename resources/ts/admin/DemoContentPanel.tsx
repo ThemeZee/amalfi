@@ -12,16 +12,26 @@ import {
 	Flex,
 } from '@wordpress/components';
 
-export default function DemoContentPanel( { parts, restNamespace } ) {
-	const [ selected, setSelected ] = useState( () =>
-		Object.fromEntries( parts.map( ( part ) => [ part.key, true ] ) )
+import type { DemoPart, DemoResponse, ImportResult } from './types';
+
+interface DemoContentPanelProps {
+	parts: DemoPart[];
+	restNamespace: string;
+}
+
+export default function DemoContentPanel( {
+	parts,
+	restNamespace,
+}: DemoContentPanelProps ) {
+	const [ selected, setSelected ] = useState< Record< string, boolean > >(
+		() => Object.fromEntries( parts.map( ( part ) => [ part.key, true ] ) )
 	);
 	const [ isBusy, setIsBusy ] = useState( false );
-	const [ results, setResults ] = useState( null );
+	const [ results, setResults ] = useState< ImportResult[] | null >( null );
 
 	const anySelected = Object.values( selected ).some( Boolean );
 
-	const toggle = ( key ) => ( value ) =>
+	const toggle = ( key: string ) => ( value: boolean ) =>
 		setSelected( ( current ) => ( { ...current, [ key ]: value } ) );
 
 	const runImport = async () => {
@@ -29,7 +39,7 @@ export default function DemoContentPanel( { parts, restNamespace } ) {
 		setResults( null );
 
 		try {
-			const response = await apiFetch( {
+			const response = await apiFetch< DemoResponse >( {
 				path: `/${ restNamespace }/demo`,
 				method: 'POST',
 				data: { parts: selected },
@@ -41,8 +51,12 @@ export default function DemoContentPanel( { parts, restNamespace } ) {
 					task: 'error',
 					status: 'error',
 					message:
-						error.message ||
-						__( 'The import could not be completed.', 'amalfi' ),
+						error instanceof Error
+							? error.message
+							: __(
+									'The import could not be completed.',
+									'amalfi'
+							  ),
 				},
 			] );
 		} finally {
@@ -94,10 +108,14 @@ export default function DemoContentPanel( { parts, restNamespace } ) {
 				results.map( ( result ) => (
 					<Notice
 						key={ result.task }
-						status={ result.status === 'success' ? 'success' : 'error' }
+						status={
+							result.status === 'success' ? 'success' : 'error'
+						}
 						onRemove={ () =>
 							setResults( ( current ) =>
-								current.filter( ( item ) => item.task !== result.task )
+								( current || [] ).filter(
+									( item ) => item.task !== result.task
+								)
 							)
 						}
 						className="amalfi-theme-setup__notice"

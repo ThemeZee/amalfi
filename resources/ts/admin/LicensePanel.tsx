@@ -13,22 +13,37 @@ import {
 	Flex,
 } from '@wordpress/components';
 
-export default function LicensePanel( { initialState, restNamespace } ) {
-	const [ state, setState ] = useState( {
+import type {
+	LicenseRequest,
+	LicenseResponse,
+	LicenseState,
+	PanelNotice,
+} from './types';
+
+interface LicensePanelProps {
+	initialState: Partial< LicenseState >;
+	restNamespace: string;
+}
+
+export default function LicensePanel( {
+	initialState,
+	restNamespace,
+}: LicensePanelProps ) {
+	const [ state, setState ] = useState< LicenseState >( {
 		active: !! initialState.active,
 		status: initialState.status || 'inactive',
 		keyMasked: initialState.keyMasked || '',
 	} );
 	const [ key, setKey ] = useState( '' );
 	const [ isBusy, setIsBusy ] = useState( false );
-	const [ notice, setNotice ] = useState( null );
+	const [ notice, setNotice ] = useState< PanelNotice | null >( null );
 
-	const request = async ( data ) => {
+	const request = async ( data: LicenseRequest ) => {
 		setIsBusy( true );
 		setNotice( null );
 
 		try {
-			const response = await apiFetch( {
+			const response = await apiFetch< LicenseResponse >( {
 				path: `/${ restNamespace }/license`,
 				method: 'POST',
 				data,
@@ -49,8 +64,9 @@ export default function LicensePanel( { initialState, restNamespace } ) {
 			setNotice( {
 				status: 'error',
 				message:
-					error.message ||
-					__( 'The request could not be completed.', 'amalfi' ),
+					error instanceof Error
+						? error.message
+						: __( 'The request could not be completed.', 'amalfi' ),
 			} );
 		} finally {
 			setIsBusy( false );
@@ -90,14 +106,20 @@ export default function LicensePanel( { initialState, restNamespace } ) {
 						__nextHasNoMarginBottom
 						label={ __( 'License Key', 'amalfi' ) }
 						value={ state.keyMasked }
+						onChange={ () => undefined }
 						readOnly
 						disabled
 					/>
-					<Flex justify="flex-start" className="amalfi-theme-setup__actions">
+					<Flex
+						justify="flex-start"
+						className="amalfi-theme-setup__actions"
+					>
 						<Button
 							variant="secondary"
 							isDestructive
-							onClick={ () => request( { action: 'deactivate' } ) }
+							onClick={ () =>
+								request( { action: 'deactivate' } )
+							}
 							disabled={ isBusy }
 							__next40pxDefaultSize
 						>
@@ -117,10 +139,15 @@ export default function LicensePanel( { initialState, restNamespace } ) {
 						onChange={ setKey }
 						placeholder={ __( 'Enter your license key', 'amalfi' ) }
 					/>
-					<Flex justify="flex-start" className="amalfi-theme-setup__actions">
+					<Flex
+						justify="flex-start"
+						className="amalfi-theme-setup__actions"
+					>
 						<Button
 							variant="primary"
-							onClick={ () => request( { action: 'activate', key } ) }
+							onClick={ () =>
+								request( { action: 'activate', key } )
+							}
 							disabled={ isBusy || ! key }
 							__next40pxDefaultSize
 						>
