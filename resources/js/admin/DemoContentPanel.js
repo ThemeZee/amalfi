@@ -91,11 +91,15 @@ export default function DemoContentPanel( { parts, restNamespace } ) {
 			</Flex>
 
 			{ results &&
-				results.map( ( result, index ) => (
+				results.map( ( result ) => (
 					<Notice
-						key={ index }
+						key={ result.task }
 						status={ result.status === 'success' ? 'success' : 'error' }
-						isDismissible={ false }
+						onRemove={ () =>
+							setResults( ( current ) =>
+								current.filter( ( item ) => item.task !== result.task )
+							)
+						}
 						className="amalfi-theme-setup__notice"
 					>
 						{ result.message }

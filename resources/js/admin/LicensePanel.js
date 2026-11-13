@@ -136,7 +136,7 @@ export default function LicensePanel( { initialState, restNamespace } ) {
 			{ notice && (
 				<Notice
 					status={ notice.status }
-					isDismissible={ false }
+					onRemove={ () => setNotice( null ) }
 					className="amalfi-theme-setup__notice"
 				>
 					{ notice.message }
