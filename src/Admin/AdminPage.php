@@ -162,10 +162,6 @@ class AdminPage {
 				'label' => __( 'Theme Changelog', 'amalfi' ),
 				'url'   => $store . '/changelogs/?action=themezee-changelog&type=theme&slug=' . $slug,
 			),
-			array(
-				'label' => __( 'Rate this theme', 'amalfi' ),
-				'url'   => 'https://wordpress.org/support/theme/' . $slug . '/reviews/',
-			),
 		);
 	}
 
