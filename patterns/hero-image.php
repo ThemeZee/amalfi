@@ -9,8 +9,8 @@
 
 ?>
 
-<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|1000","bottom":"var:preset|spacing|1000"},"margin":{"top":"0"}}},"layout":{"type":"constrained","contentSize":"1440px"}} -->
-<div class="wp-block-group alignfull" style="margin-top:0;padding-top:var(--wp--preset--spacing--1000);padding-bottom:var(--wp--preset--spacing--1000)">
+<!-- wp:group {"align":"full","className":"amalfi-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|1000","bottom":"var:preset|spacing|1000"}}},"layout":{"type":"constrained","contentSize":"1440px"}} -->
+<div class="wp-block-group alignfull amalfi-section" style="padding-top:var(--wp--preset--spacing--1000);padding-bottom:var(--wp--preset--spacing--1000)">
 
 	<!-- wp:columns {"verticalAlignment":"center","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|600","left":"var:preset|spacing|800"}}}} -->
 	<div class="wp-block-columns are-vertically-aligned-center">

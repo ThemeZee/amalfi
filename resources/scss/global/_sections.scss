@@ -1,0 +1,24 @@
+// Page-section rhythm
+//
+// The "page section" patterns are alignwide groups with a top border, marked
+// with `.amalfi-section`. Stacked one after another they sit flush — their top
+// border is the only divider, so no gap is wanted between them. But when a
+// section follows ordinary flow content (a paragraph, an image, a heading, …)
+// the border butts straight up against the previous block, which looks wrong;
+// such a section needs breathing room above it.
+//
+// `margin-block-start` (not `margin-top`) is used throughout so these rules act
+// on the same logical property the post-content block gap uses, and cleanly win
+// it on specificity rather than leaving a physical/logical margin conflict.
+
+.amalfi-section {
+	// Flush by default. Covers two cases at once: a section stacked on another
+	// section, and a section that opens the content (no preceding sibling, so no
+	// stray gap at the very top).
+	margin-block-start: 0;
+}
+
+// Add spacing only when a section follows a non-section block.
+:not( .amalfi-section ) + .amalfi-section {
+	margin-block-start: var( --wp--preset--spacing--600 );
+}

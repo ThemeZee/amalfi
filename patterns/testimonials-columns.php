@@ -9,8 +9,8 @@
 
 ?>
 
-<!-- wp:group {"align":"wide","style":{"border":{"top":{"color":"var:preset|color|primary-200","width":"1px"}},"spacing":{"margin":{"top":"0"},"padding":{"top":"var:preset|spacing|1000","bottom":"var:preset|spacing|1000"},"blockGap":"var:preset|spacing|800"}},"layout":{"type":"constrained","contentSize":"1040px","wideSize":"1040px"}} -->
-<div class="wp-block-group alignwide" style="border-top-color:var(--wp--preset--color--primary-200);border-top-width:1px;padding-top:var(--wp--preset--spacing--1000);padding-bottom:var(--wp--preset--spacing--1000);margin-top:0">
+<!-- wp:group {"align":"wide","className":"amalfi-section","style":{"border":{"top":{"color":"var:preset|color|primary-200","width":"1px"}},"spacing":{"padding":{"top":"var:preset|spacing|1000","bottom":"var:preset|spacing|1000"},"blockGap":"var:preset|spacing|800"}},"layout":{"type":"constrained","contentSize":"1040px","wideSize":"1040px"}} -->
+<div class="wp-block-group alignwide amalfi-section" style="border-top-color:var(--wp--preset--color--primary-200);border-top-width:1px;padding-top:var(--wp--preset--spacing--1000);padding-bottom:var(--wp--preset--spacing--1000)">
 
 	<!-- wp:heading {"textAlign":"center","fontSize":"display-sm"} -->
 	<h2 class="has-text-align-center has-display-sm-font-size">Notes from fellow travellers.</h2>
