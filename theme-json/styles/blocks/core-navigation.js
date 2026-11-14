@@ -17,8 +17,13 @@
 // via inheritance, so no colour key is set for it.
 const MAIN_NAVIGATION_CSS =
 	// Top-level links only: a buttonish uppercase, semibold, tracked label at the
-	// small button font size.
-	'& .wp-block-navigation__container > li > .wp-block-navigation-item__content{' +
+	// small button font size. Match the item by its `.wp-block-navigation-item`
+	// class, not the `li` tag: on the front end an item is an `<li>`, but in the
+	// block editor each item renders as a `<div class="wp-block-navigation-item …">`
+	// block-list block, so a `> li >` selector matches nothing in the canvas and
+	// the style would look unapplied there. The class is present in both, and the
+	// `>` keeps it to top-level items (submenu items sit in `__submenu-container`).
+	'& .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content{' +
 	'text-transform:uppercase;font-weight:600;letter-spacing:0.12rem;' +
 	'font-size:var(--wp--preset--font-size--body-xs)' +
 	'}' +
@@ -40,13 +45,14 @@ const MAIN_NAVIGATION_CSS =
 	'color:var(--wp--preset--color--primary-700) !important' +
 	'}' +
 	// Slightly larger dropdown chevron on top-level toggles (the `<button>` is a
-	// direct child of the top-level `<li>`, so this leaves any nested icon alone),
+	// direct child of the top-level item, so this leaves any nested icon alone),
 	// nudged up 1px to sit better against the uppercase label. The
 	// inner `<svg>` is `width/height:inherit`, so sizing the button is enough.
 	// Core sets 0.6em at 0-2-0 (`.wp-block-navigation .…__submenu-icon`), past this
 	// `:root :where(…)` rule (0-1-0), so the size needs `!important` (no editor
-	// control); the relative nudge has no competing rule.
-	'& .wp-block-navigation__container > li > .wp-block-navigation__submenu-icon{' +
+	// control); the relative nudge has no competing rule. Item matched by class,
+	// not `li`, so it also applies to the editor's `<div>` items (see above).
+	'& .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation__submenu-icon{' +
 	'width:0.75em !important;height:0.75em !important;' +
 	'position:relative;top:-1px' +
 	'}' +
