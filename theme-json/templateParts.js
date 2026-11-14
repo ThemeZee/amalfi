@@ -5,6 +5,16 @@ module.exports = [
 		area: 'header',
 	},
 	{
+		name: 'header-centered',
+		title: 'Header (Centered)',
+		area: 'header',
+	},
+	{
+		name: 'header-centered-social',
+		title: 'Header (Centered, Social Links)',
+		area: 'header',
+	},
+	{
 		name: 'footer',
 		title: 'Footer',
 		area: 'footer',

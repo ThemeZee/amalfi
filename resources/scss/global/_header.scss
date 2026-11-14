@@ -1,0 +1,43 @@
+// Header · centered navigation
+//
+// Used by the "Header (Centered)" template parts, whose inner row carries the
+// `has-centered-navigation` class and holds three items: the site branding,
+// the navigation, and an action (Contact button or social links).
+//
+// This is custom layout that theme.json cannot express, so it lives here,
+// scoped to the wrapper class so only the centered headers are affected. The
+// navigation block has no firm intrinsic width — it fills the space it is
+// given and otherwise collapses — so it is kept in normal flex flow (never
+// absolutely positioned) and the branding/action on either side are grown to
+// equal width, which centres the navigation on the page regardless of their
+// differing content widths.
+.wp-block-group.has-centered-navigation {
+	// Small screens: the navigation is collapsed to its hamburger toggle.
+	// Push the branding to the left so the toggle and the action stay
+	// right-aligned, matching the default header.
+	> :first-child {
+		margin-inline-end: auto;
+	}
+
+	// From the navigation block's own responsive breakpoint (600px) up, where
+	// the full horizontal menu is shown, centre it between equal-width sides.
+	@media (min-width: 600px) {
+		> :first-child,
+		> :last-child {
+			flex: 1 1 0;
+			margin-inline-end: 0;
+		}
+
+		> .wp-block-navigation {
+			flex: 0 0 auto;
+		}
+
+		// Keep the action (button / social links) hard against the right edge
+		// of its grown track.
+		> :last-child {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+		}
+	}
+}
