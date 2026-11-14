@@ -58,7 +58,7 @@ class ThemeUpdater {
 	 */
 	public function register(): void {
 		add_filter( 'pre_set_site_transient_update_themes', array( $this, 'injectUpdate' ) );
-		add_filter( 'delete_site_transient_update_themes', array( $this, 'flush' ) );
+		add_action( 'delete_site_transient_update_themes', array( $this, 'flush' ) );
 		add_action( 'load-update-core.php', array( $this, 'flush' ) );
 		add_action( 'load-themes.php', array( $this, 'flush' ) );
 		add_action( 'load-themes.php', array( $this, 'onThemesScreen' ) );

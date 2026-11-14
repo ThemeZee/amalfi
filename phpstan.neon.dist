@@ -1,0 +1,12 @@
+includes:
+	# WordPress core function/class/constant stubs and dynamic-return extensions.
+	- vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+	level: 6
+
+	# Analyse the theme's own PHP. The test suite is checked separately via
+	# PHPUnit (and the sources are linted with PHP_CodeSniffer).
+	paths:
+		- src
+		- functions.php

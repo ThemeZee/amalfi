@@ -51,9 +51,7 @@ class Module implements ServiceModule, ExecutableModule {
 		add_action(
 			'init',
 			static function () use ( $container ): void {
-				$doingCron = defined( 'DOING_CRON' ) && DOING_CRON;
-
-				if ( ! current_user_can( 'manage_options' ) && ! $doingCron ) {
+				if ( ! current_user_can( 'manage_options' ) && ! wp_doing_cron() ) {
 					return;
 				}
 

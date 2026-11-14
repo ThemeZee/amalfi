@@ -29,7 +29,9 @@
 		"wp-coding-standards/wpcs": "^3.4",
 		"phpunit/phpunit": "^11.5",
 		"brain/monkey": "^2.6",
-		"mockery/mockery": "^1.6"
+		"mockery/mockery": "^1.6",
+		"phpstan/phpstan": "^2.1",
+		"szepeviktor/phpstan-wordpress": "^2.0"
 	},
 	"config": {
 		"allow-plugins": {
@@ -41,9 +43,11 @@
 	"scripts": {
 		"phpcs": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
 		"phpcbf": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf",
+		"phpstan": "@php ./vendor/phpstan/phpstan/phpstan analyse",
 		"test": "@php ./vendor/phpunit/phpunit/phpunit",
 		"qa": [
 			"@phpcs",
+			"@phpstan",
 			"@test"
 		]
 	}
