@@ -12,9 +12,8 @@ import DemoContentPanel from './DemoContentPanel';
 import LicensePanel from './LicensePanel';
 import type { ThemeSetupBootstrap } from './types';
 
-const bootstrap: ThemeSetupBootstrap = window.amalfiThemeSetup || {};
-
 export default function App() {
+	const bootstrap: ThemeSetupBootstrap = window.amalfiThemeSetup || {};
 	const restNamespace = bootstrap.restNamespace || 'amalfi/v1';
 
 	return (
