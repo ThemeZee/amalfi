@@ -20,6 +20,16 @@ module.exports = [
 		area: 'footer',
 	},
 	{
+		name: 'footer-centered',
+		title: 'Footer (Centered)',
+		area: 'footer',
+	},
+	{
+		name: 'footer-simple',
+		title: 'Footer (Simple)',
+		area: 'footer',
+	},
+	{
 		name: 'posts',
 		title: 'Posts',
 		area: 'uncategorized',
