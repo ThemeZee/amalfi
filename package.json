@@ -20,12 +20,17 @@
 		"ajv": "^8.20.0",
 		"copy-webpack-plugin": "^14.0.0",
 		"jsonfile": "^6.2.1",
-		"typescript": "7.0.2"
+		"typescript": "5.3.3"
 	},
 	"scripts": {
 		"build": "wp-scripts build",
 		"check-types": "tsc --noEmit",
 		"format": "wp-scripts format *.{js,json} ./resources/**/*.{ts,tsx,json,scss} ./theme-json/**/*.{js,json}",
+		"lint": "npm run lint:js && npm run lint:css",
+		"lint:js": "wp-scripts lint-js --ext .js,.jsx,.ts,.tsx resources/ts tests/ts",
+		"lint:js:fix": "wp-scripts lint-js --ext .js,.jsx,.ts,.tsx --fix resources/ts tests/ts",
+		"lint:css": "wp-scripts lint-style \"resources/**/*.scss\"",
+		"lint:css:fix": "wp-scripts lint-style --fix \"resources/**/*.scss\"",
 		"start": "wp-scripts start",
 		"test": "wp-scripts test-unit-js",
 		"test:watch": "wp-scripts test-unit-js --watch",

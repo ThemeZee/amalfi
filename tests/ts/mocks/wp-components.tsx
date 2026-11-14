@@ -7,10 +7,18 @@
  * panels rely on — a labelled input, a checkbox, a button, a notice — so tests
  * can exercise our own logic (state, REST calls, conditional rendering) without
  * depending on WordPress component internals.
+ *
+ * These are deliberately minimal test doubles, not production UI, so the
+ * jsx-a11y label rule (satisfied by the real components) does not apply here.
  */
-import * as React from 'react';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any, jsx-a11y/label-has-associated-control */
+
+/**
+ * The subset of a change event these doubles read, typed locally to avoid a
+ * direct dependency on the `react` package.
+ */
+type ChangeEvent = { target: { value: string; checked: boolean } };
 
 export const BaseControl = ( { label, children }: any ) => (
 	<div>
@@ -35,7 +43,7 @@ export const TextControl = ( {
 			placeholder={ placeholder }
 			disabled={ disabled }
 			readOnly={ readOnly }
-			onChange={ ( event: React.ChangeEvent< HTMLInputElement > ) =>
+			onChange={ ( event: ChangeEvent ) =>
 				onChange?.( event.target.value )
 			}
 		/>
@@ -48,7 +56,7 @@ export const ToggleControl = ( { label, checked, onChange }: any ) => (
 		<input
 			type="checkbox"
 			checked={ !! checked }
-			onChange={ ( event: React.ChangeEvent< HTMLInputElement > ) =>
+			onChange={ ( event: ChangeEvent ) =>
 				onChange?.( event.target.checked )
 			}
 		/>
