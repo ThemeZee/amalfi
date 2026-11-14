@@ -13,7 +13,7 @@ Amalfi is an elegant magazine and blog theme with refined typography and a flexi
 
 == Description ==
 
-Amalfi is an elegant magazine and blog theme with refined typography and a flexible, pattern-based layout. Built entirely on WordPress core blocks and full site editing, it ships with a large collection of block patterns and multiple header and footer template parts, so you can assemble feature-rich pages and post layouts with just a few clicks.
+Amalfi is an elegant magazine and blog theme with refined typography and a flexible, pattern-based layout, built entirely on WordPress core blocks and full site editing. Its large collection of block patterns suits travel blogs, agencies and lifestyle magazines, letting you assemble feature-rich pages and post layouts in a few clicks.
 
 == Copyright ==
 
