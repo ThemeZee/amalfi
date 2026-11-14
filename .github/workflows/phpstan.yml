@@ -1,0 +1,25 @@
+name: PHPStan
+
+on: push
+
+jobs:
+  phpstan:
+    name: PHPStan
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        coverage: none
+
+    - name: Install dependencies
+      run: composer install --no-interaction --no-progress
+      env:
+        COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ github.token }}"}}'
+
+    - name: Run PHPStan
+      run: composer phpstan
