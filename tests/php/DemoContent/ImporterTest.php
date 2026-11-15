@@ -46,6 +46,9 @@ final class ImporterTest extends TestCase {
 		$content->shouldReceive( 'imageFiles' )->andReturn(
 			array( 'a.jpg', 'b.jpg', 'c.jpg' )
 		);
+		$content->shouldReceive( 'pageDefinitions' )->andReturn(
+			array_fill( 0, 6, array() )
+		);
 
 		return $content;
 	}
@@ -59,7 +62,7 @@ final class ImporterTest extends TestCase {
 		$this->assertSame( 2, $byKey['categories'] );
 		$this->assertSame( 1, $byKey['tags'] );
 		$this->assertSame( 3, $byKey['image'] );
-		$this->assertSame( 3, $byKey['pages'] );
+		$this->assertSame( 6, $byKey['pages'] );
 	}
 
 	public function test_run_does_nothing_when_no_parts_are_selected(): void {
@@ -103,5 +106,62 @@ final class ImporterTest extends TestCase {
 		$this->assertCount( 1, $results );
 		$this->assertSame( 'categories', $results[0]['task'] );
 		$this->assertSame( 'error', $results[0]['status'] );
+	}
+
+	public function test_run_imports_pages_with_template_slug_and_front_posts_config(): void {
+		$content = $this->content();
+		$content->shouldReceive( 'pages' )->andReturn(
+			array(
+				array(
+					'title'    => 'Home',
+					'content'  => 'home markup',
+					'template' => 'page-no-title',
+					'front'    => true,
+					'posts'    => false,
+				),
+				array(
+					'title'    => 'Blog',
+					'content'  => '',
+					'template' => '',
+					'front'    => false,
+					'posts'    => true,
+				),
+			)
+		);
+
+		$inserted = array();
+		Functions\when( 'get_current_user_id' )->justReturn( 1 );
+		Functions\when( 'wp_insert_post' )->alias(
+			static function ( $postarr ) use ( &$inserted ) {
+				$inserted[] = $postarr;
+
+				return count( $inserted ); // Return ascending IDs 1, 2, …
+			}
+		);
+
+		$options = array();
+		Functions\when( 'update_option' )->alias(
+			static function ( $key, $value ) use ( &$options ) {
+				$options[ $key ] = $value;
+
+				return true;
+			}
+		);
+
+		$results = ( new Importer( $content ) )->run( array( 'pages' => true ) );
+
+		$this->assertSame( 'pages', $results[0]['task'] );
+		$this->assertSame( 'success', $results[0]['status'] );
+
+		// Regression: the template is passed as the block-template slug, never a
+		// file name — `wp_insert_post` rejects `page-no-title.html`.
+		$this->assertSame( 'page-no-title', $inserted[0]['page_template'] );
+		// A page without a template sets no page_template key at all.
+		$this->assertArrayNotHasKey( 'page_template', $inserted[1] );
+
+		// The front and posts pages are wired to the pages that declared them.
+		$this->assertSame( 'page', $options['show_on_front'] );
+		$this->assertSame( 1, $options['page_on_front'] );
+		$this->assertSame( 2, $options['page_for_posts'] );
 	}
 }

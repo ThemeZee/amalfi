@@ -17,8 +17,14 @@ use ThemeZee\Amalfi\Core\ThemeConfig;
  * Both pages and posts are stored as bundled block-markup files under
  * `demo-content/` — posts in `demo-content/posts/`, pages in
  * `demo-content/pages/` — and loaded on demand. The markup is written with
- * generic, distribution-safe copy and root-relative links, so it works on any
- * install rather than being tied to this demo site.
+ * generic, distribution-safe copy. Internal links use the `%HOME_URL%`
+ * placeholder token, which is resolved to the site's home URL on import (see
+ * {@see self::placeholders()}), so the content works on any install — including
+ * a sub-directory or multisite sub-site — rather than being tied to this demo.
+ *
+ * Demo files are read as data only: they are never included or evaluated, and
+ * token replacement is a fixed, one-pass string substitution, so the bundled
+ * markup cannot execute code or alter the replacement values.
  */
 class Content {
 
@@ -327,6 +333,9 @@ class Content {
 	/**
 	 * Load the block markup for a single demo page.
 	 *
+	 * The file is read as plain text — never included or evaluated — and its
+	 * placeholder tokens are resolved before the markup is returned.
+	 *
 	 * @param string $file Page markup file base name (without extension).
 	 */
 	private function pageContent( string $file ): string {
@@ -337,6 +346,44 @@ class Content {
 		}
 
 		// Reading a bundled local theme file, not a remote URL.
-		return trim( (string) file_get_contents( $path ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$markup = trim( (string) file_get_contents( $path ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		return $this->resolvePlaceholders( $markup );
+	}
+
+	/**
+	 * Replace the placeholder tokens in demo markup with their dynamic values.
+	 *
+	 * This is a plain, one-pass string substitution: only the fixed tokens
+	 * defined in {@see self::placeholders()} are replaced, each with a trusted
+	 * value produced by WordPress core (never with anything read from the file).
+	 * The markup is treated purely as data — it is never executed, interpolated
+	 * as PHP, or passed to a callback — so a demo file cannot inject code or
+	 * influence what the replacements are. Unknown `%TOKENS%` are left untouched
+	 * as literal text.
+	 *
+	 * @param string $markup The raw demo markup.
+	 */
+	private function resolvePlaceholders( string $markup ): string {
+		return strtr( $markup, $this->placeholders() );
+	}
+
+	/**
+	 * The placeholder tokens demo files may use, mapped to their values.
+	 *
+	 * Keys are the literal tokens as they appear in the markup; values are the
+	 * strings they resolve to. Every value is derived from WordPress core and
+	 * escaped for its use in the markup (URLs with {@see esc_url()}), so the
+	 * result is safe to store as post content.
+	 *
+	 * @return array<string, string> A map of token to replacement value.
+	 */
+	private function placeholders(): array {
+		return array(
+			// The site's home URL without a trailing slash, so a file can write
+			// `%HOME_URL%/blog/` and have it resolve on any install (including a
+			// sub-directory or multisite sub-site).
+			'%HOME_URL%' => esc_url( untrailingslashit( home_url() ) ),
+		);
 	}
 }

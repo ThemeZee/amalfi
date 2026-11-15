@@ -38,7 +38,7 @@ final class BlockPatternCategoryTest extends TestCase {
 
 		$this->assertArrayHasKey( 'amalfi_hero', $registered );
 		$this->assertArrayHasKey( 'amalfi_query_loops', $registered );
-		$this->assertCount( 8, $registered );
+		$this->assertCount( 9, $registered );
 		$this->assertSame( 'Amalfi: Hero', $registered['amalfi_hero'] );
 	}
 
