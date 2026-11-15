@@ -43,7 +43,7 @@
 			<!-- wp:column {"verticalAlignment":"center"} -->
 			<div class="wp-block-column is-vertically-aligned-center">
 				<!-- wp:heading {"level":3,"fontSize":"body-xl"} -->
-				<h3 class="wp-block-heading has-body-xl-font-size"><a href="/amalfi/category/destinations/">Destinations</a></h3>
+				<h3 class="wp-block-heading has-body-xl-font-size"><a href="/category/destinations/">Destinations</a></h3>
 				<!-- /wp:heading -->
 			</div>
 			<!-- /wp:column -->
@@ -73,7 +73,7 @@
 			<!-- wp:column {"verticalAlignment":"center"} -->
 			<div class="wp-block-column is-vertically-aligned-center">
 				<!-- wp:heading {"level":3,"fontSize":"body-xl"} -->
-				<h3 class="wp-block-heading has-body-xl-font-size"><a href="/amalfi/category/things-to-do/">Things to Do</a></h3>
+				<h3 class="wp-block-heading has-body-xl-font-size"><a href="/category/things-to-do/">Things to Do</a></h3>
 				<!-- /wp:heading -->
 			</div>
 			<!-- /wp:column -->
@@ -103,7 +103,7 @@
 			<!-- wp:column {"verticalAlignment":"center"} -->
 			<div class="wp-block-column is-vertically-aligned-center">
 				<!-- wp:heading {"level":3,"fontSize":"body-xl"} -->
-				<h3 class="wp-block-heading has-body-xl-font-size"><a href="/amalfi/category/food-drink/">Food &amp; Drink</a></h3>
+				<h3 class="wp-block-heading has-body-xl-font-size"><a href="/category/food-drink/">Food &amp; Drink</a></h3>
 				<!-- /wp:heading -->
 			</div>
 			<!-- /wp:column -->
@@ -133,7 +133,7 @@
 			<!-- wp:column {"verticalAlignment":"center"} -->
 			<div class="wp-block-column is-vertically-aligned-center">
 				<!-- wp:heading {"level":3,"fontSize":"body-xl"} -->
-				<h3 class="wp-block-heading has-body-xl-font-size"><a href="/amalfi/category/where-to-stay/">Where to Stay</a></h3>
+				<h3 class="wp-block-heading has-body-xl-font-size"><a href="/category/where-to-stay/">Where to Stay</a></h3>
 				<!-- /wp:heading -->
 			</div>
 			<!-- /wp:column -->

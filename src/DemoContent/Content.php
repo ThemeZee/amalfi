@@ -12,11 +12,13 @@ namespace ThemeZee\Amalfi\DemoContent;
 use ThemeZee\Amalfi\Core\ThemeConfig;
 
 /**
- * Builds the block markup for the demo pages and posts.
+ * Provides the block markup for the demo pages and posts.
  *
- * Pages are composed from the theme's own block patterns, so the demo content
- * always reflects the current patterns and stays distribution-safe. Posts use
- * generic placeholder copy.
+ * Both pages and posts are stored as bundled block-markup files under
+ * `demo-content/` — posts in `demo-content/posts/`, pages in
+ * `demo-content/pages/` — and loaded on demand. The markup is written with
+ * generic, distribution-safe copy and root-relative links, so it works on any
+ * install rather than being tied to this demo site.
  */
 class Content {
 
@@ -243,58 +245,98 @@ class Content {
 	}
 
 	/**
-	 * The block markup for the demo home page.
-	 */
-	public function homePage(): string {
-		return $this->patterns(
-			'hero-centered',
-			'featured-story',
-			'highlights-cards',
-			'newsletter-cta'
-		);
-	}
-
-	/**
-	 * The block markup for the demo about page.
-	 */
-	public function aboutPage(): string {
-		return $this->patterns(
-			'hero-image',
-			'contributors-cards',
-			'testimonials-columns'
-		);
-	}
-
-	/**
-	 * Compose markup by rendering the given theme patterns in order.
+	 * The demo pages to create.
 	 *
-	 * @param string ...$slugs Pattern file base names (without extension).
+	 * Each entry describes a page: its title, the base name of the block markup
+	 * file under `demo-content/pages/` (an empty string for a page with no
+	 * content, such as the blog posts page), an optional page template slug,
+	 * and which role it plays in the front-page configuration. The content
+	 * itself is loaded on demand by {@see self::pages()} so the markup stays out
+	 * of this class.
+	 *
+	 * @return array<int, array{title: string, file: string, template: string, front: bool, posts: bool}>
 	 */
-	private function patterns( string ...$slugs ): string {
-		$markup = '';
+	public function pageDefinitions(): array {
+		return array(
+			array(
+				'title'    => __( 'Home', 'amalfi' ),
+				'file'     => 'home',
+				'template' => 'page-no-title',
+				'front'    => true,
+				'posts'    => false,
+			),
+			array(
+				'title'    => __( 'Activities', 'amalfi' ),
+				'file'     => 'activities',
+				'template' => 'page-no-title',
+				'front'    => false,
+				'posts'    => false,
+			),
+			array(
+				'title'    => __( 'Destinations', 'amalfi' ),
+				'file'     => 'destinations',
+				'template' => '',
+				'front'    => false,
+				'posts'    => false,
+			),
+			array(
+				'title'    => __( 'About', 'amalfi' ),
+				'file'     => 'about',
+				'template' => '',
+				'front'    => false,
+				'posts'    => false,
+			),
+			array(
+				'title'    => __( 'Blog', 'amalfi' ),
+				'file'     => '',
+				'template' => '',
+				'front'    => false,
+				'posts'    => true,
+			),
+			array(
+				'title'    => __( 'Contact', 'amalfi' ),
+				'file'     => 'contact',
+				'template' => '',
+				'front'    => false,
+				'posts'    => false,
+			),
+		);
+	}
 
-		foreach ( $slugs as $slug ) {
-			$markup .= $this->renderPattern( $slug ) . "\n\n";
+	/**
+	 * The demo pages, each with its content markup loaded.
+	 *
+	 * @return array<int, array{title: string, content: string, template: string, front: bool, posts: bool}>
+	 */
+	public function pages(): array {
+		$pages = array();
+
+		foreach ( $this->pageDefinitions() as $page ) {
+			$pages[] = array(
+				'title'    => $page['title'],
+				'content'  => '' === $page['file'] ? '' : $this->pageContent( $page['file'] ),
+				'template' => $page['template'],
+				'front'    => $page['front'],
+				'posts'    => $page['posts'],
+			);
 		}
 
-		return trim( $markup );
+		return $pages;
 	}
 
 	/**
-	 * Render a single pattern file to its block markup.
+	 * Load the block markup for a single demo page.
 	 *
-	 * @param string $slug Pattern file base name (without extension).
+	 * @param string $file Page markup file base name (without extension).
 	 */
-	private function renderPattern( string $slug ): string {
-		$file = $this->config->basePath() . '/patterns/' . $slug . '.php';
+	private function pageContent( string $file ): string {
+		$path = $this->config->basePath() . '/demo-content/pages/' . $file . '.html';
 
-		if ( ! is_readable( $file ) ) {
+		if ( ! is_readable( $path ) ) {
 			return '';
 		}
 
-		ob_start();
-		include $file;
-
-		return trim( (string) ob_get_clean() );
+		// Reading a bundled local theme file, not a remote URL.
+		return trim( (string) file_get_contents( $path ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 	}
 }

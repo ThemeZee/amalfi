@@ -30,27 +30,27 @@
 	<div class="wp-block-buttons">
 
 		<!-- wp:button {"className":"is-style-outline"} -->
-		<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/amalfi/category/destinations/">Destinations</a></div>
+		<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/category/destinations/">Destinations</a></div>
 		<!-- /wp:button -->
 
 		<!-- wp:button {"className":"is-style-outline"} -->
-		<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/amalfi/category/things-to-do/">Things to Do</a></div>
+		<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/category/things-to-do/">Things to Do</a></div>
 		<!-- /wp:button -->
 
 		<!-- wp:button {"className":"is-style-outline"} -->
-		<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/amalfi/category/where-to-stay/">Where to Stay</a></div>
+		<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/category/where-to-stay/">Where to Stay</a></div>
 		<!-- /wp:button -->
 
 		<!-- wp:button {"className":"is-style-outline"} -->
-		<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/amalfi/category/food-drink/">Food &amp; Drink</a></div>
+		<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/category/food-drink/">Food &amp; Drink</a></div>
 		<!-- /wp:button -->
 
 		<!-- wp:button {"className":"is-style-outline"} -->
-		<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/amalfi/category/travel-tips/">Travel Tips</a></div>
+		<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/category/travel-tips/">Travel Tips</a></div>
 		<!-- /wp:button -->
 
 		<!-- wp:button {"className":"is-style-outline"} -->
-		<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/amalfi/category/photography/">Photography</a></div>
+		<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/category/photography/">Photography</a></div>
 		<!-- /wp:button -->
 
 	</div>

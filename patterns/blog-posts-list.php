@@ -66,7 +66,7 @@
 	<div class="wp-block-buttons">
 
 		<!-- wp:button {"className":"is-style-outline"} -->
-		<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/amalfi/blog/">View all stories</a></div>
+		<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/blog/">View all stories</a></div>
 		<!-- /wp:button -->
 
 	</div>

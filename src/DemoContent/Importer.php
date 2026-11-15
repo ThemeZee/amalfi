@@ -60,7 +60,7 @@ class Importer {
 			array(
 				'key'   => 'pages',
 				'label' => __( 'Static Pages', 'amalfi' ),
-				'count' => 3,
+				'count' => count( $this->content->pageDefinitions() ),
 			),
 		);
 	}
@@ -354,16 +354,36 @@ class Importer {
 	/**
 	 * Create the demo pages and configure the front page.
 	 *
+	 * Every page defined in {@see Content::pages()} is created. The page flagged
+	 * as the front page becomes a static front page, and the page flagged as the
+	 * posts page becomes the blog index.
+	 *
 	 * @throws \RuntimeException When a page cannot be created.
 	 */
 	private function importPages(): void {
-		$home = $this->insertPage( __( 'Home', 'amalfi' ), $this->content->homePage(), 'page-no-title' );
-		$this->insertPage( __( 'About', 'amalfi' ), $this->content->aboutPage(), 'page-no-title' );
-		$blog = $this->insertPage( __( 'Blog', 'amalfi' ), '' );
+		$frontPageId = 0;
+		$postsPageId = 0;
 
-		update_option( 'show_on_front', 'page' );
-		update_option( 'page_on_front', $home );
-		update_option( 'page_for_posts', $blog );
+		foreach ( $this->content->pages() as $page ) {
+			$pageId = $this->insertPage( $page['title'], $page['content'], $page['template'] );
+
+			if ( $page['front'] ) {
+				$frontPageId = $pageId;
+			}
+
+			if ( $page['posts'] ) {
+				$postsPageId = $pageId;
+			}
+		}
+
+		if ( $frontPageId > 0 ) {
+			update_option( 'show_on_front', 'page' );
+			update_option( 'page_on_front', $frontPageId );
+		}
+
+		if ( $postsPageId > 0 ) {
+			update_option( 'page_for_posts', $postsPageId );
+		}
 	}
 
 	/**
@@ -371,7 +391,9 @@ class Importer {
 	 *
 	 * @param string $title    The page title.
 	 * @param string $content  The page block markup.
-	 * @param string $template Optional page template slug.
+	 * @param string $template Optional page template slug, as registered in the
+	 *                         theme's custom templates (e.g. `page-no-title`,
+	 *                         without the `.html` extension).
 	 * @return int The created page ID.
 	 * @throws \RuntimeException When the page cannot be created.
 	 */
@@ -385,7 +407,9 @@ class Importer {
 		);
 
 		if ( '' !== $template ) {
-			$postarr['page_template'] = $template . '.html';
+			// The key must match WP_Theme::get_page_templates(), which keys block
+			// theme templates by their slug, not the file name — so no `.html`.
+			$postarr['page_template'] = $template;
 		}
 
 		$pageId = wp_insert_post( $postarr, true );
