@@ -34,11 +34,11 @@
 			<div class="wp-block-buttons" style="margin-top:var(--wp--preset--spacing--500)">
 
 				<!-- wp:button -->
-				<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/blog/">Read the stories</a></div>
+				<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/blog/' ) ); ?>">Read the stories</a></div>
 				<!-- /wp:button -->
 
 				<!-- wp:button {"className":"is-style-outline"} -->
-				<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/destinations/">Explore destinations</a></div>
+				<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/destinations/' ) ); ?>">Explore destinations</a></div>
 				<!-- /wp:button -->
 
 			</div>
