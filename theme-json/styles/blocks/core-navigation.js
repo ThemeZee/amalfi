@@ -15,6 +15,33 @@
 //     rounded corners can only be reached by selector.
 // The base link colour stays the nav default ("dark green / black, like now")
 // via inheritance, so no colour key is set for it.
+
+// Top-level items reach the container by one of two chains, so every top-level
+// rule has to be emitted for both:
+//   - a hand-built menu item (`core/navigation-link`) is an `<li>` placed
+//     DIRECTLY inside `.wp-block-navigation__container`;
+//   - the Page List block (`core/page-list`), which is what a fresh install's
+//     navigation shows, wraps its items in an extra `<ul class="wp-block-page-
+//     list">`, so each item `<li>` sits one level deeper — a grandchild of the
+//     container. A single `container > item` chain therefore styled only the
+//     hand-built items and skipped the whole Page List.
+// Both chains keep the `>` combinator so the rule stays on top-level items only
+// (submenu items live in `__submenu-container`, matched separately below). The
+// `css` escape hatch drops all but the last of a comma-separated selector, so
+// the two chains can't be comma-combined in one rule — this helper emits one
+// rule block per chain instead, with the same trailing selector and body.
+const topLevel = ( trailing, declarations ) =>
+	'& .wp-block-navigation__container > ' +
+	trailing +
+	'{' +
+	declarations +
+	'}' +
+	'& .wp-block-navigation__container > .wp-block-page-list > ' +
+	trailing +
+	'{' +
+	declarations +
+	'}';
+
 const MAIN_NAVIGATION_CSS =
 	// Top-level links only: a buttonish uppercase, semibold, tracked label at the
 	// small button font size, plus a reserved 1px transparent bottom border so the
@@ -25,21 +52,25 @@ const MAIN_NAVIGATION_CSS =
 	// `> li >` selector matches nothing in the canvas and the style would look
 	// unapplied there. The class is present in both, and the `>` keeps it to
 	// top-level items (submenu items sit in `__submenu-container`).
-	'& .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content{' +
-	'text-transform:uppercase;font-weight:600;letter-spacing:0.12rem;' +
-	'font-size:var(--wp--preset--font-size--body-xs);' +
-	'border-bottom:1px solid transparent' +
-	'}' +
+	topLevel(
+		'.wp-block-navigation-item > .wp-block-navigation-item__content',
+		'text-transform:uppercase;font-weight:600;letter-spacing:0.12rem;' +
+			'font-size:var(--wp--preset--font-size--body-xs);' +
+			'border-bottom:1px solid transparent'
+	) +
 	// Current menu item (the page being viewed): reveal that reserved border in the
 	// link\'s own colour. `currentColor` keeps it the same black as the link text
 	// (and tracks the hover colour with it). WordPress marks the active item\'s
 	// `<li>` with `current-menu-item` (front end only — the editor has no "current"
 	// item, so it simply won\'t show there). Kept to top-level items via the `>`
 	// chain; emits at the same 0-1-0 as the rule above but later in source order,
-	// so the colour wins without `!important`.
-	'& .wp-block-navigation__container > .current-menu-item > .wp-block-navigation-item__content{' +
-	'border-bottom-color:currentColor' +
-	'}' +
+	// so the colour wins without `!important`. `core/page-list` marks the viewed
+	// page's `<li>` with `current-menu-item` too, so the shared helper covers
+	// Page List items the same way.
+	topLevel(
+		'.current-menu-item > .wp-block-navigation-item__content',
+		'border-bottom-color:currentColor'
+	) +
 	// Hover / keyboard-focus colour for every nav link — top-level and dropdown,
 	// desktop and the mobile overlay. The colour is set on the link itself (not
 	// the `<li>`), which needs `!important`: core pins links to `color:inherit` —
@@ -65,10 +96,11 @@ const MAIN_NAVIGATION_CSS =
 	// `:root :where(…)` rule (0-1-0), so the size needs `!important` (no editor
 	// control); the relative nudge has no competing rule. Item matched by class,
 	// not `li`, so it also applies to the editor's `<div>` items (see above).
-	'& .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation__submenu-icon{' +
-	'width:0.75em !important;height:0.75em !important;' +
-	'position:relative;top:-1px' +
-	'}' +
+	topLevel(
+		'.wp-block-navigation-item > .wp-block-navigation__submenu-icon',
+		'width:0.75em !important;height:0.75em !important;' +
+			'position:relative;top:-1px'
+	) +
 	// Dropdown panel: drop core's border, green fill, rounded corners, and drop
 	// it a gap below the top-level item.
 	// Core styles the border and white fill at `.wp-block-navigation:not(
