@@ -1,0 +1,82 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Grapes",
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"color": "#f5f3ff",
+					"name": "Primary 50",
+					"slug": "primary-50"
+				},
+				{
+					"color": "#ede9fe",
+					"name": "Primary 100",
+					"slug": "primary-100"
+				},
+				{
+					"color": "#ddd6fe",
+					"name": "Primary 200",
+					"slug": "primary-200"
+				},
+				{
+					"color": "#c4b5fd",
+					"name": "Primary 300",
+					"slug": "primary-300"
+				},
+				{
+					"color": "#a78bfa",
+					"name": "Primary 400",
+					"slug": "primary-400"
+				},
+				{
+					"color": "#8b5cf6",
+					"name": "Primary 500",
+					"slug": "primary-500"
+				},
+				{
+					"color": "#7c3aed",
+					"name": "Primary 600",
+					"slug": "primary-600"
+				},
+				{
+					"color": "#6d28d9",
+					"name": "Primary 700",
+					"slug": "primary-700"
+				},
+				{
+					"color": "#5b21b6",
+					"name": "Primary 800",
+					"slug": "primary-800"
+				},
+				{
+					"color": "#4c1d95",
+					"name": "Primary 900",
+					"slug": "primary-900"
+				},
+				{
+					"color": "#2e1065",
+					"name": "Primary 950",
+					"slug": "primary-950"
+				}
+			]
+		},
+		"custom": {
+			"fontFamily": {
+				"body": "var:preset|font-family|dm-sans",
+				"display": "var:preset|font-family|playfair-display"
+			},
+			"lineHeight": {
+				"body": "1.65",
+				"display": "1.05"
+			}
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var:preset|color|primary-50",
+			"text": "var:preset|color|primary-950"
+		}
+	}
+}

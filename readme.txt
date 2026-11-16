@@ -44,6 +44,22 @@ b) Manrope Font - https://fonts.google.com/specimen/Manrope
 License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL)
 Copyright: Mikhail Sharanda
 
+c) Fraunces Font - https://fonts.google.com/specimen/Fraunces
+License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL)
+Copyright: Phaedra Charles, Flavia Zimbardi, Undercase Type
+
+d) Playfair Display Font - https://fonts.google.com/specimen/Playfair+Display
+License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL)
+Copyright: Claus Eggers Sørensen
+
+e) Space Grotesk Font - https://fonts.google.com/specimen/Space+Grotesk
+License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL)
+Copyright: Florian Karsten
+
+f) DM Sans Font - https://fonts.google.com/specimen/DM+Sans
+License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL)
+Copyright: Colophon Foundry, Jonny Pinhorn, Indian Type Foundry
+
 2. Images used in block patterns and demo content
 
 a) Positano seen from the sea, used in the Hero block pattern and as the featured image of the "Positano: The Vertical Village That Steals Every Heart" demo post (assets/images/positano-coast.jpg)
