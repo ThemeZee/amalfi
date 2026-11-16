@@ -246,6 +246,10 @@ final class ContentTest extends TestCase {
 
 			$this->assertStringNotContainsString( 'href="/', $markup, "{$name} contains a hardcoded root-relative link." );
 			$this->assertStringNotContainsString( '/amalfi/', $markup, "{$name} leaks the demo sub-site path." );
+
+			// Query Loops must not pin a hardcoded term ID: those IDs do not
+			// exist on a fresh install, so the loop would render no posts.
+			$this->assertStringNotContainsString( 'taxQuery', $markup, "{$name} pins a Query Loop to a hardcoded taxonomy term." );
 		}
 	}
 }
