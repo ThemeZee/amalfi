@@ -17,15 +17,28 @@
 // via inheritance, so no colour key is set for it.
 const MAIN_NAVIGATION_CSS =
 	// Top-level links only: a buttonish uppercase, semibold, tracked label at the
-	// small button font size. Match the item by its `.wp-block-navigation-item`
-	// class, not the `li` tag: on the front end an item is an `<li>`, but in the
-	// block editor each item renders as a `<div class="wp-block-navigation-item …">`
-	// block-list block, so a `> li >` selector matches nothing in the canvas and
-	// the style would look unapplied there. The class is present in both, and the
-	// `>` keeps it to top-level items (submenu items sit in `__submenu-container`).
+	// small button font size, plus a reserved 1px transparent bottom border so the
+	// current-item underline below adds no height and nothing shifts when it shows.
+	// Match the item by its `.wp-block-navigation-item` class, not the `li` tag: on
+	// the front end an item is an `<li>`, but in the block editor each item renders
+	// as a `<div class="wp-block-navigation-item …">` block-list block, so a
+	// `> li >` selector matches nothing in the canvas and the style would look
+	// unapplied there. The class is present in both, and the `>` keeps it to
+	// top-level items (submenu items sit in `__submenu-container`).
 	'& .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content{' +
 	'text-transform:uppercase;font-weight:600;letter-spacing:0.12rem;' +
-	'font-size:var(--wp--preset--font-size--body-xs)' +
+	'font-size:var(--wp--preset--font-size--body-xs);' +
+	'border-bottom:1px solid transparent' +
+	'}' +
+	// Current menu item (the page being viewed): reveal that reserved border in the
+	// link\'s own colour. `currentColor` keeps it the same black as the link text
+	// (and tracks the hover colour with it). WordPress marks the active item\'s
+	// `<li>` with `current-menu-item` (front end only — the editor has no "current"
+	// item, so it simply won\'t show there). Kept to top-level items via the `>`
+	// chain; emits at the same 0-1-0 as the rule above but later in source order,
+	// so the colour wins without `!important`.
+	'& .wp-block-navigation__container > .current-menu-item > .wp-block-navigation-item__content{' +
+	'border-bottom-color:currentColor' +
 	'}' +
 	// Hover / keyboard-focus colour for every nav link — top-level and dropdown,
 	// desktop and the mobile overlay. The colour is set on the link itself (not
