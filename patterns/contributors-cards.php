@@ -31,8 +31,8 @@
 
 		<!-- wp:column -->
 		<div class="wp-block-column">
-			<!-- wp:group {"style":{"border":{"radius":"12px"},"spacing":{"padding":{"top":"var:preset|spacing|600","right":"var:preset|spacing|500","bottom":"var:preset|spacing|600","left":"var:preset|spacing|500"},"blockGap":"var:preset|spacing|200"}},"backgroundColor":"primary-100","layout":{"type":"constrained"}} -->
-			<div class="wp-block-group has-primary-100-background-color has-background" style="border-radius:12px;padding-top:var(--wp--preset--spacing--600);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--600);padding-left:var(--wp--preset--spacing--500)">
+			<!-- wp:group {"style":{"border":{"color":"var:preset|color|primary-200","width":"1px","radius":"12px"},"spacing":{"padding":{"top":"var:preset|spacing|600","right":"var:preset|spacing|500","bottom":"var:preset|spacing|600","left":"var:preset|spacing|500"},"blockGap":"var:preset|spacing|200"}},"backgroundColor":"primary-100","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group has-border-color has-primary-100-background-color has-background" style="border-color:var(--wp--preset--color--primary-200);border-width:1px;border-radius:12px;padding-top:var(--wp--preset--spacing--600);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--600);padding-left:var(--wp--preset--spacing--500)">
 				<!-- wp:heading {"level":3,"fontSize":"body-xl"} -->
 				<h3 class="wp-block-heading has-body-xl-font-size">Giulia Moretti</h3>
 				<!-- /wp:heading -->
@@ -49,8 +49,8 @@
 
 		<!-- wp:column -->
 		<div class="wp-block-column">
-			<!-- wp:group {"style":{"border":{"radius":"12px"},"spacing":{"padding":{"top":"var:preset|spacing|600","right":"var:preset|spacing|500","bottom":"var:preset|spacing|600","left":"var:preset|spacing|500"},"blockGap":"var:preset|spacing|200"}},"backgroundColor":"primary-100","layout":{"type":"constrained"}} -->
-			<div class="wp-block-group has-primary-100-background-color has-background" style="border-radius:12px;padding-top:var(--wp--preset--spacing--600);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--600);padding-left:var(--wp--preset--spacing--500)">
+			<!-- wp:group {"style":{"border":{"color":"var:preset|color|primary-200","width":"1px","radius":"12px"},"spacing":{"padding":{"top":"var:preset|spacing|600","right":"var:preset|spacing|500","bottom":"var:preset|spacing|600","left":"var:preset|spacing|500"},"blockGap":"var:preset|spacing|200"}},"backgroundColor":"primary-100","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group has-border-color has-primary-100-background-color has-background" style="border-color:var(--wp--preset--color--primary-200);border-width:1px;border-radius:12px;padding-top:var(--wp--preset--spacing--600);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--600);padding-left:var(--wp--preset--spacing--500)">
 				<!-- wp:heading {"level":3,"fontSize":"body-xl"} -->
 				<h3 class="wp-block-heading has-body-xl-font-size">Luca Esposito</h3>
 				<!-- /wp:heading -->
@@ -67,8 +67,8 @@
 
 		<!-- wp:column -->
 		<div class="wp-block-column">
-			<!-- wp:group {"style":{"border":{"radius":"12px"},"spacing":{"padding":{"top":"var:preset|spacing|600","right":"var:preset|spacing|500","bottom":"var:preset|spacing|600","left":"var:preset|spacing|500"},"blockGap":"var:preset|spacing|200"}},"backgroundColor":"primary-100","layout":{"type":"constrained"}} -->
-			<div class="wp-block-group has-primary-100-background-color has-background" style="border-radius:12px;padding-top:var(--wp--preset--spacing--600);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--600);padding-left:var(--wp--preset--spacing--500)">
+			<!-- wp:group {"style":{"border":{"color":"var:preset|color|primary-200","width":"1px","radius":"12px"},"spacing":{"padding":{"top":"var:preset|spacing|600","right":"var:preset|spacing|500","bottom":"var:preset|spacing|600","left":"var:preset|spacing|500"},"blockGap":"var:preset|spacing|200"}},"backgroundColor":"primary-100","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group has-border-color has-primary-100-background-color has-background" style="border-color:var(--wp--preset--color--primary-200);border-width:1px;border-radius:12px;padding-top:var(--wp--preset--spacing--600);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--600);padding-left:var(--wp--preset--spacing--500)">
 				<!-- wp:heading {"level":3,"fontSize":"body-xl"} -->
 				<h3 class="wp-block-heading has-body-xl-font-size">Aisha Romano</h3>
 				<!-- /wp:heading -->

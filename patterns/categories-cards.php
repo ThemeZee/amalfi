@@ -112,8 +112,8 @@
 
 		<!-- wp:column -->
 		<div class="wp-block-column">
-			<!-- wp:group {"style":{"border":{"radius":"8px","color":"var:preset|color|primary-200","width":"1px"},"spacing":{"padding":{"top":"var:preset|spacing|500","right":"var:preset|spacing|500","bottom":"var:preset|spacing|500","left":"var:preset|spacing|500"}}},"layout":{"type":"constrained"}} -->
-			<div class="wp-block-group has-border-color" style="border-color:var(--wp--preset--color--primary-200);border-width:1px;border-radius:8px;padding-top:var(--wp--preset--spacing--500);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--500);padding-left:var(--wp--preset--spacing--500)">
+			<!-- wp:group {"style":{"border":{"radius":"8px","color":"var:preset|color|primary-200","width":"1px"},"spacing":{"padding":{"top":"var:preset|spacing|500","right":"var:preset|spacing|500","bottom":"var:preset|spacing|500","left":"var:preset|spacing|500"}}},"backgroundColor":"primary-100","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group has-border-color has-primary-100-background-color has-background" style="border-color:var(--wp--preset--color--primary-200);border-width:1px;border-radius:8px;padding-top:var(--wp--preset--spacing--500);padding-right:var(--wp--preset--spacing--500);padding-bottom:var(--wp--preset--spacing--500);padding-left:var(--wp--preset--spacing--500)">
 				<!-- wp:heading {"level":3,"fontSize":"body-lg"} -->
 				<h3 class="has-body-lg-font-size"><a href="<?php echo esc_url( home_url( '/blog/' ) ); ?>">All Stories</a></h3>
 				<!-- /wp:heading -->

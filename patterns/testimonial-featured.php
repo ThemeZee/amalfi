@@ -9,8 +9,8 @@
 
 ?>
 
-<!-- wp:group {"align":"full","backgroundColor":"primary-100","className":"amalfi-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|1000","right":"var:preset|spacing|400","bottom":"var:preset|spacing|1000","left":"var:preset|spacing|400"}}},"layout":{"type":"constrained","contentSize":"800px"}} -->
-<div class="wp-block-group alignfull has-primary-100-background-color has-background amalfi-section" style="padding-top:var(--wp--preset--spacing--1000);padding-right:var(--wp--preset--spacing--400);padding-bottom:var(--wp--preset--spacing--1000);padding-left:var(--wp--preset--spacing--400)">
+<!-- wp:group {"align":"full","className":"amalfi-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|1000","right":"var:preset|spacing|400","bottom":"var:preset|spacing|1000","left":"var:preset|spacing|400"}}},"layout":{"type":"constrained","contentSize":"800px"}} -->
+<div class="wp-block-group alignfull amalfi-section" style="padding-top:var(--wp--preset--spacing--1000);padding-right:var(--wp--preset--spacing--400);padding-bottom:var(--wp--preset--spacing--1000);padding-left:var(--wp--preset--spacing--400)">
 
 	<!-- wp:paragraph {"align":"center","className":"is-style-overline"} -->
 	<p class="has-text-align-center is-style-overline">What readers say</p>
