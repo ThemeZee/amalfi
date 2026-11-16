@@ -1,0 +1,93 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Pinewood",
+	"settings": {
+		"color": {
+			"defaultPalette": false,
+			"palette": [
+				{
+					"color": "#081510",
+					"name": "Primary 50",
+					"slug": "primary-50"
+				},
+				{
+					"color": "#0d1f17",
+					"name": "Primary 100",
+					"slug": "primary-100"
+				},
+				{
+					"color": "#142c21",
+					"name": "Primary 200",
+					"slug": "primary-200"
+				},
+				{
+					"color": "#1d3d2e",
+					"name": "Primary 300",
+					"slug": "primary-300"
+				},
+				{
+					"color": "#2a5842",
+					"name": "Primary 400",
+					"slug": "primary-400"
+				},
+				{
+					"color": "#3c7a5b",
+					"name": "Primary 500",
+					"slug": "primary-500"
+				},
+				{
+					"color": "#5fa883",
+					"name": "Primary 600",
+					"slug": "primary-600"
+				},
+				{
+					"color": "#8ec9a9",
+					"name": "Primary 700",
+					"slug": "primary-700"
+				},
+				{
+					"color": "#bae3cf",
+					"name": "Primary 800",
+					"slug": "primary-800"
+				},
+				{
+					"color": "#dcf1e6",
+					"name": "Primary 900",
+					"slug": "primary-900"
+				},
+				{
+					"color": "#eef9f2",
+					"name": "Primary 950",
+					"slug": "primary-950"
+				},
+				{
+					"color": "#081510",
+					"name": "On Accent",
+					"slug": "white"
+				},
+				{
+					"color": "#000000",
+					"name": "Black",
+					"slug": "black"
+				}
+			]
+		},
+		"custom": {
+			"fontFamily": {
+				"body": "var:preset|font-family|dm-sans",
+				"display": "var:preset|font-family|cormorant-garamond"
+			},
+			"lineHeight": {
+				"body": "1.6",
+				"display": "1.1"
+			}
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var:preset|color|primary-50",
+			"text": "var:preset|color|primary-950"
+		}
+	}
+}

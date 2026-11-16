@@ -1,0 +1,96 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Ember",
+	"settings": {
+		"color": {
+			"defaultPalette": false,
+			"palette": [
+				{
+					"color": "#1a0b07",
+					"name": "Primary 50",
+					"slug": "primary-50"
+				},
+				{
+					"color": "#280f0a",
+					"name": "Primary 100",
+					"slug": "primary-100"
+				},
+				{
+					"color": "#3a160f",
+					"name": "Primary 200",
+					"slug": "primary-200"
+				},
+				{
+					"color": "#512018",
+					"name": "Primary 300",
+					"slug": "primary-300"
+				},
+				{
+					"color": "#742f20",
+					"name": "Primary 400",
+					"slug": "primary-400"
+				},
+				{
+					"color": "#a0452c",
+					"name": "Primary 500",
+					"slug": "primary-500"
+				},
+				{
+					"color": "#d4714a",
+					"name": "Primary 600",
+					"slug": "primary-600"
+				},
+				{
+					"color": "#e8977a",
+					"name": "Primary 700",
+					"slug": "primary-700"
+				},
+				{
+					"color": "#f3bda9",
+					"name": "Primary 800",
+					"slug": "primary-800"
+				},
+				{
+					"color": "#f9ddd2",
+					"name": "Primary 900",
+					"slug": "primary-900"
+				},
+				{
+					"color": "#fdefe9",
+					"name": "Primary 950",
+					"slug": "primary-950"
+				},
+				{
+					"color": "#1a0b07",
+					"name": "On Accent",
+					"slug": "white"
+				},
+				{
+					"color": "#000000",
+					"name": "Black",
+					"slug": "black"
+				}
+			]
+		},
+		"custom": {
+			"fontFamily": {
+				"body": "var:preset|font-family|manrope",
+				"display": "var:preset|font-family|fraunces"
+			},
+			"lineHeight": {
+				"body": "1.6",
+				"display": "1.1"
+			}
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var:preset|color|primary-50",
+			"text": "var:preset|color|primary-950"
+		},
+		"spacing": {
+			"blockGap": "var:preset|spacing|300"
+		}
+	}
+}

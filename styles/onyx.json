@@ -1,0 +1,114 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Onyx",
+	"settings": {
+		"color": {
+			"defaultPalette": false,
+			"palette": [
+				{
+					"color": "#0c0d10",
+					"name": "Primary 50",
+					"slug": "primary-50"
+				},
+				{
+					"color": "#16181c",
+					"name": "Primary 100",
+					"slug": "primary-100"
+				},
+				{
+					"color": "#22252b",
+					"name": "Primary 200",
+					"slug": "primary-200"
+				},
+				{
+					"color": "#31353d",
+					"name": "Primary 300",
+					"slug": "primary-300"
+				},
+				{
+					"color": "#474d57",
+					"name": "Primary 400",
+					"slug": "primary-400"
+				},
+				{
+					"color": "#646b77",
+					"name": "Primary 500",
+					"slug": "primary-500"
+				},
+				{
+					"color": "#8b929d",
+					"name": "Primary 600",
+					"slug": "primary-600"
+				},
+				{
+					"color": "#aeb4bd",
+					"name": "Primary 700",
+					"slug": "primary-700"
+				},
+				{
+					"color": "#ced2d9",
+					"name": "Primary 800",
+					"slug": "primary-800"
+				},
+				{
+					"color": "#e6e9ed",
+					"name": "Primary 900",
+					"slug": "primary-900"
+				},
+				{
+					"color": "#f4f6f8",
+					"name": "Primary 950",
+					"slug": "primary-950"
+				},
+				{
+					"color": "#0c0d10",
+					"name": "On Accent",
+					"slug": "white"
+				},
+				{
+					"color": "#000000",
+					"name": "Black",
+					"slug": "black"
+				}
+			]
+		},
+		"custom": {
+			"fontFamily": {
+				"body": "var:preset|font-family|dm-sans",
+				"display": "var:preset|font-family|dm-sans"
+			},
+			"lineHeight": {
+				"body": "1.6",
+				"display": "1.1"
+			}
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var:preset|color|primary-50",
+			"text": "var:preset|color|primary-950"
+		},
+		"elements": {
+			"heading": {
+				"typography": {
+					"fontStyle": "normal",
+					"fontWeight": "700",
+					"letterSpacing": "-0.02em"
+				}
+			}
+		},
+		"blocks": {
+			"core/site-title": {
+				"typography": {
+					"fontStyle": "normal"
+				}
+			},
+			"core/pullquote": {
+				"typography": {
+					"fontStyle": "normal"
+				}
+			}
+		}
+	}
+}
