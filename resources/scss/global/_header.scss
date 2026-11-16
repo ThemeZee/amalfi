@@ -22,6 +22,7 @@
 	// From the navigation block's own responsive breakpoint (600px) up, where
 	// the full horizontal menu is shown, centre it between equal-width sides.
 	@media (min-width: 600px) {
+
 		> :first-child,
 		> :last-child {
 			flex: 1 1 0;

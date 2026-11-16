@@ -173,7 +173,25 @@ WordPress runs locally via **ddev** (project `themes-website`, type `php`, root 
 
 ---
 
-## 10. Quick checklist before finishing a change
+## 10. All checks must pass — linting, tests, tools, and CI
+
+**Any code change must leave every linter, test, tool, and GitHub workflow passing with zero errors.** A change is not finished while any check still fails. Do not ignore, disable, or work around a check to make it pass — fix the underlying issue (or, if a rule is genuinely wrong for this project, raise it with the user rather than silencing it).
+
+- **Run the checks your change can affect before you consider it done**, and fix anything that fails. The commands below are exactly what the `.github/workflows/` jobs run, so passing them locally means CI passes:
+  - CSS/SCSS — `npm run lint:css` (Stylelint). Autofix with `npm run lint:css:fix`.
+  - JS/TS — `npm run lint:js` (ESLint). Autofix with `npm run lint:js:fix`.
+  - JS/TS types — `npm run check-types` (`tsc --noEmit`).
+  - JS/TS tests — `npm test` (Jest).
+  - PHP standards — `composer phpcs`.
+  - PHP static analysis — `composer phpstan`.
+  - PHP tests — `composer test` (PHPUnit).
+  - `theme.json` — `npm run theme-json` regenerates **and** validates against the trunk schema; it must succeed.
+- **Every workflow in `.github/workflows/` must stay green**: ESLint, Stylelint, Jest, phpcs, phpstan, phpunit, and the release build. If you add or change tooling, update the matching workflow so CI still reflects reality.
+- **Never commit or hand off a change with a known-failing check.** If something is out of scope to fix, say so explicitly to the user instead of leaving it silently broken.
+
+---
+
+## 11. Quick checklist before finishing a change
 
 - [ ] Built only from **WordPress Core blocks**; no Custom HTML block used for layout.
 - [ ] Design expressed via **`theme.json`** (presets); custom CSS only where unavoidable.
@@ -183,4 +201,5 @@ WordPress runs locally via **ddev** (project `themes-website`, type `php`, root 
 - [ ] Pattern/template/part names and content are **generic and distribution-safe** (no domain-specific wording, no hardcoded nav `ref`, placeholder emails only).
 - [ ] Pattern **slug = filename = title**; pattern cache flushed if slugs/categories changed.
 - [ ] Any new/changed pattern image is from **pxhere.com (CC0)**, stored in **`resources/images/`**, and **`readme.txt` Resources is updated** with its pxhere source URL.
+- [ ] **All linters, tests, tools, and GitHub workflows pass with zero errors** (`npm run lint:css`, `npm run lint:js`, `npm run check-types`, `npm test`, `composer phpcs`, `composer phpstan`, `composer test`, `npm run theme-json`).
 - [ ] **No git operations** performed.
